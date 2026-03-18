@@ -3,6 +3,38 @@ export type Json = string | number | boolean | null | { [key: string]: Json } | 
 export type Database = {
   public: {
     Tables: {
+      client_logos: {
+        Row: {
+          id: string;
+          name: string;
+          logo_url: string | null;
+          sort_order: number;
+          created_at: string;
+        };
+      };
+      cta_content: {
+        Row: {
+          id: string;
+          email: string;
+          whatsapp_number: string;
+          linkedin_url: string;
+          instagram_url: string;
+          behance_url: string;
+          dribbble_url: string;
+          updated_at: string;
+        };
+      };
+      testimonials: {
+        Row: {
+          id: string;
+          quote: string;
+          name: string;
+          title: string;
+          initials: string;
+          sort_order: number;
+          created_at: string;
+        };
+      };
       selected_work: {
         Row: {
           id: string;
@@ -18,17 +50,15 @@ export type Database = {
           case_study_url: string | null;
           intro: string;
           challenge: string;
-          process: Json; // { step: string; description: string; image_url?: string }[]
+          process: Json;
           outcome: string;
-          metrics: Json; // { value: string; label: string }[]
+          metrics: Json;
           tools: string[];
           published: boolean;
           sort_order: number;
           created_at: string;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["selected_work"]["Row"], "id" | "created_at" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["selected_work"]["Insert"]>;
       };
       experiences: {
         Row: {
@@ -42,8 +72,6 @@ export type Database = {
           sort_order: number;
           created_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["experiences"]["Row"], "id" | "created_at">;
-        Update: Partial<Database["public"]["Tables"]["experiences"]["Insert"]>;
       };
       about_content: {
         Row: {
@@ -55,8 +83,6 @@ export type Database = {
           photo_url: string | null;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["about_content"]["Row"], "id" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["about_content"]["Insert"]>;
       };
       hero_content: {
         Row: {
@@ -67,46 +93,6 @@ export type Database = {
           happy_clients: string;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["hero_content"]["Row"], "id" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["hero_content"]["Insert"]>;
-      };
-      client_logos: {
-        Row: {
-          id: string;
-          name: string;
-          logo_url: string | null;
-          sort_order: number;
-          created_at: string;
-        };
-        Insert: Omit<Database["public"]["Tables"]["client_logos"]["Row"], "id" | "created_at">;
-        Update: Partial<Database["public"]["Tables"]["client_logos"]["Insert"]>;
-      };
-      cta_content: {
-        Row: {
-          id: string;
-          email: string;
-          whatsapp_number: string;
-          linkedin_url: string;
-          instagram_url: string;
-          behance_url: string;
-          dribbble_url: string;
-          updated_at: string;
-        };
-        Insert: Omit<Database["public"]["Tables"]["cta_content"]["Row"], "id" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["cta_content"]["Insert"]>;
-      };
-      testimonials: {
-        Row: {
-          id: string;
-          quote: string;
-          name: string;
-          title: string;
-          initials: string;
-          sort_order: number;
-          created_at: string;
-        };
-        Insert: Omit<Database["public"]["Tables"]["testimonials"]["Row"], "id" | "created_at">;
-        Update: Partial<Database["public"]["Tables"]["testimonials"]["Insert"]>;
       };
       posts: {
         Row: {
@@ -119,17 +105,15 @@ export type Database = {
           date: string;
           intro: string;
           challenge: string;
-          process: Json; // { step: string; description: string }[]
+          process: Json;
           outcome: string;
-          metrics: Json; // { value: string; label: string }[]
+          metrics: Json;
           tools: string[];
           cover_url: string | null;
           published: boolean;
           created_at: string;
           updated_at: string;
         };
-        Insert: Omit<Database["public"]["Tables"]["posts"]["Row"], "id" | "created_at" | "updated_at">;
-        Update: Partial<Database["public"]["Tables"]["posts"]["Insert"]>;
       };
     };
   };

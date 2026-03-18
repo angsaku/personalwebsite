@@ -27,10 +27,12 @@ export async function getHeroContent(): Promise<HeroContent> {
 
   if (error || !data) return fallback;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row = data as any;
   return {
-    shortDescription: data.short_description,
-    yearsExperience: data.years_experience,
-    projectsDelivered: data.projects_delivered,
-    happyClients: data.happy_clients,
+    shortDescription: row.short_description,
+    yearsExperience: row.years_experience,
+    projectsDelivered: row.projects_delivered,
+    happyClients: row.happy_clients,
   };
 }

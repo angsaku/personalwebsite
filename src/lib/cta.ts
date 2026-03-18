@@ -32,12 +32,14 @@ export async function getCtaContent(): Promise<CtaContent> {
     return fallback;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row = data as any;
   return {
-    email: data.email ?? fallback.email,
-    whatsapp_number: data.whatsapp_number ?? fallback.whatsapp_number,
-    linkedin_url: data.linkedin_url ?? fallback.linkedin_url,
-    instagram_url: data.instagram_url ?? fallback.instagram_url,
-    behance_url: data.behance_url ?? fallback.behance_url,
-    dribbble_url: data.dribbble_url ?? fallback.dribbble_url,
+    email: row.email ?? fallback.email,
+    whatsapp_number: row.whatsapp_number ?? fallback.whatsapp_number,
+    linkedin_url: row.linkedin_url ?? fallback.linkedin_url,
+    instagram_url: row.instagram_url ?? fallback.instagram_url,
+    behance_url: row.behance_url ?? fallback.behance_url,
+    dribbble_url: row.dribbble_url ?? fallback.dribbble_url,
   };
 }

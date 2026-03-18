@@ -43,7 +43,8 @@ export async function getClientLogos(): Promise<ClientLogo[]> {
   }
   if (!data || data.length === 0) return fallback;
 
-  return data.map((row) => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map((row) => ({
     id: row.id,
     name: row.name,
     logo_url: toDirectImageUrl(row.logo_url),

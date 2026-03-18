@@ -100,7 +100,8 @@ export async function getSelectedWork(): Promise<Project[]> {
     .order("sort_order", { ascending: true });
 
   if (error || !data || data.length === 0) return fallback;
-  return data.map(mapRow);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map(mapRow);
 }
 
 export async function getProject(slug: string): Promise<Project | undefined> {
@@ -115,7 +116,8 @@ export async function getProject(slug: string): Promise<Project | undefined> {
     .single();
 
   if (error || !data) return fallback.find((p) => p.slug === slug);
-  return mapRow(data);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return mapRow(data as any);
 }
 
 export async function getAllWorkSlugs(): Promise<string[]> {
@@ -128,5 +130,6 @@ export async function getAllWorkSlugs(): Promise<string[]> {
     .eq("published", true);
 
   if (error || !data) return fallback.map((p) => p.slug);
-  return data.map((r) => r.slug);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map((r) => r.slug);
 }

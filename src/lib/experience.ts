@@ -54,7 +54,8 @@ export async function getExperiences(): Promise<Experience[]> {
 
   if (error || !data || data.length === 0) return fallback;
 
-  return data.map((row) => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map((row) => ({
     id: row.id,
     company: row.company,
     role: row.role,

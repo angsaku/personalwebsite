@@ -49,7 +49,8 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   }
   if (!data || data.length === 0) return fallback;
 
-  return data.map((row) => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map((row) => ({
     id: row.id,
     quote: row.quote,
     name: row.name,

@@ -39,11 +39,13 @@ export async function getAboutContent(): Promise<AboutContent> {
 
   if (error || !data) return fallback;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row = data as any;
   return {
-    heading: data.heading,
-    bioParagraph1: data.bio_paragraph_1,
-    bioParagraph2: data.bio_paragraph_2,
-    skills: data.skills,
-    photoUrl: data.photo_url,
+    heading: row.heading,
+    bioParagraph1: row.bio_paragraph_1,
+    bioParagraph2: row.bio_paragraph_2,
+    skills: row.skills,
+    photoUrl: row.photo_url,
   };
 }

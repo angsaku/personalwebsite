@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect, useRef, ReactNode, ElementType } from "react";
 
 interface Props {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface Props {
   delay?: number;
   stagger?: boolean;
   threshold?: number;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
 }
 
 export default function ScrollReveal({
@@ -55,7 +55,6 @@ export default function ScrollReveal({
     .join(" ");
 
   return (
-    // @ts-expect-error dynamic tag
     <Tag ref={ref} className={classes}>
       {children}
     </Tag>
