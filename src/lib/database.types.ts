@@ -92,6 +92,7 @@ export type Database = {
           years_experience: string;
           projects_delivered: string;
           happy_clients: string;
+          og_image_url: string | null;
           updated_at: string;
         };
       };

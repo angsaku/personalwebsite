@@ -5,6 +5,7 @@ export interface HeroContent {
   yearsExperience: string;
   projectsDelivered: string;
   happyClients: string;
+  ogImageUrl: string | null;
 }
 
 const fallback: HeroContent = {
@@ -13,6 +14,7 @@ const fallback: HeroContent = {
   yearsExperience: "5+",
   projectsDelivered: "40+",
   happyClients: "20+",
+  ogImageUrl: null,
 };
 
 export async function getHeroContent(): Promise<HeroContent> {
@@ -34,5 +36,6 @@ export async function getHeroContent(): Promise<HeroContent> {
     yearsExperience: row.years_experience,
     projectsDelivered: row.projects_delivered,
     happyClients: row.happy_clients,
+    ogImageUrl: row.og_image_url ?? null,
   };
 }
