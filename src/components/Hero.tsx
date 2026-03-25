@@ -29,7 +29,7 @@ export default async function Hero() {
         {/* Badge */}
         <div className="fade-up delay-1 inline-flex items-center gap-2 mb-8">
           <span className="w-2 h-2 rounded-full bg-[#E5212E] animate-pulse" />
-          <span className="text-xs text-gray-400 tracking-[0.2em] uppercase">
+          <span className="text-xs text-gray-400 tracking-[0.08em] md:tracking-[0.2em] uppercase">
             Available for projects
           </span>
         </div>
