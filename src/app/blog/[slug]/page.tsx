@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";

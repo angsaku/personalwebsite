@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getSelectedWork } from "@/lib/selected-work";
