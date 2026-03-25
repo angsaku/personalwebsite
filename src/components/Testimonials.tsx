@@ -15,23 +15,23 @@ export default async function Testimonials() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin">
           {testimonials.map((t, i) => (
             <div
               key={t.id ?? i}
-              className="group relative bg-[#020618] border border-white/[0.06] rounded-2xl p-8 hover:border-[#E5212E]/30 transition-all duration-300 flex flex-col h-64"
+              className="group relative bg-[#020618] border border-white/[0.06] rounded-2xl p-8 hover:border-[#E5212E]/30 transition-all duration-300 flex flex-col flex-shrink-0 w-[85vw] md:w-[360px] snap-start"
             >
               {/* Quote mark */}
-              <div className="text-5xl text-[#E5212E]/20 font-serif leading-none mb-4 select-none flex-shrink-0">
+              <div className="text-5xl text-[#E5212E]/20 font-serif leading-none mb-4 select-none">
                 &ldquo;
               </div>
 
-              <p className="text-gray-400 text-sm leading-relaxed mb-6 overflow-y-auto flex-1 pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+              <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-5">
                 {t.quote}
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-3 flex-shrink-0">
+              <div className="flex items-center gap-3 mt-auto">
                 <div className="w-10 h-10 rounded-full bg-[#E5212E]/10 border border-[#E5212E]/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-[#E5212E]">
                     {t.initials}
