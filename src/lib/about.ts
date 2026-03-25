@@ -6,6 +6,7 @@ export interface AboutContent {
   bioParagraph2: string;
   skills: string[];
   photoUrl: string | null;
+  resumeUrl: string | null;
 }
 
 const fallback: AboutContent = {
@@ -25,6 +26,7 @@ const fallback: AboutContent = {
     "Figma",
   ],
   photoUrl: null,
+  resumeUrl: null,
 };
 
 export async function getAboutContent(): Promise<AboutContent> {
@@ -47,5 +49,6 @@ export async function getAboutContent(): Promise<AboutContent> {
     bioParagraph2: row.bio_paragraph_2,
     skills: row.skills,
     photoUrl: row.photo_url,
+    resumeUrl: row.resume_url ?? null,
   };
 }

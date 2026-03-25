@@ -81,6 +81,7 @@ export type Database = {
           bio_paragraph_2: string;
           skills: string[];
           photo_url: string | null;
+          resume_url: string | null;
           updated_at: string;
         };
       };

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Download } from "lucide-react";
 import { getAboutContent } from "@/lib/about";
 
 function toDirectImageUrl(url: string): string {
@@ -77,6 +78,22 @@ export default async function About() {
               ))}
             </div>
           </div>
+
+          {/* Resume CTA */}
+          {about.resumeUrl && (
+            <div className="pt-4">
+              <a
+                href={about.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#E5212E] text-white text-sm font-medium rounded-full hover:bg-[#c41a25] transition-colors"
+              >
+                <Download size={15} />
+                Download Resume
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </section>
