@@ -7,6 +7,7 @@ import ScrollLink from "@/components/ScrollLink";
 const navLinks = [
   { label: "Work", href: "#work" },
   { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
   { label: "Experience", href: "#experience" },
   { label: "Blog", href: "#blog" },
 ];

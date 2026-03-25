@@ -12,6 +12,17 @@ export type Database = {
           created_at: string;
         };
       };
+      services: {
+        Row: {
+          id: string;
+          number: string;
+          title: string;
+          description: string;
+          tags: string[];
+          sort_order: number;
+          created_at: string;
+        };
+      };
       cta_content: {
         Row: {
           id: string;
