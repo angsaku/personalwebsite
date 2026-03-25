@@ -4,7 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import { getSelectedWork } from "@/lib/selected-work";
 
 export default async function Blog() {
-  const projects = await getSelectedWork();
+  const allProjects = await getSelectedWork();
+  const projects = allProjects.slice(0, 3);
 
   return (
     <section id="blog" className="py-24 px-6">
@@ -92,13 +93,16 @@ export default async function Blog() {
           ))}
         </div>
         {/* View All CTA */}
-        <div className="flex justify-center mt-12">
+        <div className="border-t border-white/[0.06] pt-10 mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-gray-500">
+            Showing 3 of {allProjects.length} posts
+          </p>
           <Link
             href="/blog"
-            className="group flex items-center gap-2 border border-white/10 text-gray-400 px-8 py-3 rounded-full text-sm font-medium hover:border-[#E5212E] hover:text-white transition-all duration-300"
+            className="group inline-flex items-center gap-2 px-6 py-3 border border-[#E5212E]/40 text-[#E5212E] text-sm font-medium rounded-full hover:bg-[#E5212E] hover:text-white hover:border-[#E5212E] transition-all duration-300"
           >
             View All Posts
-            <ArrowUpRight size={15} className="group-hover:text-[#E5212E] transition-colors" />
+            <ArrowUpRight size={15} />
           </Link>
         </div>
       </div>
