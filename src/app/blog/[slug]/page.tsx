@@ -64,7 +64,7 @@ export default async function BlogDetail({ params }: Props) {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#E5212E] rounded-full blur-[200px] opacity-[0.06] pointer-events-none" />
+        <div className="blur-blob absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#E5212E] rounded-full blur-[200px] opacity-[0.06] pointer-events-none" />
 
         <div className="relative max-w-3xl mx-auto px-6 pt-16 pb-12">
           {/* Tag */}

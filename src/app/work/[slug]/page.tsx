@@ -68,7 +68,7 @@ export default async function WorkDetail({ params }: Props) {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.08] pointer-events-none" />
+        <div className="blur-blob absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.08] pointer-events-none" />
 
         <div className="relative max-w-4xl mx-auto px-6 py-20">
           <div className="flex items-center gap-3 mb-6">

@@ -21,9 +21,9 @@ export default async function Hero() {
         }}
       />
 
-      {/* Red accent blob */}
-      <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#E5212E] rounded-full blur-[180px] opacity-10 pointer-events-none" />
-      <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-[#E5212E] rounded-full blur-[140px] opacity-5 pointer-events-none" />
+      {/* Red accent blob — hidden on mobile for performance */}
+      <div className="blur-blob absolute top-1/3 right-1/4 w-96 h-96 bg-[#E5212E] rounded-full blur-[180px] opacity-10 pointer-events-none" />
+      <div className="blur-blob absolute bottom-1/4 left-1/3 w-64 h-64 bg-[#E5212E] rounded-full blur-[140px] opacity-5 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto w-full">
         {/* Badge */}
@@ -35,19 +35,20 @@ export default async function Hero() {
         </div>
 
         {/* Headline */}
-        <h1 className="fade-up delay-2 text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8">
+        <h1 className="fade-up delay-2 text-[2.75rem] md:text-7xl lg:text-8xl font-bold leading-[1] md:leading-[0.95] tracking-tight mb-8">
           <span className="text-white">Crafting</span>
           <br />
           <span className="text-white">Digital</span>{" "}
           <span
-            className="italic font-light"
+            className="block md:inline italic font-light"
             style={{ WebkitTextStroke: "1px #E5212E", color: "transparent" }}
           >
             Experience
           </span>
-          <br />
-          <span className="text-white">That Matter</span>
-          <span className="text-[#E5212E]">.</span>
+          <span className="block md:inline">
+            <span className="text-white">That Matter</span>
+            <span className="text-[#E5212E]">.</span>
+          </span>
         </h1>
 
         {/* Sub row */}

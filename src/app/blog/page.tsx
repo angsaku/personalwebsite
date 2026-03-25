@@ -46,7 +46,7 @@ export default async function BlogPage() {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.07] pointer-events-none" />
+        <div className="blur-blob absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.07] pointer-events-none" />
 
         <div className="relative max-w-6xl mx-auto px-6 py-16">
           <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-4">
