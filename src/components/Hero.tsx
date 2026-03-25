@@ -35,17 +35,18 @@ export default async function Hero() {
         </div>
 
         {/* Headline */}
-        <h1 className="fade-up delay-2 text-[2.75rem] md:text-7xl lg:text-8xl font-bold leading-[1] md:leading-[0.95] tracking-tight mb-8">
-          <span className="text-white">Crafting</span>
-          <br />
-          <span className="text-white">Digital</span>{" "}
-          <span
-            className="block md:inline italic font-light"
-            style={{ WebkitTextStroke: "1px #E5212E", color: "transparent" }}
-          >
-            Experience
+        <h1 className="fade-up delay-2 text-[2.75rem] md:text-7xl lg:text-8xl font-bold leading-[1.15] tracking-tight mb-8">
+          <span className="text-white block">Crafting</span>
+          <span className="block">
+            <span className="text-white">Digital</span>{" "}
+            <span
+              className="italic font-light"
+              style={{ WebkitTextStroke: "1px #E5212E", color: "transparent" }}
+            >
+              Experience
+            </span>
           </span>
-          <span className="block md:inline">
+          <span className="block">
             <span className="text-white">That Matter</span>
             <span className="text-[#E5212E]">.</span>
           </span>
