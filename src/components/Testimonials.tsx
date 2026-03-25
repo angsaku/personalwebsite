@@ -26,7 +26,7 @@ export default async function Testimonials() {
                 &ldquo;
               </div>
 
-              <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-5">
+              <p className="text-gray-400 text-sm leading-relaxed mb-6 overflow-y-auto max-h-[7.5rem] pr-2 scrollbar-brand">
                 {t.quote}
               </p>
 
