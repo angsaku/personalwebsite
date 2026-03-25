@@ -11,7 +11,7 @@ export default async function Testimonials() {
             Testimonials
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-            What clients say<span className="text-[#E5212E]">.</span>
+            What people say<span className="text-[#E5212E]">.</span>
           </h2>
         </div>
 
