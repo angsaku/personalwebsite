@@ -19,19 +19,19 @@ export default async function Testimonials() {
           {testimonials.map((t, i) => (
             <div
               key={t.id ?? i}
-              className="group relative bg-[#020618] border border-white/[0.06] rounded-2xl p-8 hover:border-[#E5212E]/30 transition-all duration-300"
+              className="group relative bg-[#020618] border border-white/[0.06] rounded-2xl p-8 hover:border-[#E5212E]/30 transition-all duration-300 flex flex-col h-64"
             >
               {/* Quote mark */}
-              <div className="text-5xl text-[#E5212E]/20 font-serif leading-none mb-6 select-none">
+              <div className="text-5xl text-[#E5212E]/20 font-serif leading-none mb-4 select-none flex-shrink-0">
                 &ldquo;
               </div>
 
-              <p className="text-gray-400 text-sm leading-relaxed mb-8">
+              <p className="text-gray-400 text-sm leading-relaxed mb-6 overflow-y-auto flex-1 pr-1 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {t.quote}
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-3 mt-auto">
+              <div className="flex items-center gap-3 flex-shrink-0">
                 <div className="w-10 h-10 rounded-full bg-[#E5212E]/10 border border-[#E5212E]/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-[#E5212E]">
                     {t.initials}
