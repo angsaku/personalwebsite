@@ -5,7 +5,9 @@ import { getSelectedWork } from "@/lib/selected-work";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export default async function SelectedWork() {
-  const projects = await getSelectedWork();
+  const allProjects = await getSelectedWork();
+  const projects = allProjects.slice(0, 5);
+  const hasMore = allProjects.length > 5;
 
   return (
     <section id="work" className="py-24 px-6">
@@ -101,6 +103,22 @@ export default async function SelectedWork() {
             </Link>
           ))}
         </ScrollReveal>
+
+        {/* View All CTA */}
+        {hasMore && (
+          <div className="border-t border-white/[0.06] pt-10 mt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-gray-500">
+              Showing 5 of {allProjects.length} projects
+            </p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-[#E5212E]/40 text-[#E5212E] text-sm font-medium rounded-full hover:bg-[#E5212E] hover:text-white hover:border-[#E5212E] transition-all duration-300"
+            >
+              View All Projects
+              <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
