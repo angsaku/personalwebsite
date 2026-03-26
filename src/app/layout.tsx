@@ -14,13 +14,19 @@ const geist = Geist({
 const BASE_URL = "https://angsaku.vercel.app";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const hero = await getHeroContent();
-  const ogImage = hero.ogImageUrl ?? `${BASE_URL}/opengraph-image`;
+  let ogImage = `${BASE_URL}/opengraph-image`;
+  try {
+    const hero = await getHeroContent();
+    ogImage = hero.ogImageUrl ?? ogImage;
+  } catch {}
 
   return {
     metadataBase: new URL(BASE_URL),
     title: "Satriya Kurniawan — Professional Designer",
     description: "Product Designer crafting meaningful digital experiences.",
+    verification: {
+      google: "N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI",
+    },
     icons: {
       icon: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
       shortcut: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
@@ -39,9 +45,6 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Product Designer crafting meaningful digital experiences that bridge business goals with human needs.",
       images: [ogImage],
     },
-    verification: {
-      google: "N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI",
-    },
   };
 }
 
@@ -52,9 +55,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <meta name="google-site-verification" content="N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI" />
-      </head>
       <body className={`${geist.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
         <Analytics />
