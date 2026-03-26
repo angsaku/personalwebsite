@@ -20,9 +20,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
+
+  const image = project.coverUrl ?? project.thumbnailUrl;
+
   return {
     title: `${project.title} — Satriya Kurniawan`,
     description: project.description,
+    openGraph: {
+      title: `${project.title} — Satriya Kurniawan`,
+      description: project.description,
+      url: `https://angsaku.vercel.app/work/${slug}`,
+      images: image ? [{ url: image, width: 1200, height: 630, alt: project.title }] : [],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — Satriya Kurniawan`,
+      description: project.description,
+      images: image ? [image] : [],
+    },
   };
 }
 
