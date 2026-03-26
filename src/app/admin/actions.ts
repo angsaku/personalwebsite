@@ -1,7 +1,6 @@
 "use server";
 
 import { createSupabaseServer } from "@/lib/supabase-server";
-import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { redirect } from "next/navigation";
 
 /* ── Auth ──────────────────────────────────────── */
@@ -15,7 +14,7 @@ export async function logout() {
 /* ── Blog Posts ─────────────────────────────────── */
 
 export async function createPost(formData: FormData) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
 
   const { error } = await supabase.from("blog_posts").insert({
     slug: formData.get("slug") as string,
@@ -34,7 +33,7 @@ export async function createPost(formData: FormData) {
 }
 
 export async function updatePost(id: string, formData: FormData) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
 
   const { error } = await supabase
     .from("blog_posts")
@@ -57,20 +56,20 @@ export async function updatePost(id: string, formData: FormData) {
 }
 
 export async function deletePost(id: string) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
   await supabase.from("blog_posts").delete().eq("id", id);
   redirect("/admin/posts");
 }
 
 export async function togglePublish(id: string, published: boolean) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
   await supabase.from("blog_posts").update({ published: !published }).eq("id", id);
 }
 
 /* ── Selected Work ──────────────────────────────── */
 
 export async function createWork(formData: FormData) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
 
   const process = JSON.parse((formData.get("process") as string) || "[]");
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
@@ -103,7 +102,7 @@ export async function createWork(formData: FormData) {
 }
 
 export async function updateWork(id: string, formData: FormData) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
 
   const process = JSON.parse((formData.get("process") as string) || "[]");
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
@@ -140,12 +139,12 @@ export async function updateWork(id: string, formData: FormData) {
 }
 
 export async function deleteWork(id: string) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
   await supabase.from("selected_work").delete().eq("id", id);
   redirect("/admin/work");
 }
 
 export async function toggleWorkPublish(id: string, published: boolean) {
-  const supabase = createSupabaseAdmin();
+  const supabase = await createSupabaseServer();
   await supabase.from("selected_work").update({ published: !published }).eq("id", id);
 }
