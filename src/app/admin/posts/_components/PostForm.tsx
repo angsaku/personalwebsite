@@ -21,11 +21,22 @@ type Post = {
   content: string | null;
 };
 
+function toSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
 export default function PostForm({ post }: { post?: Post }) {
   const isEdit = !!post;
   const [published, setPublished] = useState(post?.published ?? false);
   const [content, setContent] = useState(post?.content ?? "");
   const [coverUrl, setCoverUrl] = useState<string | null>(post?.cover_url ?? null);
+  const [slug, setSlug] = useState(post?.slug ?? "");
+  const [slugTouched, setSlugTouched] = useState(isEdit);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -81,11 +92,27 @@ export default function PostForm({ post }: { post?: Post }) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelCls}>Title *</label>
-              <input name="title" defaultValue={post?.title} required className={inputCls} placeholder="Post title" />
+              <input
+                name="title"
+                defaultValue={post?.title}
+                required
+                className={inputCls}
+                placeholder="Post title"
+                onChange={(e) => {
+                  if (!slugTouched) setSlug(toSlug(e.target.value));
+                }}
+              />
             </div>
             <div>
               <label className={labelCls}>Slug *</label>
-              <input name="slug" defaultValue={post?.slug} required className={inputCls} placeholder="my-post-slug" />
+              <input
+                name="slug"
+                value={slug}
+                required
+                className={inputCls}
+                placeholder="my-post-slug"
+                onChange={(e) => { setSlug(e.target.value); setSlugTouched(true); }}
+              />
             </div>
           </div>
 
