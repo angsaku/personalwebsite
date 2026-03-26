@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Satriya Kurniawan — Professional Designer",
     description: "Product Designer crafting meaningful digital experiences.",
     verification: {
-      google: "N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI",
+      google: "9N-G778upnbXJjKyqyOi0mDq5s9-GL3JUMYeW88gjUw",
     },
     icons: {
       icon: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
