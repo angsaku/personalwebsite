@@ -81,7 +81,6 @@ export default async function BlogDetail({ params }: Props) {
         <div className="blur-blob absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#E5212E] rounded-full blur-[200px] opacity-[0.06] pointer-events-none" />
 
         <div className="relative max-w-3xl mx-auto px-6 pt-16 pb-12">
-          {/* Tag */}
           <div className="flex items-center gap-2 mb-6">
             <span className="inline-flex items-center gap-1.5 text-xs text-[#E5212E] bg-[#E5212E]/10 border border-[#E5212E]/20 px-3 py-1 rounded-full tracking-wide font-medium">
               <Tag size={10} />
@@ -89,17 +88,14 @@ export default async function BlogDetail({ params }: Props) {
             </span>
           </div>
 
-          {/* Title */}
           <h1 className="text-3xl md:text-[2.6rem] font-bold text-white leading-[1.2] tracking-tight mb-6">
             {post.title}
           </h1>
 
-          {/* Excerpt */}
           <p className="text-gray-400 text-lg leading-relaxed mb-8 max-w-2xl">
             {post.excerpt}
           </p>
 
-          {/* Meta */}
           <div className="flex items-center gap-5 text-xs text-gray-600 border-t border-white/[0.06] pt-6">
             <span className="flex items-center gap-1.5">
               <Calendar size={12} />
@@ -134,105 +130,15 @@ export default async function BlogDetail({ params }: Props) {
         </div>
       )}
 
-      {/* Article body */}
+      {/* Article body — render Quill HTML */}
       <div className="max-w-3xl mx-auto px-6 pb-24">
-
-        {/* Intro — large drop-cap feel */}
-        {post.intro && (
-          <div className="mb-12">
-            <p className="text-gray-300 text-lg leading-[1.85] first-letter:text-5xl first-letter:font-bold first-letter:text-white first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none">
-              {post.intro}
-            </p>
-          </div>
-        )}
-
-        {/* Divider */}
-        <div className="flex items-center gap-3 my-10">
-          <div className="flex-1 h-px bg-white/[0.06]" />
-          <span className="text-[#E5212E] text-xs">✦</span>
-          <div className="flex-1 h-px bg-white/[0.06]" />
-        </div>
-
-        {/* The Challenge */}
-        {post.challenge && (
-          <div className="mb-14">
-            <h2 className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-4 font-medium">
-              The Challenge
-            </h2>
-            {/* Pull quote style */}
-            <blockquote className="border-l-2 border-[#E5212E] pl-6 my-6">
-              <p className="text-white text-xl font-medium leading-relaxed italic">
-                &ldquo;{post.challenge.split(".")[0]}.&rdquo;
-              </p>
-            </blockquote>
-            <p className="text-gray-400 leading-[1.85] text-base">
-              {post.challenge.split(".").slice(1).join(".").trim()}
-            </p>
-          </div>
-        )}
-
-        {/* Process steps as blog sections */}
-        {post.process.length > 0 && (
-          <div className="mb-14 space-y-14">
-            <h2 className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-4 font-medium">
-              The Process
-            </h2>
-            {post.process.map((step, i) => (
-              <div key={i}>
-                <div className="flex items-baseline gap-3 mb-4">
-                  <span className="text-[#E5212E] text-xs font-bold tabular-nums opacity-60">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="text-xl font-semibold text-white leading-snug">
-                    {(step.step ?? "").replace(/^\d+\s*[—–-]\s*/, "")}
-                  </h3>
-                </div>
-                <p className="text-gray-400 leading-[1.85] text-base pl-7">
-                  {step.description ?? ""}
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Metrics callout bar */}
-        {post.metrics.length > 0 && (
-          <div className="my-14 bg-[#0a1128] border border-white/[0.06] rounded-2xl p-8">
-            <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-6">Key Results</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {post.metrics.map((m) => (
-                <div key={m.label} className="text-center">
-                  <p className="text-3xl font-bold text-[#E5212E] mb-1">{m.value}</p>
-                  <p className="text-xs text-gray-500">{m.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Outcome */}
-        {post.outcome && (
-          <div className="mb-14">
-            <h2 className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-4 font-medium">
-              Outcome & Learnings
-            </h2>
-            <p className="text-gray-400 leading-[1.85] text-base">{post.outcome}</p>
-          </div>
-        )}
-
-        {/* Tools */}
-        {post.tools.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 pt-10 border-t border-white/[0.06]">
-            <span className="text-xs text-gray-600 mr-1">Tools used:</span>
-            {post.tools.map((tool) => (
-              <span
-                key={tool}
-                className="text-xs text-gray-500 border border-white/[0.08] px-3 py-1 rounded-full"
-              >
-                {tool}
-              </span>
-            ))}
-          </div>
+        {post.content ? (
+          <div
+            className="blog-content"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
+        ) : (
+          <p className="text-gray-500 text-center py-12">No content yet.</p>
         )}
 
         {/* Related posts */}

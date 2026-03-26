@@ -8,7 +8,7 @@ export const revalidate = 0;
 export default async function PostsPage() {
   const supabase = await createSupabaseServer();
   const { data: posts } = await supabase
-    .from("posts")
+    .from("blog_posts")
     .select("id, slug, title, tag, date, published, read_time")
     .order("created_at", { ascending: false });
 

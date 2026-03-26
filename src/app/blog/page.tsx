@@ -2,7 +2,7 @@ export const revalidate = 0;
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { getSelectedWork } from "@/lib/selected-work";
+import { getAllPosts } from "@/lib/blog";
 import BlogSearch from "@/components/BlogSearch";
 import type { Metadata } from "next";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const projects = await getSelectedWork();
+  const posts = await getAllPosts();
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
@@ -63,7 +63,7 @@ export default async function BlogPage() {
 
       {/* Searchable content */}
       <div className="max-w-6xl mx-auto px-6 py-16 pb-32">
-        <BlogSearch projects={projects} />
+        <BlogSearch posts={posts} />
       </div>
     </div>
   );

@@ -107,7 +107,7 @@ export type Database = {
           updated_at: string;
         };
       };
-      posts: {
+      blog_posts: {
         Row: {
           id: string;
           slug: string;
@@ -116,13 +116,8 @@ export type Database = {
           excerpt: string;
           read_time: string;
           date: string;
-          intro: string;
-          challenge: string;
-          process: Json;
-          outcome: string;
-          metrics: Json;
-          tools: string[];
           cover_url: string | null;
+          content: string | null;
           published: boolean;
           created_at: string;
           updated_at: string;

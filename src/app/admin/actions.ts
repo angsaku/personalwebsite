@@ -16,7 +16,7 @@ export async function logout() {
 export async function createPost(formData: FormData) {
   const supabase = await createSupabaseServer();
 
-  const { error } = await supabase.from("posts").insert({
+  const { error } = await supabase.from("blog_posts").insert({
     slug: formData.get("slug") as string,
     tag: formData.get("tag") as string,
     title: formData.get("title") as string,
@@ -26,13 +26,6 @@ export async function createPost(formData: FormData) {
     cover_url: (formData.get("cover_url") as string) || null,
     content: (formData.get("content") as string) || null,
     published: formData.get("published") === "true",
-    // keep structured fields empty for blog posts
-    intro: "",
-    challenge: "",
-    outcome: "",
-    process: [],
-    metrics: [],
-    tools: [],
   });
 
   if (error) return { error: error.message };
@@ -43,7 +36,7 @@ export async function updatePost(id: string, formData: FormData) {
   const supabase = await createSupabaseServer();
 
   const { error } = await supabase
-    .from("posts")
+    .from("blog_posts")
     .update({
       slug: formData.get("slug") as string,
       tag: formData.get("tag") as string,
@@ -64,13 +57,13 @@ export async function updatePost(id: string, formData: FormData) {
 
 export async function deletePost(id: string) {
   const supabase = await createSupabaseServer();
-  await supabase.from("posts").delete().eq("id", id);
+  await supabase.from("blog_posts").delete().eq("id", id);
   redirect("/admin/posts");
 }
 
 export async function togglePublish(id: string, published: boolean) {
   const supabase = await createSupabaseServer();
-  await supabase.from("posts").update({ published: !published }).eq("id", id);
+  await supabase.from("blog_posts").update({ published: !published }).eq("id", id);
 }
 
 /* ── Selected Work ──────────────────────────────── */

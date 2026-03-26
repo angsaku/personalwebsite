@@ -11,7 +11,7 @@ export default async function EditPostPage({ params }: Props) {
   const supabase = await createSupabaseServer();
 
   const { data: post } = await supabase
-    .from("posts")
+    .from("blog_posts")
     .select("*")
     .eq("id", id)
     .single();
