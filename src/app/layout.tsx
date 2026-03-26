@@ -39,6 +39,9 @@ export async function generateMetadata(): Promise<Metadata> {
       description: "Product Designer crafting meaningful digital experiences that bridge business goals with human needs.",
       images: [ogImage],
     },
+    verification: {
+      google: "N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI",
+    },
   };
 }
 
