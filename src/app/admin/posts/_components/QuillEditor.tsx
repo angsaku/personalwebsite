@@ -19,6 +19,8 @@ export default function QuillEditor({ value, onChange }: Props) {
 
     async function init() {
       const Quill = (await import("quill")).default;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore – CSS module has no type declarations
       await import("quill/dist/quill.snow.css");
 
       quillRef.current = new Quill(containerRef.current!, {

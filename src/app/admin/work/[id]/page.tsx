@@ -6,16 +6,41 @@ export const revalidate = 0;
 
 type Props = { params: Promise<{ id: string }> };
 
+type WorkRow = {
+  id: string;
+  slug: string;
+  number: string;
+  title: string;
+  category: string;
+  description: string;
+  tags: string[] | null;
+  year: string;
+  thumbnail_url: string | null;
+  cover_url: string | null;
+  case_study_url: string | null;
+  intro: string;
+  challenge: string;
+  outcome: string;
+  published: boolean;
+  sort_order: number | null;
+  tools: string[] | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  process: any[] | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  metrics: any[] | null;
+};
+
 export default async function EditWorkPage({ params }: Props) {
   const { id } = await params;
   const supabase = await createSupabaseServer();
 
-  const { data: project } = await supabase
+  const { data } = await supabase
     .from("selected_work")
     .select("*")
     .eq("id", id)
     .single();
 
+  const project = data as WorkRow | null;
   if (!project) notFound();
 
   return (
@@ -38,10 +63,8 @@ export default async function EditWorkPage({ params }: Props) {
         published: project.published,
         sort_order: project.sort_order ?? 0,
         tools: project.tools ?? [],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        process: (project.process as any[]) ?? [],
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        metrics: (project.metrics as any[]) ?? [],
+        process: project.process ?? [],
+        metrics: project.metrics ?? [],
       }}
     />
   );

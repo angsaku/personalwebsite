@@ -6,16 +6,30 @@ export const revalidate = 0;
 
 type Props = { params: Promise<{ id: string }> };
 
+type BlogPostRow = {
+  id: string;
+  slug: string;
+  tag: string;
+  title: string;
+  excerpt: string;
+  read_time: string;
+  date: string;
+  cover_url: string | null;
+  content: string | null;
+  published: boolean;
+};
+
 export default async function EditPostPage({ params }: Props) {
   const { id } = await params;
   const supabase = await createSupabaseServer();
 
-  const { data: post } = await supabase
+  const { data } = await supabase
     .from("blog_posts")
     .select("*")
     .eq("id", id)
     .single();
 
+  const post = data as BlogPostRow | null;
   if (!post) notFound();
 
   return (
