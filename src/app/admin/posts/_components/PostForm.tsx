@@ -120,9 +120,9 @@ export default function PostForm({ post }: { post?: Post }) {
             <button
               type="button"
               onClick={() => setPublished(!published)}
-              className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${published ? "bg-[#E5212E]" : "bg-white/10"}`}
+              className={`w-11 h-6 rounded-full transition-colors relative flex-shrink-0 ${published ? "bg-[#E5212E]" : "bg-white/10"}`}
             >
-              <span className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${published ? "translate-x-7" : "translate-x-1"}`} />
+              <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${published ? "translate-x-5" : "translate-x-0"}`} />
             </button>
           </div>
         </section>

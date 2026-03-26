@@ -3,6 +3,11 @@ import Image from "next/image";
 import { ArrowUpRight, Clock, Calendar } from "lucide-react";
 import { getAllPosts } from "@/lib/blog";
 
+function isValidUrl(url: string | null | undefined): boolean {
+  if (!url) return false;
+  return url.startsWith("http://") || url.startsWith("https://") || url.startsWith("/");
+}
+
 export default async function Blog() {
   const allPosts = await getAllPosts();
   const posts = allPosts.slice(0, 3);
@@ -35,9 +40,9 @@ export default async function Blog() {
               >
                 {/* Cover image */}
                 <div className="aspect-video bg-[#020618] border-b border-white/[0.06] overflow-hidden flex-shrink-0">
-                  {post.coverUrl ? (
+                  {isValidUrl(post.coverUrl) ? (
                     <Image
-                      src={post.coverUrl}
+                      src={post.coverUrl!}
                       alt={post.title}
                       width={600}
                       height={338}
