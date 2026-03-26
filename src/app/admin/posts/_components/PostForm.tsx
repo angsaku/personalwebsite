@@ -4,6 +4,7 @@ import { useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { createPost, updatePost } from "@/app/admin/actions";
+import ImageUpload from "@/app/admin/_components/ImageUpload";
 
 const QuillEditor = lazy(() => import("./QuillEditor"));
 
@@ -24,6 +25,7 @@ export default function PostForm({ post }: { post?: Post }) {
   const isEdit = !!post;
   const [published, setPublished] = useState(post?.published ?? false);
   const [content, setContent] = useState(post?.content ?? "");
+  const [coverUrl, setCoverUrl] = useState<string | null>(post?.cover_url ?? null);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -35,6 +37,7 @@ export default function PostForm({ post }: { post?: Post }) {
     const formData = new FormData(e.currentTarget);
     formData.set("published", String(published));
     formData.set("content", content);
+    formData.set("cover_url", coverUrl ?? "");
 
     const result = isEdit
       ? await updatePost(post.id, formData)
@@ -106,10 +109,12 @@ export default function PostForm({ post }: { post?: Post }) {
             <textarea name="excerpt" defaultValue={post?.excerpt} rows={2} className={inputCls} placeholder="Short summary shown in the blog card…" />
           </div>
 
-          <div>
-            <label className={labelCls}>Cover Image URL</label>
-            <input name="cover_url" defaultValue={post?.cover_url ?? ""} className={inputCls} placeholder="https://…" />
-          </div>
+          <ImageUpload
+            value={coverUrl}
+            onChange={setCoverUrl}
+            folder="blog-covers"
+            label="Cover Image"
+          />
 
           {/* Published */}
           <div className="flex items-center justify-between pt-1">

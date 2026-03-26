@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { createWork, updateWork } from "@/app/admin/actions";
+import ImageUpload from "@/app/admin/_components/ImageUpload";
 
 type ProcessStep = { step: string; description: string };
 type Metric = { value: string; label: string };
@@ -33,6 +34,8 @@ type Project = {
 export default function WorkForm({ project }: { project?: Project }) {
   const isEdit = !!project;
   const [published, setPublished] = useState(project?.published ?? false);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(project?.thumbnail_url ?? null);
+  const [coverUrl, setCoverUrl] = useState<string | null>(project?.cover_url ?? null);
   const [process, setProcess] = useState<ProcessStep[]>(project?.process ?? [{ step: "", description: "" }]);
   const [metrics, setMetrics] = useState<Metric[]>(project?.metrics ?? [{ value: "", label: "" }]);
   const [error, setError] = useState("");
@@ -45,6 +48,8 @@ export default function WorkForm({ project }: { project?: Project }) {
 
     const formData = new FormData(e.currentTarget);
     formData.set("published", String(published));
+    formData.set("thumbnail_url", thumbnailUrl ?? "");
+    formData.set("cover_url", coverUrl ?? "");
     formData.set("process", JSON.stringify(process.filter((p) => p.step)));
     formData.set("metrics", JSON.stringify(metrics.filter((m) => m.value)));
 
@@ -120,19 +125,24 @@ export default function WorkForm({ project }: { project?: Project }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className={labelCls}>Thumbnail URL</label>
-              <input name="thumbnail_url" defaultValue={project?.thumbnail_url ?? ""} className={inputCls} placeholder="https://…" />
-            </div>
-            <div>
-              <label className={labelCls}>Cover URL</label>
-              <input name="cover_url" defaultValue={project?.cover_url ?? ""} className={inputCls} placeholder="https://…" />
-            </div>
-            <div>
-              <label className={labelCls}>Case Study URL</label>
-              <input name="case_study_url" defaultValue={project?.case_study_url ?? ""} className={inputCls} placeholder="https://…" />
-            </div>
+          <div className="grid grid-cols-2 gap-4">
+            <ImageUpload
+              value={thumbnailUrl}
+              onChange={setThumbnailUrl}
+              folder="work-thumbnails"
+              label="Thumbnail Image"
+            />
+            <ImageUpload
+              value={coverUrl}
+              onChange={setCoverUrl}
+              folder="work-covers"
+              label="Cover Image"
+            />
+          </div>
+
+          <div>
+            <label className={labelCls}>Case Study URL</label>
+            <input name="case_study_url" defaultValue={project?.case_study_url ?? ""} className={inputCls} placeholder="https://…" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
