@@ -16,9 +16,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: "Satriya Kurniawan — Professional Designer",
   description: "Product Designer crafting meaningful digital experiences.",
-  verification: {
-    google: "9N-G778upnbXJjKyqyOi0mDq5s9-GL3JUMYeW88gjUw",
-  },
   icons: {
     icon: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
     shortcut: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
