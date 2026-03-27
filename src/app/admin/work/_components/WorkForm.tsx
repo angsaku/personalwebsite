@@ -45,8 +45,7 @@ function toSlug(title: string) {
 export default function WorkForm({ project }: { project?: Project }) {
   const isEdit = !!project;
   const [published, setPublished] = useState(project?.published ?? false);
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(project?.thumbnail_url ?? null);
-  const [coverUrl, setCoverUrl] = useState<string | null>(project?.cover_url ?? null);
+  const [imageUrl, setImageUrl] = useState<string | null>(project?.cover_url ?? project?.thumbnail_url ?? null);
   const [process, setProcess] = useState<ProcessStep[]>(project?.process ?? [{ step: "", description: "" }]);
   const [metrics, setMetrics] = useState<Metric[]>(project?.metrics ?? [{ value: "", label: "" }]);
   const [slug, setSlug] = useState(project?.slug ?? "");
@@ -64,8 +63,8 @@ export default function WorkForm({ project }: { project?: Project }) {
 
     const formData = new FormData(e.currentTarget);
     formData.set("published", String(published));
-    formData.set("thumbnail_url", thumbnailUrl ?? "");
-    formData.set("cover_url", coverUrl ?? "");
+    formData.set("thumbnail_url", imageUrl ?? "");
+    formData.set("cover_url", imageUrl ?? "");
     formData.set("intro", intro);
     formData.set("challenge", challenge);
     formData.set("outcome", outcome);
@@ -160,20 +159,12 @@ export default function WorkForm({ project }: { project?: Project }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <ImageUpload
-              value={thumbnailUrl}
-              onChange={setThumbnailUrl}
-              folder="work-thumbnails"
-              label="Thumbnail Image"
-            />
-            <ImageUpload
-              value={coverUrl}
-              onChange={setCoverUrl}
-              folder="work-covers"
-              label="Cover Image"
-            />
-          </div>
+          <ImageUpload
+            value={imageUrl}
+            onChange={setImageUrl}
+            folder="work-covers"
+            label="Project Image (used as both cover and thumbnail)"
+          />
 
           <div>
             <label className={labelCls}>Case Study URL</label>
