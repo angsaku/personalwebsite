@@ -31,6 +31,15 @@ type Project = {
   metrics: Metric[];
 };
 
+function toSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
 export default function WorkForm({ project }: { project?: Project }) {
   const isEdit = !!project;
   const [published, setPublished] = useState(project?.published ?? false);
@@ -38,6 +47,8 @@ export default function WorkForm({ project }: { project?: Project }) {
   const [coverUrl, setCoverUrl] = useState<string | null>(project?.cover_url ?? null);
   const [process, setProcess] = useState<ProcessStep[]>(project?.process ?? [{ step: "", description: "" }]);
   const [metrics, setMetrics] = useState<Metric[]>(project?.metrics ?? [{ value: "", label: "" }]);
+  const [slug, setSlug] = useState(project?.slug ?? "");
+  const [slugTouched, setSlugTouched] = useState(isEdit);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -86,11 +97,27 @@ export default function WorkForm({ project }: { project?: Project }) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelCls}>Title *</label>
-              <input name="title" defaultValue={project?.title} required className={inputCls} placeholder="Project title" />
+              <input
+                name="title"
+                defaultValue={project?.title}
+                required
+                className={inputCls}
+                placeholder="Project title"
+                onChange={(e) => {
+                  if (!slugTouched) setSlug(toSlug(e.target.value));
+                }}
+              />
             </div>
             <div>
               <label className={labelCls}>Slug *</label>
-              <input name="slug" defaultValue={project?.slug} required className={inputCls} placeholder="project-slug" />
+              <input
+                name="slug"
+                value={slug}
+                required
+                className={inputCls}
+                placeholder="project-slug"
+                onChange={(e) => { setSlug(e.target.value); setSlugTouched(true); }}
+              />
             </div>
           </div>
 
