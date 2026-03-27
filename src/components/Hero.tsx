@@ -39,7 +39,6 @@ export default async function Hero() {
         <h1 className="fade-up delay-2 text-[2.75rem] md:text-7xl lg:text-8xl font-bold leading-[1.15] tracking-tight mb-8">
           <span className="text-white block">Crafting</span>
           <span className="block">
-            <span className="text-white">Digital</span>{" "}
             <HeroFlipWordClient />
           </span>
           <span className="block">
