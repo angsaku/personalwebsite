@@ -1,5 +1,6 @@
 import { getHeroContent } from "@/lib/hero";
 import HeroButtons from "@/components/HeroButtons";
+import HeroFlipWord from "@/components/HeroFlipWord";
 
 export default async function Hero() {
   const hero = await getHeroContent();
@@ -39,12 +40,7 @@ export default async function Hero() {
           <span className="text-white block">Crafting</span>
           <span className="block">
             <span className="text-white">Digital</span>{" "}
-            <span
-              className="italic font-light"
-              style={{ WebkitTextStroke: "1px #E5212E", color: "transparent" }}
-            >
-              Experience
-            </span>
+            <HeroFlipWord />
           </span>
           <span className="block">
             <span className="text-white">That Matter</span>
