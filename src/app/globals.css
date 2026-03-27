@@ -243,13 +243,24 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
   margin-bottom: 1.25rem;
   list-style: none;
 }
-.blog-content li { margin-bottom: 0.4rem; }
+.blog-content li {
+  margin-bottom: 0.4rem;
+  display: list-item;
+}
 /* Quill 1.x standard lists */
 .blog-content ul > li { list-style-type: disc; }
 .blog-content ol > li { list-style-type: decimal; }
 /* Quill 2.x: both types use <ol>, type set via data-list on <li> */
-.blog-content li[data-list="bullet"] { list-style-type: disc; }
-.blog-content li[data-list="ordered"] { list-style-type: decimal; }
+.blog-content li[data-list="bullet"] {
+  list-style-type: disc;
+}
+.blog-content li[data-list="ordered"] {
+  list-style-type: decimal;
+}
+/* Hide Quill 2.x UI span (it renders its own bullet marker in editor mode) */
+.blog-content .ql-ui {
+  display: none;
+}
 .blog-content pre,
 .blog-content code {
   background: #0a1128;
