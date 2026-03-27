@@ -16,12 +16,20 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
+function isDirectImage(url: string | null | undefined): boolean {
+  if (!url) return false;
+  // Only use images directly hosted (Supabase, CDN) — skip Google Drive redirects
+  return url.includes("supabase.co") || (url.startsWith("https://") && !url.includes("drive.google.com"));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
 
-  const image = project.coverUrl ?? project.thumbnailUrl;
+  const rawImage =
+    (isDirectImage(project.coverUrl) ? project.coverUrl : null) ??
+    (isDirectImage(project.thumbnailUrl) ? project.thumbnailUrl : null);
 
   return {
     title: `${project.title} — Satriya Kurniawan`,
@@ -30,14 +38,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${project.title} — Satriya Kurniawan`,
       description: project.description,
       url: `https://angsaku.vercel.app/work/${slug}`,
-      images: image ? [{ url: image, width: 1200, height: 630, alt: project.title }] : [],
+      images: rawImage ? [{ url: rawImage, width: 1200, height: 630, alt: project.title }] : [],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
       title: `${project.title} — Satriya Kurniawan`,
       description: project.description,
-      images: image ? [image] : [],
+      images: rawImage ? [rawImage] : [],
     },
   };
 }
