@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import { createWork, updateWork } from "@/app/admin/actions";
 import ImageUpload from "@/app/admin/_components/ImageUpload";
+
+const MiniEditor = lazy(() => import("./MiniEditor"));
 
 type ProcessStep = { step: string; description: string };
 type Metric = { value: string; label: string };
@@ -49,6 +51,9 @@ export default function WorkForm({ project }: { project?: Project }) {
   const [metrics, setMetrics] = useState<Metric[]>(project?.metrics ?? [{ value: "", label: "" }]);
   const [slug, setSlug] = useState(project?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(isEdit);
+  const [intro, setIntro] = useState(project?.intro ?? "");
+  const [challenge, setChallenge] = useState(project?.challenge ?? "");
+  const [outcome, setOutcome] = useState(project?.outcome ?? "");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -61,6 +66,9 @@ export default function WorkForm({ project }: { project?: Project }) {
     formData.set("published", String(published));
     formData.set("thumbnail_url", thumbnailUrl ?? "");
     formData.set("cover_url", coverUrl ?? "");
+    formData.set("intro", intro);
+    formData.set("challenge", challenge);
+    formData.set("outcome", outcome);
     formData.set("process", JSON.stringify(process.filter((p) => p.step)));
     formData.set("metrics", JSON.stringify(metrics.filter((m) => m.value)));
 
@@ -199,15 +207,21 @@ export default function WorkForm({ project }: { project?: Project }) {
           <h2 className="text-sm font-semibold text-white mb-2">Case Study Content</h2>
           <div>
             <label className={labelCls}>Introduction</label>
-            <textarea name="intro" defaultValue={project?.intro} rows={3} className={inputCls} placeholder="Opening paragraph…" />
+            <Suspense fallback={<div className="h-32 bg-[#020618] rounded-xl border border-white/[0.08] animate-pulse" />}>
+              <MiniEditor value={intro} onChange={setIntro} placeholder="Opening paragraph…" />
+            </Suspense>
           </div>
           <div>
             <label className={labelCls}>The Challenge</label>
-            <textarea name="challenge" defaultValue={project?.challenge} rows={3} className={inputCls} placeholder="Describe the problem…" />
+            <Suspense fallback={<div className="h-32 bg-[#020618] rounded-xl border border-white/[0.08] animate-pulse" />}>
+              <MiniEditor value={challenge} onChange={setChallenge} placeholder="Describe the problem…" />
+            </Suspense>
           </div>
           <div>
             <label className={labelCls}>Outcome & Learnings</label>
-            <textarea name="outcome" defaultValue={project?.outcome} rows={3} className={inputCls} placeholder="Results and takeaways…" />
+            <Suspense fallback={<div className="h-32 bg-[#020618] rounded-xl border border-white/[0.08] animate-pulse" />}>
+              <MiniEditor value={outcome} onChange={setOutcome} placeholder="Results and takeaways…" />
+            </Suspense>
           </div>
         </section>
 

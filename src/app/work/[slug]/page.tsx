@@ -180,14 +180,14 @@ export default async function WorkDetail({ params }: Props) {
             {project.intro && (
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">Introduction</h2>
-                <p className="text-gray-400 leading-relaxed">{project.intro}</p>
+                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.intro }} />
               </section>
             )}
 
             {project.challenge && (
               <section>
                 <h2 className="text-xl font-semibold text-white mb-4">The Challenge</h2>
-                <p className="text-gray-400 leading-relaxed">{project.challenge}</p>
+                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.challenge }} />
               </section>
             )}
 
@@ -240,7 +240,7 @@ export default async function WorkDetail({ params }: Props) {
             {project.outcome && (
               <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-8">
                 <h2 className="text-xl font-semibold text-white mb-4">Outcome & Learnings</h2>
-                <p className="text-gray-400 leading-relaxed">{project.outcome}</p>
+                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.outcome }} />
               </section>
             )}
 
