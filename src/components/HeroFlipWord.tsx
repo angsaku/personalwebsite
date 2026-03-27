@@ -8,19 +8,20 @@ const DELETE_SPEED = 50;
 const PAUSE_AFTER_TYPE = 1600;
 const PAUSE_AFTER_DELETE = 300;
 
-const STROKE_STYLE: React.CSSProperties = {
+const STROKE_STYLE: import("react").CSSProperties = {
   WebkitTextStroke: "1px #E5212E",
   color: "transparent",
+  fontStyle: "italic",
+  fontWeight: 300,
 };
 
-export default function HeroFlipWord() {
+export default function HeroFlipWord({ fallback: _ }: { fallback?: string }) {
   const [wordIndex, setWordIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
+  const [displayed, setDisplayed] = useState(WORDS[0]);
   const [deleting, setDeleting] = useState(false);
   const [minWidth, setMinWidth] = useState<number | undefined>(undefined);
   const measureRef = useRef<HTMLSpanElement>(null);
 
-  // Lock container to widest word at current font size
   useEffect(() => {
     const el = measureRef.current;
     if (!el) return;
@@ -30,6 +31,9 @@ export default function HeroFlipWord() {
       max = Math.max(max, el.offsetWidth);
     });
     setMinWidth(max);
+    // Start deleting the first word to kick off the loop
+    const t = setTimeout(() => setDeleting(true), PAUSE_AFTER_TYPE);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -58,19 +62,13 @@ export default function HeroFlipWord() {
 
   return (
     <>
-      {/* Hidden span to measure widest word */}
       <span
         ref={measureRef}
-        style={{ ...STROKE_STYLE, fontStyle: "italic", fontWeight: 300, position: "absolute", visibility: "hidden", whiteSpace: "nowrap", pointerEvents: "none" }}
+        style={{ ...STROKE_STYLE, position: "absolute", visibility: "hidden", whiteSpace: "nowrap", pointerEvents: "none" }}
         aria-hidden
       />
-
-      {/* Fixed-width container prevents reflow */}
-      <span
-        className="italic font-light inline-block"
-        style={{ minWidth: minWidth ? `${minWidth}px` : undefined }}
-      >
-        <span style={STROKE_STYLE}>{displayed}</span>
+      <span style={{ ...STROKE_STYLE, display: "inline-block", minWidth: minWidth ? `${minWidth}px` : undefined }}>
+        {displayed}
         <span className="animate-pulse" style={STROKE_STYLE}>|</span>
       </span>
     </>

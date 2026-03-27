@@ -1,6 +1,6 @@
 import { getHeroContent } from "@/lib/hero";
 import HeroButtons from "@/components/HeroButtons";
-import HeroFlipWord from "@/components/HeroFlipWord";
+import HeroFlipWordClient from "@/components/HeroFlipWordClient";
 
 export default async function Hero() {
   const hero = await getHeroContent();
@@ -40,7 +40,7 @@ export default async function Hero() {
           <span className="text-white block">Crafting</span>
           <span className="block">
             <span className="text-white">Digital</span>{" "}
-            <HeroFlipWord />
+            <HeroFlipWordClient />
           </span>
           <span className="block">
             <span className="text-white">That Matter</span>
@@ -61,12 +61,8 @@ export default async function Hero() {
         <div className="fade-up delay-4 grid grid-cols-3 gap-6 mt-16 pt-10 border-t border-white/[0.06]">
           {stats.map((stat) => (
             <div key={stat.label}>
-              <p className="text-3xl md:text-4xl font-bold text-white">
-                {stat.value}
-              </p>
-              <p className="text-xs text-gray-500 mt-1 tracking-wide">
-                {stat.label}
-              </p>
+              <p className="text-3xl md:text-4xl font-bold text-white">{stat.value}</p>
+              <p className="text-xs text-gray-500 mt-1 tracking-wide">{stat.label}</p>
             </div>
           ))}
         </div>
