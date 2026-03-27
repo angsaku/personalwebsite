@@ -111,7 +111,7 @@ export default async function SelectedWork() {
               Showing 5 of {allProjects.length} projects
             </p>
             <Link
-              href="/blog"
+              href="/work"
               className="inline-flex items-center gap-2 px-6 py-3 border border-[#E5212E]/40 text-[#E5212E] text-sm font-medium rounded-full hover:bg-[#E5212E] hover:text-white hover:border-[#E5212E] transition-all duration-300"
             >
               View All Projects
