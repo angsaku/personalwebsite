@@ -29,9 +29,11 @@ export default async function BlogPage() {
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg"
+              src="/logo.svg"
               alt="Satriya Kurniawan"
               className="h-7 w-auto"
+              width={28}
+              height={28}
             />
           </Link>
         </div>

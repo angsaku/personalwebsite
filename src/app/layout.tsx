@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   title: "Satriya Kurniawan — Professional Designer",
   description: "Product Designer crafting meaningful digital experiences.",
   icons: {
-    icon: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
-    shortcut: "https://fzjpbihupkiggcdvynua.supabase.co/storage/v1/object/public/Logo%20Client/favicon.svg",
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
   },
   openGraph: {
     title: "Satriya Kurniawan — Product Designer",
