@@ -54,7 +54,7 @@ export default async function CTA() {
         </div>
 
         {/* Social links */}
-        <div className="flex items-center justify-center gap-6 mt-16 pt-10 border-t border-white/[0.06]">
+        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-16 pt-10 border-t border-white/[0.06]">
           {socials.map((social) => (
             <a
               key={social.label}
