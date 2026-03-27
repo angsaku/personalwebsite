@@ -17,7 +17,7 @@ export default async function Services() {
             </h2>
           </div>
           <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
-            From pixels to strategy — a range of design and management services
+            From pixels to strategy a range of design and management services
             tailored to your product needs.
           </p>
         </div>
