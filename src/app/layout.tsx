@@ -14,6 +14,9 @@ const BASE_URL = "https://angsaku.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
+  verification: {
+    google: "N3QtQnvtEL0Ihmrpjbw7MhqxBOuovWJvbMNUB8iXgoI",
+  },
   title: "Satriya Kurniawan — Professional Designer",
   description: "Product Designer crafting meaningful digital experiences.",
   icons: {
