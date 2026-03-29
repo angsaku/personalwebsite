@@ -43,6 +43,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fzjpbihupkiggcdvynua.supabase.co" />
+        <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
+      </head>
       <body className={`${geist.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
         <Analytics />

@@ -32,7 +32,7 @@ export default async function Blog() {
 
         {posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6" id="blog-grid">
-            {posts.map((post) => (
+            {posts.map((post, idx) => (
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
@@ -47,6 +47,7 @@ export default async function Blog() {
                       width={600}
                       height={338}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      priority={idx === 0}
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">

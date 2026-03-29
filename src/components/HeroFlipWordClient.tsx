@@ -1,8 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const HeroFlipWord = dynamic(() => import("./HeroFlipWord"), { ssr: false });
+import HeroFlipWord from "./HeroFlipWord";
 
 export default function HeroFlipWordClient() {
   return <HeroFlipWord />;

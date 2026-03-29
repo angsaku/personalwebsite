@@ -1,6 +1,7 @@
-export const revalidate = 0;
+export const revalidate = 3600;
 
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
 import { getPost, getAllPosts, getAllSlugs } from "@/lib/blog";
@@ -115,8 +116,7 @@ export default async function BlogDetail({ params }: Props) {
       {post.coverUrl ? (
         <div className="max-w-4xl mx-auto px-6 mb-16">
           <div className="aspect-video rounded-2xl overflow-hidden border border-white/[0.06]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.coverUrl} alt={post.title} className="w-full h-full object-cover" />
+            <Image src={post.coverUrl} alt={post.title} fill className="object-cover" priority />
           </div>
         </div>
       ) : (

@@ -35,8 +35,7 @@ export default function ScrollReveal({
           } else {
             el.classList.add("is-visible");
           }
-        } else {
-          el.classList.remove("is-visible");
+          observer.unobserve(el);
         }
       },
       { threshold, rootMargin: "0px 0px -60px 0px" }

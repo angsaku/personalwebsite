@@ -14,9 +14,11 @@
   box-sizing: border-box;
 }
 
-/* Only apply colour transitions on non-mobile to avoid jank */
+/* Scope colour transitions to interactive elements only — not every DOM node */
 @media (min-width: 768px) {
-  * {
+  a, button, input, textarea,
+  [class*="hover:"], [class*="group-hover:"],
+  .transition-colors, .transition-all {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
   }
 }
