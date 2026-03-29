@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Download } from "lucide-react";
+import Link from "next/link";
+import { Download, ArrowUpRight } from "lucide-react";
 import { getAboutContent } from "@/lib/about";
 
 function toDirectImageUrl(url: string): string {
@@ -80,8 +81,15 @@ export default async function About() {
           </div>
 
           {/* Resume CTA */}
-          {about.resumeUrl && (
-            <div className="pt-4">
+          <div className="pt-4 flex flex-wrap items-center gap-3">
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-white/10 text-gray-400 text-sm font-medium rounded-full hover:border-white/30 hover:text-white transition-colors"
+            >
+              More About Me
+              <ArrowUpRight size={14} />
+            </Link>
+            {about.resumeUrl && (
               <a
                 href={about.resumeUrl}
                 target="_blank"
@@ -92,8 +100,8 @@ export default async function About() {
                 <Download size={15} />
                 Download Resume
               </a>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>

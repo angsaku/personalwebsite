@@ -218,6 +218,31 @@ export type Database = {
         Update: { short_description?: string; years_experience?: string; projects_delivered?: string; happy_clients?: string; og_image_url?: string | null; updated_at?: string };
         Relationships: [];
       };
+      instagram_reels: {
+        Row: { id: string; url: string; thumbnail_url: string | null; instagram_url: string | null; sort_order: number; created_at: string };
+        Insert: { id?: string; url: string; thumbnail_url?: string | null; instagram_url?: string | null; sort_order?: number };
+        Update: { url?: string; thumbnail_url?: string | null; instagram_url?: string | null; sort_order?: number };
+        Relationships: [];
+      };
+      beyond_work: {
+        Row: {
+          id: string;
+          icon: string;
+          title: string;
+          description: string;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: { id?: string; icon: string; title: string; description?: string; sort_order?: number };
+        Update: { icon?: string; title?: string; description?: string; sort_order?: number };
+        Relationships: [];
+      };
+      communities: {
+        Row: { id: string; name: string; role: string; period: string; description: string; logo_url: string | null; sort_order: number; created_at: string };
+        Insert: { id?: string; name: string; role?: string; period?: string; description?: string; logo_url?: string | null; sort_order?: number };
+        Update: { name?: string; role?: string; period?: string; description?: string; logo_url?: string | null; sort_order?: number };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
