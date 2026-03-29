@@ -177,6 +177,9 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
   background: #020618;
   border-color: rgba(255,255,255,0.08) !important;
   border-radius: 0.75rem 0.75rem 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 .ql-container.ql-snow {
   background: #020618;
@@ -263,6 +266,17 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
 .blog-content .ql-ui {
   display: none;
 }
+/* Quill 2.x nested list indentation */
+.blog-content .ql-indent-1 { padding-left: 2em; }
+.blog-content .ql-indent-2 { padding-left: 4em; }
+.blog-content .ql-indent-3 { padding-left: 6em; }
+.blog-content .ql-indent-4 { padding-left: 8em; }
+.blog-content .ql-indent-1[data-list="bullet"] { list-style-type: circle; }
+.blog-content .ql-indent-2[data-list="bullet"] { list-style-type: square; }
+.blog-content .ql-indent-3[data-list="bullet"] { list-style-type: disc; }
+.blog-content .ql-indent-1[data-list="ordered"] { list-style-type: lower-alpha; }
+.blog-content .ql-indent-2[data-list="ordered"] { list-style-type: lower-roman; }
+.blog-content .ql-indent-3[data-list="ordered"] { list-style-type: decimal; }
 .blog-content pre,
 .blog-content code {
   background: #0a1128;

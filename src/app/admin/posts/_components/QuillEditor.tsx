@@ -30,7 +30,7 @@ export default function QuillEditor({ value, onChange }: Props) {
           toolbar: [
             [{ header: [1, 2, 3, false] }],
             ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
+            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
             ["blockquote", "code-block"],
             ["link"],
             ["clean"],
@@ -52,7 +52,7 @@ export default function QuillEditor({ value, onChange }: Props) {
   }, []);
 
   return (
-    <div className="quill-wrapper rounded-xl overflow-hidden border border-white/[0.08]">
+    <div className="quill-wrapper rounded-xl border border-white/[0.08]">
       <div ref={containerRef} style={{ minHeight: "320px" }} />
     </div>
   );
