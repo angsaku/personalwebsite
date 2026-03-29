@@ -115,7 +115,7 @@ export default async function BlogDetail({ params }: Props) {
       {/* Cover image */}
       {post.coverUrl ? (
         <div className="max-w-4xl mx-auto px-6 mb-16">
-          <div className="aspect-video rounded-2xl overflow-hidden border border-white/[0.06]">
+          <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/[0.06]">
             <Image src={post.coverUrl} alt={post.title} fill className="object-cover" priority />
           </div>
         </div>
