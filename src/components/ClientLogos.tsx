@@ -13,7 +13,7 @@ export default async function ClientLogos() {
       </div>
 
       {/* Marquee */}
-      <div className="relative">
+      <div className="relative marquee-wrapper">
         {/* Fade edges */}
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020618] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020618] to-transparent z-10 pointer-events-none" />

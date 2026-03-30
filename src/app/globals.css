@@ -154,6 +154,10 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
   will-change: transform;
 }
 
+.marquee-wrapper:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
 /* Disable heavy blur blobs on mobile for performance */
 @media (max-width: 767px) {
   .blur-blob {
