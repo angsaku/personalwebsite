@@ -2,6 +2,7 @@
 
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 /* ── Auth ──────────────────────────────────────── */
 
@@ -290,6 +291,7 @@ export async function createExperience(formData: FormData) {
   });
 
   if (error) return { error: error.message };
+  revalidatePath("/");
   redirect("/admin/experience");
 }
 
@@ -300,7 +302,7 @@ export async function updateExperience(id: string, formData: FormData) {
     .map((t) => t.trim())
     .filter(Boolean);
 
-  const { error } = await supabase
+  const { data, error, count } = await supabase
     .from("experiences")
     .update({
       company: formData.get("company") as string,
@@ -311,14 +313,18 @@ export async function updateExperience(id: string, formData: FormData) {
       highlights,
       sort_order: Number(formData.get("sort_order") || 0),
     })
-    .eq("id", id);
+    .eq("id", id)
+    .select();
 
   if (error) return { error: error.message };
+  if (!data || data.length === 0) return { error: `No row matched id="${id}". Disable RLS on the experiences table in Supabase.` };
+  revalidatePath("/");
   redirect("/admin/experience");
 }
 
 export async function deleteExperience(id: string) {
   const supabase = await createSupabaseServer();
   await supabase.from("experiences").delete().eq("id", id);
+  revalidatePath("/");
   redirect("/admin/experience");
 }
