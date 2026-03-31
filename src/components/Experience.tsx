@@ -38,9 +38,25 @@ export default async function Experience() {
                     {exp.company}
                   </p>
                 </div>
-                <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
-                  {exp.description}
-                </p>
+                {exp.description.startsWith("<") ? (
+                  <div
+                    className="blog-content text-sm max-w-2xl [&_*]:text-gray-500 [&_strong]:text-gray-300"
+                    dangerouslySetInnerHTML={{ __html: exp.description }}
+                  />
+                ) : exp.description.includes("\n- ") || exp.description.startsWith("- ") ? (
+                  <ul className="space-y-1.5 max-w-2xl">
+                    {exp.description.split("\n").filter(Boolean).map((line, i) => (
+                      <li key={i} className="flex items-start gap-2 text-gray-500 text-sm leading-relaxed">
+                        <span className="mt-1.5 w-1 h-1 rounded-full bg-[#E5212E]/50 flex-shrink-0" />
+                        <span>{line.replace(/^-\s*/, "")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500 text-sm leading-relaxed max-w-2xl">
+                    {exp.description}
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-2">
                   {exp.highlights.map((tag) => (
                     <span

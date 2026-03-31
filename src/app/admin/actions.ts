@@ -269,3 +269,56 @@ export async function deleteCommunity(id: string) {
   await supabase.from("communities").delete().eq("id", id);
   redirect("/admin/communities");
 }
+
+/* ── Experience ──────────────────────────────────── */
+
+export async function createExperience(formData: FormData) {
+  const supabase = await createSupabaseServer();
+  const highlights = ((formData.get("highlights") as string) ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  const { error } = await supabase.from("experiences").insert({
+    company: formData.get("company") as string,
+    role: formData.get("role") as string,
+    period: formData.get("period") as string,
+    location: formData.get("location") as string,
+    description: formData.get("description") as string,
+    highlights,
+    sort_order: Number(formData.get("sort_order") || 0),
+  });
+
+  if (error) return { error: error.message };
+  redirect("/admin/experience");
+}
+
+export async function updateExperience(id: string, formData: FormData) {
+  const supabase = await createSupabaseServer();
+  const highlights = ((formData.get("highlights") as string) ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  const { error } = await supabase
+    .from("experiences")
+    .update({
+      company: formData.get("company") as string,
+      role: formData.get("role") as string,
+      period: formData.get("period") as string,
+      location: formData.get("location") as string,
+      description: formData.get("description") as string,
+      highlights,
+      sort_order: Number(formData.get("sort_order") || 0),
+    })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+  redirect("/admin/experience");
+}
+
+export async function deleteExperience(id: string) {
+  const supabase = await createSupabaseServer();
+  await supabase.from("experiences").delete().eq("id", id);
+  redirect("/admin/experience");
+}
