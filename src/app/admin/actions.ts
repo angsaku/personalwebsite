@@ -1,6 +1,7 @@
 "use server";
 
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -15,7 +16,7 @@ export async function logout() {
 /* ── Blog Posts ─────────────────────────────────── */
 
 export async function createPost(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase.from("blog_posts").insert({
     slug: formData.get("slug") as string,
@@ -34,7 +35,7 @@ export async function createPost(formData: FormData) {
 }
 
 export async function updatePost(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase
     .from("blog_posts")
@@ -57,20 +58,20 @@ export async function updatePost(id: string, formData: FormData) {
 }
 
 export async function deletePost(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("blog_posts").delete().eq("id", id);
   redirect("/admin/posts");
 }
 
 export async function togglePublish(id: string, published: boolean) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("blog_posts").update({ published: !published }).eq("id", id);
 }
 
 /* ── Selected Work ──────────────────────────────── */
 
 export async function createWork(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const process = JSON.parse((formData.get("process") as string) || "[]");
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
@@ -103,7 +104,7 @@ export async function createWork(formData: FormData) {
 }
 
 export async function updateWork(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const process = JSON.parse((formData.get("process") as string) || "[]");
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
@@ -140,20 +141,20 @@ export async function updateWork(id: string, formData: FormData) {
 }
 
 export async function deleteWork(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("selected_work").delete().eq("id", id);
   redirect("/admin/work");
 }
 
 export async function toggleWorkPublish(id: string, published: boolean) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("selected_work").update({ published: !published }).eq("id", id);
 }
 
 /* ── Beyond Work ─────────────────────────────────── */
 
 export async function createBeyondWork(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase.from("beyond_work").insert({
     icon: formData.get("icon") as string,
@@ -167,7 +168,7 @@ export async function createBeyondWork(formData: FormData) {
 }
 
 export async function updateBeyondWork(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase
     .from("beyond_work")
@@ -184,7 +185,7 @@ export async function updateBeyondWork(id: string, formData: FormData) {
 }
 
 export async function deleteBeyondWork(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("beyond_work").delete().eq("id", id);
   redirect("/admin/beyond-work");
 }
@@ -192,7 +193,7 @@ export async function deleteBeyondWork(id: string) {
 /* ── Instagram Reels ─────────────────────────────── */
 
 export async function createReel(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase.from("instagram_reels").insert({
     url: formData.get("url") as string,
@@ -206,7 +207,7 @@ export async function createReel(formData: FormData) {
 }
 
 export async function updateReel(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase
     .from("instagram_reels")
@@ -223,7 +224,7 @@ export async function updateReel(id: string, formData: FormData) {
 }
 
 export async function deleteReel(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("instagram_reels").delete().eq("id", id);
   redirect("/admin/reels");
 }
@@ -231,7 +232,7 @@ export async function deleteReel(id: string) {
 /* ── Communities ─────────────────────────────────── */
 
 export async function createCommunity(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase.from("communities").insert({
     name: formData.get("name") as string,
@@ -247,7 +248,7 @@ export async function createCommunity(formData: FormData) {
 }
 
 export async function updateCommunity(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
 
   const { error } = await supabase
     .from("communities")
@@ -266,7 +267,7 @@ export async function updateCommunity(id: string, formData: FormData) {
 }
 
 export async function deleteCommunity(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("communities").delete().eq("id", id);
   redirect("/admin/communities");
 }
@@ -274,7 +275,7 @@ export async function deleteCommunity(id: string) {
 /* ── Experience ──────────────────────────────────── */
 
 export async function createExperience(formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   const highlights = ((formData.get("highlights") as string) ?? "")
     .split(",")
     .map((t) => t.trim())
@@ -296,7 +297,7 @@ export async function createExperience(formData: FormData) {
 }
 
 export async function updateExperience(id: string, formData: FormData) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   const highlights = ((formData.get("highlights") as string) ?? "")
     .split(",")
     .map((t) => t.trim())
@@ -317,13 +318,13 @@ export async function updateExperience(id: string, formData: FormData) {
     .select();
 
   if (error) return { error: error.message };
-  if (!data || data.length === 0) return { error: `No row matched id="${id}". Disable RLS on the experiences table in Supabase.` };
+  if (!data || data.length === 0) return { error: `No row matched id="${id}".` };
   revalidatePath("/");
   redirect("/admin/experience");
 }
 
 export async function deleteExperience(id: string) {
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   await supabase.from("experiences").delete().eq("id", id);
   revalidatePath("/");
   redirect("/admin/experience");
