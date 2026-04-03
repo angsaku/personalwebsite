@@ -31,6 +31,7 @@ type Project = {
   tools: string[];
   process: ProcessStep[];
   metrics: Metric[];
+  gallery_images?: string[];
 };
 
 function toSlug(title: string) {
@@ -53,6 +54,7 @@ export default function WorkForm({ project }: { project?: Project }) {
   const [intro, setIntro] = useState(project?.intro ?? "");
   const [challenge, setChallenge] = useState(project?.challenge ?? "");
   const [outcome, setOutcome] = useState(project?.outcome ?? "");
+  const [galleryImages, setGalleryImages] = useState<(string | null)[]>(project?.gallery_images ?? []);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -70,6 +72,7 @@ export default function WorkForm({ project }: { project?: Project }) {
     formData.set("outcome", outcome);
     formData.set("process", JSON.stringify(process.filter((p) => p.step)));
     formData.set("metrics", JSON.stringify(metrics.filter((m) => m.value)));
+    formData.set("gallery_images", JSON.stringify(galleryImages.filter(Boolean)));
 
     const result = isEdit
       ? await updateWork(project.id, formData)
@@ -262,6 +265,74 @@ export default function WorkForm({ project }: { project?: Project }) {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* Gallery */}
+        <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-sm font-semibold text-white">Gallery Images</h2>
+              <p className="text-xs text-gray-600 mt-0.5">Displayed as bento grid in the project detail page</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setGalleryImages([...galleryImages, null])}
+              className="flex items-center gap-1.5 text-xs text-[#E5212E]"
+            >
+              <Plus size={13} /> Add Image
+            </button>
+          </div>
+          {galleryImages.length === 0 ? (
+            <p className="text-xs text-gray-600 text-center py-6">No gallery images yet. Click &quot;Add Image&quot; to add one.</p>
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {galleryImages.map((url, i) => {
+                const total = galleryImages.length;
+                let ratio = "4:3";
+                let recommended = "800×600";
+                let position = "Small";
+
+                if (total === 1) {
+                  ratio = "16:9"; recommended = "1200×675"; position = "Full width";
+                } else if (total === 2) {
+                  if (i === 0) { ratio = "16:9"; recommended = "1200×675"; position = "Large (left)"; }
+                  else { ratio = "4:3"; recommended = "600×450"; position = "Small (right)"; }
+                } else {
+                  if (i === 0) { ratio = "16:9"; recommended = "1200×675"; position = "Large (left)"; }
+                  else if (i === 1) { ratio = "4:3"; recommended = "600×450"; position = "Small (right)"; }
+                  else if (total === 4 && i === 3) { ratio = "16:9"; recommended = "1200×675"; position = "Large (right)"; }
+                  else { ratio = "4:3"; recommended = "600×450"; position = "Small"; }
+                }
+
+                return (
+                  <div key={i} className="relative">
+                    <ImageUpload
+                      value={url}
+                      onChange={(newUrl) => {
+                        const updated = [...galleryImages];
+                        updated[i] = newUrl;
+                        setGalleryImages(updated);
+                      }}
+                      folder="work-gallery"
+                      label={`Image ${i + 1}`}
+                    />
+                    {/* Dimension guide */}
+                    <div className="mt-1.5 flex items-center gap-2">
+                      <span className="text-[10px] font-medium text-[#E5212E] bg-[#E5212E]/10 border border-[#E5212E]/20 px-2 py-0.5 rounded-full">{position}</span>
+                      <span className="text-[10px] text-gray-600">{ratio} · {recommended}px</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setGalleryImages(galleryImages.filter((_, j) => j !== i))}
+                      className="absolute top-6 right-0 p-1.5 text-gray-600 hover:text-[#E5212E] transition-colors"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </section>
 
         {error && <p className="text-xs text-[#E5212E] bg-[#E5212E]/10 border border-[#E5212E]/20 rounded-xl px-4 py-3">{error}</p>}

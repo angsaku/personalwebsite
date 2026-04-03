@@ -28,6 +28,7 @@ type WorkRow = {
   process: any[] | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   metrics: any[] | null;
+  gallery_images: string[] | null;
 };
 
 export default async function EditWorkPage({ params }: Props) {
@@ -65,6 +66,7 @@ export default async function EditWorkPage({ params }: Props) {
         tools: project.tools ?? [],
         process: project.process ?? [],
         metrics: project.metrics ?? [],
+        gallery_images: project.gallery_images ?? [],
       }}
     />
   );

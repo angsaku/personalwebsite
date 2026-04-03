@@ -6,6 +6,9 @@ import Link from "next/link";
 import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
 import { getPost, getAllPosts, getAllSlugs } from "@/lib/blog";
 import type { Metadata } from "next";
+import ReadingProgressBar from "@/app/work/[slug]/_components/ReadingProgressBar";
+import BackToTop from "@/app/work/[slug]/_components/BackToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -49,8 +52,9 @@ export default async function BlogDetail({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
+      <ScrollToTop />
       {/* Top bar */}
-      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
             href="/#blog"
@@ -70,6 +74,7 @@ export default async function BlogDetail({ params }: Props) {
             />
           </Link>
         </div>
+        <ReadingProgressBar />
       </div>
 
       {/* Hero */}
@@ -152,25 +157,39 @@ export default async function BlogDetail({ params }: Props) {
                 <Link
                   key={r.slug}
                   href={`/blog/${r.slug}`}
-                  className="group block p-6 bg-[#0a1128] border border-white/[0.06] rounded-2xl hover:border-[#E5212E]/30 transition-all duration-300"
+                  className="group flex gap-4 p-5 bg-[#0a1128] border border-white/[0.06] rounded-xl hover:border-[#E5212E]/30 transition-colors"
                 >
-                  <span className="inline-flex items-center gap-1.5 text-xs text-[#E5212E] bg-[#E5212E]/10 border border-[#E5212E]/20 px-2.5 py-0.5 rounded-full mb-3">
-                    <Tag size={9} />
-                    {r.tag}
-                  </span>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#E5212E] transition-colors leading-snug line-clamp-2 mb-3">
-                    {r.title}
-                  </p>
-                  <p className="text-xs text-gray-600 flex items-center gap-1.5">
-                    <Clock size={10} />
-                    {r.readTime}
-                  </p>
+                  <div className="w-12 h-12 rounded-lg bg-[#E5212E]/10 border border-[#E5212E]/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    {r.coverUrl ? (
+                      <Image
+                        src={r.coverUrl}
+                        alt={r.title}
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <Tag size={14} className="text-[#E5212E]" />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs text-[#E5212E] mb-1">{r.tag}</p>
+                    <p className="text-sm text-white group-hover:text-[#E5212E] transition-colors font-medium leading-snug line-clamp-2 mb-2">
+                      {r.title}
+                    </p>
+                    <p className="text-xs text-gray-600 flex items-center gap-1.5">
+                      <Clock size={10} />
+                      {r.readTime}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>
           </div>
         )}
       </div>
+      <BackToTop />
     </div>
   );
 }

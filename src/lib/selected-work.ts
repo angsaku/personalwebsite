@@ -29,6 +29,7 @@ export interface Project {
   outcome: string;
   metrics: Metric[];
   tools: string[];
+  galleryImages: string[];
 }
 
 const fallback: Project[] = [
@@ -56,6 +57,7 @@ const fallback: Project[] = [
       { value: "2x", label: "Retention" },
     ],
     tools: ["Figma", "Maze", "Miro"],
+    galleryImages: [],
   },
 ];
 
@@ -86,6 +88,7 @@ function mapRow(row: any): Project {
     outcome: row.outcome ?? "",
     metrics: (row.metrics as Metric[]) ?? [],
     tools: row.tools ?? [],
+    galleryImages: (row.gallery_images as string[]) ?? [],
   };
 }
 

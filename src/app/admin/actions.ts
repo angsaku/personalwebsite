@@ -77,6 +77,7 @@ export async function createWork(formData: FormData) {
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
   const tags = (formData.get("tags") as string).split(",").map((t) => t.trim()).filter(Boolean);
   const tools = (formData.get("tools") as string).split(",").map((t) => t.trim()).filter(Boolean);
+  const gallery_images = JSON.parse((formData.get("gallery_images") as string) || "[]");
 
   const { error } = await supabase.from("selected_work").insert({
     slug: formData.get("slug") as string,
@@ -97,6 +98,7 @@ export async function createWork(formData: FormData) {
     tools,
     process,
     metrics,
+    gallery_images,
   });
 
   if (error) return { error: error.message };
@@ -110,6 +112,7 @@ export async function updateWork(id: string, formData: FormData) {
   const metrics = JSON.parse((formData.get("metrics") as string) || "[]");
   const tags = (formData.get("tags") as string).split(",").map((t) => t.trim()).filter(Boolean);
   const tools = (formData.get("tools") as string).split(",").map((t) => t.trim()).filter(Boolean);
+  const gallery_images = JSON.parse((formData.get("gallery_images") as string) || "[]");
 
   const { error } = await supabase
     .from("selected_work")
@@ -132,6 +135,7 @@ export async function updateWork(id: string, formData: FormData) {
       tools,
       process,
       metrics,
+      gallery_images,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id);

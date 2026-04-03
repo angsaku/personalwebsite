@@ -14,6 +14,10 @@
   box-sizing: border-box;
 }
 
+@keyframes shimmer {
+  100% { transform: translateX(200%); }
+}
+
 /* Scope colour transitions to interactive elements only — not every DOM node */
 @media (min-width: 768px) {
   a, button, input, textarea,

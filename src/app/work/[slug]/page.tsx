@@ -5,6 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { getProject, getSelectedWork, getAllWorkSlugs } from "@/lib/selected-work";
+import GalleryLightbox from "./_components/GalleryLightbox";
+import ReadingProgressBar from "./_components/ReadingProgressBar";
+import BackToTop from "./_components/BackToTop";
+import ScrollToTop from "@/components/ScrollToTop";
 import type { Metadata } from "next";
 
 type Props = {
@@ -62,8 +66,9 @@ export default async function WorkDetail({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
+      <ScrollToTop />
       {/* Top bar */}
-      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
           <Link
             href="/#work"
@@ -83,6 +88,7 @@ export default async function WorkDetail({ params }: Props) {
             />
           </Link>
         </div>
+        <ReadingProgressBar />
       </div>
 
       {/* Hero */}
@@ -136,6 +142,7 @@ export default async function WorkDetail({ params }: Props) {
               alt={project.title}
               width={1200}
               height={675}
+              priority
               className="w-full h-full object-cover"
             />
           ) : (
@@ -234,6 +241,7 @@ export default async function WorkDetail({ params }: Props) {
                                   alt={step.step}
                                   width={800}
                                   height={450}
+                                  loading="lazy"
                                   className="w-full h-full object-cover"
                                 />
                               </div>
@@ -276,6 +284,13 @@ export default async function WorkDetail({ params }: Props) {
                 </a>
               </section>
             )}
+
+            {project.galleryImages.length > 0 && (
+              <section>
+                <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-4">Gallery</p>
+                <GalleryLightbox images={project.galleryImages} title={project.title} />
+              </section>
+            )}
           </article>
         </div>
 
@@ -315,6 +330,7 @@ export default async function WorkDetail({ params }: Props) {
           </div>
         )}
       </div>
+      <BackToTop />
     </div>
   );
 }
