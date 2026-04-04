@@ -14,9 +14,34 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import ScrollToTop from "@/components/ScrollToTop";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Satriya Kurniawan",
+  url: "https://angsaku.vercel.app",
+  jobTitle: "Product Designer",
+  description: "Product Designer crafting meaningful digital experiences that bridge business goals with human needs.",
+  sameAs: [],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Satriya Kurniawan",
+  url: "https://angsaku.vercel.app",
+};
+
 export default function Home() {
   return (
     <main className="relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       <ScrollToTop />
       <Navbar />
       <Hero />

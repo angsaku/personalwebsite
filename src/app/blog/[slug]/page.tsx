@@ -50,8 +50,32 @@ export default async function BlogDetail({ params }: Props) {
 
   const related = allPosts.filter((p) => p.slug !== slug).slice(0, 2);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    url: `https://angsaku.vercel.app/blog/${slug}`,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: "Satriya Kurniawan",
+      url: "https://angsaku.vercel.app",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Satriya Kurniawan",
+      url: "https://angsaku.vercel.app",
+    },
+    ...(post.coverUrl && { image: post.coverUrl }),
+  };
+
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ScrollToTop />
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">

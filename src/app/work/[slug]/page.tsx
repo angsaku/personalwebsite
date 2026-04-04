@@ -65,8 +65,26 @@ export default async function WorkDetail({ params }: Props) {
 
   const related = allProjects.filter((p) => p.slug !== slug).slice(0, 2);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.description,
+    url: `https://angsaku.vercel.app/work/${slug}`,
+    author: {
+      "@type": "Person",
+      name: "Satriya Kurniawan",
+      url: "https://angsaku.vercel.app",
+    },
+    ...(isDirectImage(project.coverUrl) && { image: project.coverUrl }),
+  };
+
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ScrollToTop />
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
