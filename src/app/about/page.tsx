@@ -8,6 +8,7 @@ import { getBeyondWork } from "@/lib/beyond-work";
 import { getCommunities } from "@/lib/communities";
 import { ICON_MAP } from "@/lib/icon-map";
 import type { Metadata } from "next";
+import SkillTag from "@/components/SkillTag";
 
 export const metadata: Metadata = {
   title: "About Me — Satriya Kurniawan",
@@ -135,12 +136,7 @@ export default async function AboutPage() {
           <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Core Skills</p>
           <div className="flex flex-wrap gap-2">
             {about.skills.map((skill) => (
-              <span
-                key={skill}
-                className="text-sm text-gray-300 border border-white/[0.08] px-4 py-2 rounded-full hover:border-[#E5212E]/40 hover:text-white transition-colors"
-              >
-                {skill}
-              </span>
+              <SkillTag key={skill} label={skill} />
             ))}
           </div>
         </section>

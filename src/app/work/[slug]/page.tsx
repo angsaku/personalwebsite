@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { getProject, getSelectedWork, getAllWorkSlugs } from "@/lib/selected-work";
 import GalleryLightbox from "./_components/GalleryLightbox";
+import SkillTag from "@/components/SkillTag";
 import ReadingProgressBar from "./_components/ReadingProgressBar";
 import BackToTop from "./_components/BackToTop";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -122,12 +123,7 @@ export default async function WorkDetail({ params }: Props) {
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-8">
             {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs text-gray-500 border border-white/[0.08] px-3 py-1.5 rounded-full"
-              >
-                {tag}
-              </span>
+              <SkillTag key={tag} label={tag} className="px-3 py-1.5 text-xs" />
             ))}
           </div>
         </div>
@@ -180,12 +176,7 @@ export default async function WorkDetail({ params }: Props) {
                 <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-4">Tools Used</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tools.map((tool) => (
-                    <span
-                      key={tool}
-                      className="text-xs text-gray-500 border border-white/[0.08] px-3 py-1.5 rounded-full"
-                    >
-                      {tool}
-                    </span>
+                    <SkillTag key={tool} label={tool} className="px-3 py-1.5 text-xs" />
                   ))}
                 </div>
               </div>

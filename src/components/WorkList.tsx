@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import type { Project } from "@/lib/selected-work";
+import SkillTag from "@/components/SkillTag";
 
 export default function WorkList({ projects }: { projects: Project[] }) {
   const [query, setQuery] = useState("");
@@ -133,12 +134,7 @@ export default function WorkList({ projects }: { projects: Project[] }) {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs text-gray-500 border border-white/[0.08] px-3 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
                   ))}
                 </div>
               </div>

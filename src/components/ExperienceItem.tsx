@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import SkillTag from "@/components/SkillTag";
 
 type Experience = {
   id: string;
@@ -72,12 +73,7 @@ export default function ExperienceItem({ exp, defaultOpen = false }: { exp: Expe
               {exp.highlights.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {exp.highlights.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs text-gray-600 border border-white/[0.06] px-3 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
                   ))}
                 </div>
               )}

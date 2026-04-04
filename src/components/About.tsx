@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Download, ArrowUpRight } from "lucide-react";
 import { getAboutContent } from "@/lib/about";
+import SkillTag from "@/components/SkillTag";
 
 function toDirectImageUrl(url: string): string {
   // Convert Google Drive share URL to direct image URL
@@ -70,12 +71,7 @@ export default async function About() {
             </p>
             <div className="flex flex-wrap gap-2">
               {about.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="text-sm text-gray-300 border border-white/[0.08] px-4 py-1.5 rounded-full hover:border-[#E5212E]/40 hover:text-white transition-colors"
-                >
-                  {skill}
-                </span>
+                <SkillTag key={skill} label={skill} />
               ))}
             </div>
           </div>

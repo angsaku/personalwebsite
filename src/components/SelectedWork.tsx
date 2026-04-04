@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { getSelectedWork } from "@/lib/selected-work";
 import ScrollReveal from "@/components/ScrollReveal";
+import SkillTag from "@/components/SkillTag";
 
 export default async function SelectedWork() {
   const allProjects = await getSelectedWork();
@@ -81,12 +82,7 @@ export default async function SelectedWork() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs text-gray-500 border border-white/[0.08] px-3 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
+                    <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
                   ))}
                 </div>
               </div>

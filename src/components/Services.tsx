@@ -1,4 +1,5 @@
 import { getServices } from "@/lib/services";
+import SkillTag from "@/components/SkillTag";
 
 export default async function Services() {
   const services = await getServices();
@@ -50,12 +51,7 @@ export default async function Services() {
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {service.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs text-gray-600 border border-white/[0.06] group-hover:border-[#E5212E]/20 px-3 py-1 rounded-full transition-colors"
-                    >
-                      {tag}
-                    </span>
+                    <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
                   ))}
                 </div>
               </div>

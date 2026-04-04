@@ -1,6 +1,7 @@
 import { getHeroContent } from "@/lib/hero";
 import HeroButtons from "@/components/HeroButtons";
 import HeroFlipWordClient from "@/components/HeroFlipWordClient";
+import HeroRings from "@/components/HeroRings";
 
 export default async function Hero() {
   const hero = await getHeroContent();
@@ -22,9 +23,16 @@ export default async function Hero() {
         }}
       />
 
-      {/* Red accent blob — hidden on mobile for performance */}
-      <div className="blur-blob absolute top-1/3 right-1/4 w-96 h-96 bg-[#E5212E] rounded-full blur-[180px] opacity-10 pointer-events-none" />
-      <div className="blur-blob absolute bottom-1/4 left-1/3 w-64 h-64 bg-[#E5212E] rounded-full blur-[140px] opacity-5 pointer-events-none" />
+      {/* Decorative rings */}
+      <HeroRings />
+
+      {/* Bottom-left subtle cross accent */}
+      <div className="absolute bottom-16 left-8 pointer-events-none hidden lg:block opacity-20">
+        <div className="relative w-8 h-8">
+          <div className="absolute top-1/2 left-0 right-0 h-px bg-[#E5212E]" />
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#E5212E]" />
+        </div>
+      </div>
 
       <div className="relative max-w-6xl mx-auto w-full">
         {/* Badge */}
