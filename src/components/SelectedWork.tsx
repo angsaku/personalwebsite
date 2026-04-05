@@ -36,8 +36,9 @@ export default async function SelectedWork() {
             <Link
               key={project.id}
               href={`/work/${project.slug}`}
-              className="group relative grid grid-cols-1 md:grid-cols-12 gap-6 py-10 border-t border-white/[0.06] hover:border-[#E5212E]/30 transition-colors"
+              className="group relative grid grid-cols-1 md:grid-cols-12 gap-6 py-10 border-t border-white/[0.06] transition-colors"
             >
+              <span className="service-sweep absolute top-0 left-0 right-0 h-px bg-[#E5212E]" />
               {/* Number */}
               <div className="md:col-span-1 text-xs text-gray-600 font-mono mt-1">
                 {project.number}

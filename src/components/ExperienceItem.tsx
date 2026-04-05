@@ -18,11 +18,12 @@ export default function ExperienceItem({ exp, defaultOpen = false }: { exp: Expe
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-t border-white/[0.06] hover:border-[#E5212E]/20 transition-colors">
+    <div className="group relative border-t border-white/[0.06]">
+      <span className="service-sweep absolute top-0 left-0 right-0 h-px bg-[#E5212E]" />
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 py-8 text-left group"
+        className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 py-8 text-left"
       >
         {/* Period */}
         <div className="md:col-span-3">

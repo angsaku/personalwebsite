@@ -28,8 +28,10 @@ export default async function Services() {
           {services.map((service) => (
             <div
               key={service.id}
-              className="group grid grid-cols-1 md:grid-cols-12 gap-6 py-10 hover:bg-white/[0.015] -mx-4 px-4 rounded-2xl transition-colors duration-300"
+              className="group relative grid grid-cols-1 md:grid-cols-12 gap-6 py-10 -mx-4 px-4 transition-colors duration-300"
             >
+              {/* Animated bottom border — sweeps left to right on hover */}
+              <span className="service-sweep absolute bottom-0 left-0 right-0 h-px bg-[#E5212E]" />
               {/* Number */}
               <div className="md:col-span-1">
                 <span className="text-xs text-[#E5212E]/50 font-mono group-hover:text-[#E5212E] transition-colors">
