@@ -333,3 +333,47 @@ export async function deleteExperience(id: string) {
   revalidatePath("/");
   redirect("/admin/experience");
 }
+
+/* ── Visual Explorations ─────────────────────────── */
+
+export async function createVisualExploration(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+
+  const { error } = await supabase.from("visual_explorations").insert({
+    title: formData.get("title") as string,
+    image_url: formData.get("image_url") as string,
+    source_url: (formData.get("source_url") as string) || null,
+    sort_order: Number(formData.get("sort_order") || 0),
+    published: formData.get("published") === "true",
+  });
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/visual-explorations");
+}
+
+export async function updateVisualExploration(id: string, formData: FormData) {
+  const supabase = createSupabaseAdmin();
+
+  const { error } = await supabase
+    .from("visual_explorations")
+    .update({
+      title: formData.get("title") as string,
+      image_url: formData.get("image_url") as string,
+      source_url: (formData.get("source_url") as string) || null,
+      sort_order: Number(formData.get("sort_order") || 0),
+      published: formData.get("published") === "true",
+    })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/visual-explorations");
+}
+
+export async function deleteVisualExploration(id: string) {
+  const supabase = createSupabaseAdmin();
+  await supabase.from("visual_explorations").delete().eq("id", id);
+  revalidatePath("/");
+  redirect("/admin/visual-explorations");
+}

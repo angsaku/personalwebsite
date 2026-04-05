@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, Briefcase, LogOut, Smile, Users, Building2 } from "lucide-react";
+import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 
@@ -21,6 +21,7 @@ export default function AdminSidebar({ email }: { email: string }) {
     { label: "Blog Posts", href: "/admin/posts", icon: FileText },
     { label: "Selected Work", href: "/admin/work", icon: Briefcase },
     { label: "Experience", href: "/admin/experience", icon: Building2 },
+    { label: "Visual", href: "/admin/visual-explorations", icon: Layers },
     { label: "Beyond Work", href: "/admin/beyond-work", icon: Smile },
     { label: "Communities", href: "/admin/communities", icon: Users },
   ];

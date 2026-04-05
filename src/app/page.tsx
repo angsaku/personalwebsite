@@ -7,6 +7,7 @@ import SelectedWork from "@/components/SelectedWork";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Experience from "@/components/Experience";
+import VisualExploration from "@/components/VisualExploration";
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import CTA from "@/components/CTA";
@@ -64,6 +65,10 @@ export default function Home() {
 
       <ScrollReveal direction="up" threshold={0.06}>
         <Experience />
+      </ScrollReveal>
+
+      <ScrollReveal direction="up" threshold={0.06}>
+        <VisualExploration />
       </ScrollReveal>
 
       <ScrollReveal direction="up" threshold={0.08}>

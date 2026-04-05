@@ -13,7 +13,7 @@ export default async function Hero() {
   ];
 
   return (
-    <section className="relative lg:min-h-screen flex flex-col justify-center lg:justify-end py-32 pt-24 md:py-28 md:pt-24 lg:pb-20 lg:pt-20 px-6 overflow-hidden">
+    <section className="relative xl:min-h-screen flex flex-col justify-center xl:justify-end py-32 pt-24 md:py-28 md:pt-24 lg:py-24 lg:pt-28 xl:pb-20 xl:pt-20 px-6 overflow-hidden">
       {/* Background grid */}
       <div
         className="absolute inset-0 opacity-[0.04]"
