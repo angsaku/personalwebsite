@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import ReadingProgressBar from "@/app/work/[slug]/_components/ReadingProgressBar";
 import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 import ScrollToTop from "@/components/ScrollToTop";
+import ShareButton from "@/components/ShareButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -87,16 +88,19 @@ export default async function BlogDetail({ params }: Props) {
             <ArrowLeft size={14} />
             Back
           </Link>
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.svg"
-              alt="Satriya Kurniawan"
-              className="h-7 w-auto"
-              width={28}
-              height={28}
-            />
-          </Link>
+          <div className="flex items-center gap-4">
+            <ShareButton url={`https://angsaku.vercel.app/blog/${slug}`} title={post.title} />
+            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.svg"
+                alt="Satriya Kurniawan"
+                className="h-7 w-auto"
+                width={28}
+                height={28}
+              />
+            </Link>
+          </div>
         </div>
         <ReadingProgressBar />
       </div>

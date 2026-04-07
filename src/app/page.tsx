@@ -14,6 +14,7 @@ import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import ScrollToTop from "@/components/ScrollToTop";
+import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -44,6 +45,9 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <ScrollToTop />
+      <div className="md:hidden">
+        <BackToTop />
+      </div>
       <Navbar />
       <Hero />
 

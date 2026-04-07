@@ -10,6 +10,7 @@ import SkillTag from "@/components/SkillTag";
 import ReadingProgressBar from "./_components/ReadingProgressBar";
 import BackToTop from "./_components/BackToTop";
 import ScrollToTop from "@/components/ScrollToTop";
+import ShareButton from "@/components/ShareButton";
 import type { Metadata } from "next";
 
 type Props = {
@@ -96,16 +97,19 @@ export default async function WorkDetail({ params }: Props) {
             <ArrowLeft size={14} />
             Back
           </Link>
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.svg"
-              alt="Satriya Kurniawan"
-              className="h-7 w-auto"
-              width={28}
-              height={28}
-            />
-          </Link>
+          <div className="flex items-center gap-4">
+            <ShareButton url={`https://angsaku.vercel.app/work/${slug}`} title={project.title} />
+            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.svg"
+                alt="Satriya Kurniawan"
+                className="h-7 w-auto"
+                width={28}
+                height={28}
+              />
+            </Link>
+          </div>
         </div>
         <ReadingProgressBar />
       </div>
