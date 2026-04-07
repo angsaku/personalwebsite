@@ -119,6 +119,7 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
 /* ── Scroll reveal ─────────────────────────────── */
 .reveal {
   opacity: 0;
+  will-change: opacity, transform;
   transition:
     opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
@@ -132,23 +133,25 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 
 /* Stagger children inside a revealed parent */
 .stagger-children > * {
   opacity: 0;
   transform: translateY(24px);
+  will-change: opacity, transform;
   transition:
     opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.stagger-children.is-visible > *:nth-child(1)  { transition-delay: 0ms;   opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(2)  { transition-delay: 80ms;  opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(3)  { transition-delay: 160ms; opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(4)  { transition-delay: 240ms; opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(5)  { transition-delay: 320ms; opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(6)  { transition-delay: 400ms; opacity: 1; transform: none; }
-.stagger-children.is-visible > *:nth-child(n+7){ transition-delay: 480ms; opacity: 1; transform: none; }
+.stagger-children.is-visible > *:nth-child(1)  { transition-delay: 0ms;   opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(2)  { transition-delay: 80ms;  opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(3)  { transition-delay: 160ms; opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(4)  { transition-delay: 240ms; opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(5)  { transition-delay: 320ms; opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(6)  { transition-delay: 400ms; opacity: 1; transform: none; will-change: auto; }
+.stagger-children.is-visible > *:nth-child(n+7){ transition-delay: 480ms; opacity: 1; transform: none; will-change: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger-children > * {
@@ -185,11 +188,16 @@ html.light ::-webkit-scrollbar-track { background: #f8fafc; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.fade-up { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+.fade-up { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards; will-change: opacity, transform; }
 .delay-1 { animation-delay: 0.1s; opacity: 0; }
 .delay-2 { animation-delay: 0.25s; opacity: 0; }
 .delay-3 { animation-delay: 0.4s; opacity: 0; }
 .delay-4 { animation-delay: 0.55s; opacity: 0; }
+.delay-5 { animation-delay: 0.7s; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up { animation: none; opacity: 1; }
+}
 
 /* ── Quill editor dark theme overrides ─────────── */
 .ql-toolbar.ql-snow {

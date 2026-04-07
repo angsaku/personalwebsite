@@ -9,6 +9,8 @@ import { getCommunities } from "@/lib/communities";
 import { ICON_MAP } from "@/lib/icon-map";
 import type { Metadata } from "next";
 import SkillTag from "@/components/SkillTag";
+import ScrollToTop from "@/components/ScrollToTop";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "About Me — Satriya Kurniawan",
@@ -34,7 +36,7 @@ export default async function AboutPage() {
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
-
+      <ScrollToTop />
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
@@ -67,15 +69,10 @@ export default async function AboutPage() {
           <div className="flex flex-col md:flex-row gap-10 items-center md:items-start">
 
             {/* Photo */}
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 fade-up delay-1">
               <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden bg-[#0a1128] border border-white/[0.08] relative">
                 {about.photoUrl ? (
-                  <Image
-                    src={toDirectImageUrl(about.photoUrl)}
-                    alt="Satriya Kurniawan"
-                    fill
-                    className="object-cover"
-                  />
+                  <Image src={toDirectImageUrl(about.photoUrl)} alt="Satriya Kurniawan" fill className="object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <span className="text-5xl text-gray-600">👤</span>
@@ -86,15 +83,15 @@ export default async function AboutPage() {
 
             {/* Intro */}
             <div className="text-center md:text-left">
-              <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-3">About Me</p>
-              <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-3">
+              <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-3 fade-up delay-2">About Me</p>
+              <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-3 fade-up delay-3">
                 {about.heading}<span className="text-[#E5212E]">.</span>
               </h1>
-              <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-500 mb-6">
+              <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-500 mb-6 fade-up delay-4">
                 <MapPin size={14} />
                 <span>Jakarta, Indonesia</span>
               </div>
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 fade-up delay-5">
                 {about.resumeUrl && (
                   <a
                     href={about.resumeUrl}
@@ -123,26 +120,31 @@ export default async function AboutPage() {
       <div className="max-w-4xl mx-auto px-6 py-16 pb-32 space-y-20">
 
         {/* Bio */}
-        <section>
-          <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">My Story</p>
-          <div className="space-y-5 text-gray-400 leading-relaxed text-lg">
-            <p>{about.bioParagraph1}</p>
-            <p>{about.bioParagraph2}</p>
-          </div>
-        </section>
+        <ScrollReveal direction="up" threshold={0.1}>
+          <section>
+            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">My Story</p>
+            <div className="space-y-5 text-gray-400 leading-relaxed text-lg">
+              <p>{about.bioParagraph1}</p>
+              <p>{about.bioParagraph2}</p>
+            </div>
+          </section>
+        </ScrollReveal>
 
         {/* Skills */}
-        <section>
-          <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Core Skills</p>
-          <div className="flex flex-wrap gap-2">
-            {about.skills.map((skill) => (
-              <SkillTag key={skill} label={skill} />
-            ))}
-          </div>
-        </section>
+        <ScrollReveal direction="up" threshold={0.1}>
+          <section>
+            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Core Skills</p>
+            <div className="flex flex-wrap gap-2">
+              {about.skills.map((skill) => (
+                <SkillTag key={skill} label={skill} />
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
 
         {/* Beyond Work — Bento grid */}
-        <section>
+        <ScrollReveal direction="up" threshold={0.06}>
+          <section>
           <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Beyond Work</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[minmax(140px,auto)]">
             {beyondWork.map((item, i) => {
@@ -172,10 +174,12 @@ export default async function AboutPage() {
               );
             })}
           </div>
-        </section>
+          </section>
+        </ScrollReveal>
 
         {/* Community */}
-        <section>
+        <ScrollReveal direction="up" threshold={0.06}>
+          <section>
           <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Community</p>
           <div className="relative">
             {/* Vertical line */}
@@ -210,7 +214,8 @@ export default async function AboutPage() {
               ))}
             </div>
           </div>
-        </section>
+          </section>
+        </ScrollReveal>
 
       </div>
 
