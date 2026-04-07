@@ -2,10 +2,11 @@ export const revalidate = 0;
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Download, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, MapPin, Mail, Linkedin, Instagram } from "lucide-react";
 import { getAboutContent } from "@/lib/about";
 import { getBeyondWork } from "@/lib/beyond-work";
 import { getCommunities } from "@/lib/communities";
+import { getCtaContent } from "@/lib/cta";
 import { ICON_MAP } from "@/lib/icon-map";
 import type { Metadata } from "next";
 import SkillTag from "@/components/SkillTag";
@@ -32,7 +33,7 @@ function getBentoSpan(index: number) {
 }
 
 export default async function AboutPage() {
-  const [about, beyondWork, communities] = await Promise.all([getAboutContent(), getBeyondWork(), getCommunities()]);
+  const [about, beyondWork, communities, cta] = await Promise.all([getAboutContent(), getBeyondWork(), getCommunities(), getCtaContent()]);
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
@@ -104,13 +105,13 @@ export default async function AboutPage() {
                     Download Resume
                   </a>
                 )}
-                <Link
-                  href="/#contact"
+                <a
+                  href="#contact"
                   className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/10 text-gray-400 text-sm font-medium rounded-full hover:border-white/30 hover:text-white transition-colors"
                 >
                   Get in Touch
                   <ArrowUpRight size={14} />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -218,6 +219,65 @@ export default async function AboutPage() {
         </ScrollReveal>
 
       </div>
+
+      {/* Let's Collaborate */}
+      <ScrollReveal direction="up" threshold={0.08}>
+        <section id="contact" className="relative overflow-hidden border-t border-white/[0.06] py-24 px-6">
+          <div className="blur-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E5212E] rounded-full blur-[200px] opacity-[0.06] pointer-events-none" />
+
+          <div className="relative max-w-4xl mx-auto text-center">
+            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Let&apos;s Collaborate</p>
+
+            <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
+              Have a project<br />in mind<span className="text-[#E5212E]">?</span>
+            </h2>
+
+            <p className="text-gray-400 text-lg max-w-lg mx-auto leading-relaxed mb-10">
+              I&apos;m always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision. Let&apos;s build something great together.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href={`mailto:${cta.email}`}
+                className="flex items-center gap-2 bg-[#E5212E] text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-[#c41a25] transition-colors max-w-full overflow-hidden"
+              >
+                <Mail size={16} className="flex-shrink-0" />
+                <span className="truncate">{cta.email}</span>
+                <ArrowUpRight size={14} className="flex-shrink-0" />
+              </a>
+              <a
+                href={`https://wa.me/${cta.whatsapp_number}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 border border-white/10 text-gray-400 px-8 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-colors"
+              >
+                WhatsApp
+              </a>
+            </div>
+
+            <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-14 pt-10 border-t border-white/[0.06]">
+              {[
+                { label: "LinkedIn", icon: Linkedin, href: cta.linkedin_url },
+                { label: "Instagram", icon: Instagram, href: cta.instagram_url },
+                { label: "Behance", icon: null, text: "Be", href: cta.behance_url },
+                { label: "Dribbble", icon: null, text: "Dr", href: cta.dribbble_url },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-white transition-colors"
+                >
+                  {s.icon ? <s.icon size={16} /> : <span className="text-sm font-bold">{s.text}</span>}
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      </ScrollReveal>
 
     </div>
   );
