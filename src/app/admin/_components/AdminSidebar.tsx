@@ -46,7 +46,7 @@ export default function AdminSidebar({ email }: { email: string }) {
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-1">
         {links.map((link) => {
-          const active = pathname.startsWith(link.href);
+          const active = pathname === link.href || pathname.startsWith(link.href + "/");
           return (
             <Link
               key={link.href}
@@ -63,15 +63,16 @@ export default function AdminSidebar({ email }: { email: string }) {
 
         {/* Approach — parent + submenu */}
         <div>
-          <div
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm ${
-              approachActive ? "text-[#E5212E]" : "text-gray-500"
+          <Link
+            href="/admin/workflow"
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${
+              approachActive ? "bg-[#E5212E]/10 text-[#E5212E]" : "text-gray-500 hover:text-white hover:bg-white/[0.04]"
             }`}
           >
             <GitBranch size={15} className="flex-shrink-0" />
             <span className="flex-1">Approach</span>
-            <ChevronDown size={13} className={`transition-transform ${approachActive ? "rotate-180" : ""}`} />
-          </div>
+            <ChevronDown size={13} className={`transition-transform duration-200 ${approachActive ? "rotate-180" : ""}`} />
+          </Link>
 
           {/* Submenu — always visible when on any /admin/workflow route, else collapsed */}
           <div
