@@ -1,5 +1,6 @@
 import { getServices } from "@/lib/services";
 import SkillTag from "@/components/SkillTag";
+import ServiceEasterEggTrigger from "@/components/ServiceEasterEggTrigger";
 
 export default async function Services() {
   const services = await getServices();
@@ -14,7 +15,7 @@ export default async function Services() {
               Services
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-              What I can do<span className="text-[#E5212E]">.</span>
+              What <ServiceEasterEggTrigger />
             </h2>
           </div>
           <p className="text-gray-500 text-sm max-w-xs leading-relaxed">

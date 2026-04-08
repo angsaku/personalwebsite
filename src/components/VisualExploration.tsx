@@ -1,10 +1,17 @@
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { getVisualExplorations } from "@/lib/visual-explorations";
 import VisualExplorationGrid from "@/components/VisualExplorationGrid";
+
+const PREVIEW_LIMIT = 6;
 
 export default async function VisualExploration() {
   const items = await getVisualExplorations();
 
   if (items.length === 0) return null;
+
+  const hasMore = items.length > PREVIEW_LIMIT;
+  const preview = hasMore ? items.slice(0, PREVIEW_LIMIT) : items;
 
   return (
     <section id="visual" className="py-24 px-6">
@@ -24,7 +31,19 @@ export default async function VisualExploration() {
           </p>
         </div>
 
-        <VisualExplorationGrid items={items} />
+        <VisualExplorationGrid items={preview} />
+
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/visual"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-white/10 text-gray-400 text-sm font-medium rounded-full hover:border-white/30 hover:text-white transition-colors"
+            >
+              View All {items.length} Visuals
+              <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
