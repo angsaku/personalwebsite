@@ -13,6 +13,10 @@ type CtaRow = {
   instagram_url: string;
   behance_url: string;
   dribbble_url: string;
+  github_url: string;
+  twitter_url: string;
+  youtube_url: string;
+  tiktok_url: string;
 };
 
 export default function CtaForm({ cta }: { cta: CtaRow | null }) {
@@ -116,6 +120,7 @@ export default function CtaForm({ cta }: { cta: CtaRow | null }) {
 
       <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-6 space-y-4">
         <h2 className="text-sm font-semibold text-white mb-2">Social Links</h2>
+        <p className="text-xs text-gray-600 -mt-2">Leave a field blank to hide that social link from the CTA section.</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -134,6 +139,42 @@ export default function CtaForm({ cta }: { cta: CtaRow | null }) {
               defaultValue={cta?.instagram_url ?? ""}
               className={inputCls}
               placeholder="https://instagram.com/yourname"
+            />
+          </div>
+          <div>
+            <label className={labelCls}>GitHub URL</label>
+            <input
+              name="github_url"
+              defaultValue={cta?.github_url ?? ""}
+              className={inputCls}
+              placeholder="https://github.com/yourname"
+            />
+          </div>
+          <div>
+            <label className={labelCls}>Twitter / X URL</label>
+            <input
+              name="twitter_url"
+              defaultValue={cta?.twitter_url ?? ""}
+              className={inputCls}
+              placeholder="https://twitter.com/yourname"
+            />
+          </div>
+          <div>
+            <label className={labelCls}>YouTube URL</label>
+            <input
+              name="youtube_url"
+              defaultValue={cta?.youtube_url ?? ""}
+              className={inputCls}
+              placeholder="https://youtube.com/@yourname"
+            />
+          </div>
+          <div>
+            <label className={labelCls}>TikTok URL</label>
+            <input
+              name="tiktok_url"
+              defaultValue={cta?.tiktok_url ?? ""}
+              className={inputCls}
+              placeholder="https://tiktok.com/@yourname"
             />
           </div>
           <div>

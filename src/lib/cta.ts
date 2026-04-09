@@ -10,6 +10,10 @@ export interface CtaContent {
   instagram_url: string;
   behance_url: string;
   dribbble_url: string;
+  github_url: string;
+  twitter_url: string;
+  youtube_url: string;
+  tiktok_url: string;
 }
 
 const fallback: CtaContent = {
@@ -23,6 +27,10 @@ const fallback: CtaContent = {
   instagram_url: "https://instagram.com/yourname",
   behance_url: "https://behance.net/yourname",
   dribbble_url: "https://dribbble.com/yourname",
+  github_url: "",
+  twitter_url: "",
+  youtube_url: "",
+  tiktok_url: "",
 };
 
 export async function getCtaContent(): Promise<CtaContent> {
@@ -51,5 +59,9 @@ export async function getCtaContent(): Promise<CtaContent> {
     instagram_url: row.instagram_url ?? fallback.instagram_url,
     behance_url: row.behance_url ?? fallback.behance_url,
     dribbble_url: row.dribbble_url ?? fallback.dribbble_url,
+    github_url: row.github_url ?? fallback.github_url,
+    twitter_url: row.twitter_url ?? fallback.twitter_url,
+    youtube_url: row.youtube_url ?? fallback.youtube_url,
+    tiktok_url: row.tiktok_url ?? fallback.tiktok_url,
   };
 }

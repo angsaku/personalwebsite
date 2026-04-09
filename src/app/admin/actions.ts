@@ -612,6 +612,10 @@ export async function upsertCtaContent(formData: FormData) {
     instagram_url: formData.get("instagram_url") as string,
     behance_url: formData.get("behance_url") as string,
     dribbble_url: formData.get("dribbble_url") as string,
+    github_url: formData.get("github_url") as string,
+    twitter_url: formData.get("twitter_url") as string,
+    youtube_url: formData.get("youtube_url") as string,
+    tiktok_url: formData.get("tiktok_url") as string,
   };
 
   const { error } = existing

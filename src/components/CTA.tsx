@@ -1,15 +1,29 @@
-import { ArrowUpRight, Mail, Instagram, Linkedin, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Mail, Instagram, Linkedin, MessageCircle, Github, Youtube } from "lucide-react";
 import { getCtaContent } from "@/lib/cta";
+
+function XLogo({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 export default async function CTA() {
   const cta = await getCtaContent();
 
-  const socials = [
-    { label: "LinkedIn", icon: Linkedin, href: cta.linkedin_url, text: null },
-    { label: "Instagram", icon: Instagram, href: cta.instagram_url, text: null },
-    { label: "Behance", icon: null, href: cta.behance_url, text: "Be" },
-    { label: "Dribbble", icon: null, href: cta.dribbble_url, text: "Dr" },
+  const allSocials = [
+    { label: "LinkedIn", icon: Linkedin, href: cta.linkedin_url, text: null, svg: null },
+    { label: "Instagram", icon: Instagram, href: cta.instagram_url, text: null, svg: null },
+    { label: "GitHub", icon: Github, href: cta.github_url, text: null, svg: null },
+    { label: "X", icon: null, href: cta.twitter_url, text: null, svg: XLogo },
+    { label: "YouTube", icon: Youtube, href: cta.youtube_url, text: null, svg: null },
+    { label: "Behance", icon: null, href: cta.behance_url, text: "Be", svg: null },
+    { label: "Dribbble", icon: null, href: cta.dribbble_url, text: "Dr", svg: null },
+    { label: "TikTok", icon: null, href: cta.tiktok_url, text: "Tt", svg: null },
   ];
+
+  const socials = allSocials.filter((s) => s.href);
 
   return (
     <section id="contact" className="py-32 px-6 relative overflow-hidden">
@@ -50,21 +64,23 @@ export default async function CTA() {
         </div>
 
         {/* Social links */}
-        <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-16 pt-10 border-t border-white/[0.06]">
+        <div className="flex flex-row items-center justify-center gap-3 mt-16 pt-10 border-t border-white/[0.06]">
           {socials.map((social) => (
             <a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-white transition-colors"
+              aria-label={social.label}
+              className="group flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 border border-transparent hover:text-white hover:bg-[#E5212E]/10 hover:border-[#E5212E]/40 transition-all duration-200"
             >
               {social.icon ? (
                 <social.icon size={16} />
+              ) : social.svg ? (
+                <social.svg size={16} />
               ) : (
-                <span className="text-sm font-bold">{social.text}</span>
+                <span className="text-xs font-bold leading-none">{social.text}</span>
               )}
-              {social.label}
             </a>
           ))}
         </div>
