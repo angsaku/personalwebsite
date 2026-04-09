@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, Instagram, Linkedin } from "lucide-react";
+import { ArrowUpRight, Mail, Instagram, Linkedin, MessageCircle } from "lucide-react";
 import { getCtaContent } from "@/lib/cta";
 
 export default async function CTA() {
@@ -18,20 +18,15 @@ export default async function CTA() {
 
       <div className="max-w-4xl mx-auto relative text-center">
         <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">
-          Let&apos;s Collaborate
+          {cta.label}
         </p>
 
         <h2 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-8">
-          Have a project
-          <br />
-          in mind
-          <span className="text-[#E5212E]">?</span>
+          {cta.headline}
         </h2>
 
         <p className="text-gray-400 text-lg max-w-lg mx-auto leading-relaxed mb-12">
-          I&apos;m always open to discussing new projects, creative ideas, or
-          opportunities to be part of your vision. Let&apos;s build something great
-          together.
+          {cta.body_text}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
@@ -47,8 +42,9 @@ export default async function CTA() {
             href={`https://wa.me/${cta.whatsapp_number}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-white/10 text-gray-400 px-8 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-all duration-300"
+            className="flex items-center gap-2 border border-white/10 text-gray-400 px-6 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-all duration-300"
           >
+            <MessageCircle size={16} className="flex-shrink-0" />
             WhatsApp
           </a>
         </div>

@@ -12,6 +12,7 @@ type Experience = {
   location: string;
   description: string;
   highlights: string[];
+  is_current: boolean;
 };
 
 export default function ExperienceItem({ exp, defaultOpen = false }: { exp: Experience; defaultOpen?: boolean }) {
@@ -34,9 +35,17 @@ export default function ExperienceItem({ exp, defaultOpen = false }: { exp: Expe
         {/* Role + company + chevron */}
         <div className="md:col-span-9 flex items-start justify-between gap-4">
           <div>
-            <h3 className={`text-xl font-semibold transition-colors ${open ? "text-[#E5212E]" : "text-white group-hover:text-[#E5212E]"}`}>
-              {exp.role}
-            </h3>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className={`text-xl font-semibold transition-colors ${open ? "text-[#E5212E]" : "text-white group-hover:text-[#E5212E]"}`}>
+                {exp.role}
+              </h3>
+              {exp.is_current && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#E5212E]/10 border border-[#E5212E]/20 text-[#E5212E] text-[10px] font-medium tracking-wide">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#E5212E] animate-pulse" />
+                  Current
+                </span>
+              )}
+            </div>
             <p className="text-sm text-[#E5212E]/70 mt-0.5">{exp.company}</p>
           </div>
           <ChevronDown

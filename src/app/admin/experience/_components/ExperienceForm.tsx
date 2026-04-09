@@ -16,11 +16,13 @@ type Exp = {
   description: string;
   highlights: string[];
   sort_order: number;
+  is_current: boolean;
 };
 
 export default function ExperienceForm({ experience }: { experience?: Exp }) {
   const isEdit = !!experience;
   const [description, setDescription] = useState(experience?.description ?? "");
+  const [isCurrent, setIsCurrent] = useState(experience?.is_current ?? false);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -112,6 +114,21 @@ export default function ExperienceForm({ experience }: { experience?: Exp }) {
                 placeholder="Jakarta, ID"
               />
             </div>
+          </div>
+
+          <div className="flex items-center justify-between bg-[#020618] border border-white/[0.08] rounded-xl px-4 py-3">
+            <div>
+              <p className="text-sm text-white">Current Position</p>
+              <p className="text-xs text-gray-600 mt-0.5">Shows a pulsing "Current" badge on the experience section</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsCurrent(!isCurrent)}
+              className={`w-11 h-6 rounded-full transition-colors relative flex-shrink-0 ${isCurrent ? "bg-[#E5212E]" : "bg-white/10"}`}
+            >
+              <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${isCurrent ? "translate-x-5" : "translate-x-0"}`} />
+            </button>
+            <input type="hidden" name="is_current" value={isCurrent ? "true" : "false"} />
           </div>
 
           <div>

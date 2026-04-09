@@ -1,6 +1,9 @@
 import { getSupabase } from "./supabase";
 
 export interface CtaContent {
+  label: string;
+  headline: string;
+  body_text: string;
   email: string;
   whatsapp_number: string;
   linkedin_url: string;
@@ -10,6 +13,10 @@ export interface CtaContent {
 }
 
 const fallback: CtaContent = {
+  label: "Let's Collaborate",
+  headline: "Have a project in mind?",
+  body_text:
+    "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Let's build something great together.",
   email: "hello@yourname.com",
   whatsapp_number: "628xxxxxxxxxx",
   linkedin_url: "https://linkedin.com/in/yourname",
@@ -35,6 +42,9 @@ export async function getCtaContent(): Promise<CtaContent> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const row = data as any;
   return {
+    label: row.label ?? fallback.label,
+    headline: row.headline ?? fallback.headline,
+    body_text: row.body_text ?? fallback.body_text,
     email: row.email ?? fallback.email,
     whatsapp_number: row.whatsapp_number ?? fallback.whatsapp_number,
     linkedin_url: row.linkedin_url ?? fallback.linkedin_url,

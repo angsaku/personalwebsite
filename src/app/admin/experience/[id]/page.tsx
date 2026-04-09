@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import ExperienceForm from "../_components/ExperienceForm";
 
 export const revalidate = 0;
@@ -10,7 +10,7 @@ export default async function EditExperiencePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const supabase = await createSupabaseServer();
+  const supabase = createSupabaseAdmin();
   const { data } = await supabase
     .from("experiences")
     .select("*")
@@ -33,6 +33,7 @@ export default async function EditExperiencePage({
         description: row.description ?? "",
         highlights: row.highlights ?? [],
         sort_order: row.sort_order ?? 0,
+        is_current: row.is_current ?? false,
       }}
     />
   );

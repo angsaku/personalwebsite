@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, GitBranch, Settings, ChevronDown } from "lucide-react";
+import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, GitBranch, Settings, ChevronDown, Zap, UserCircle, Mail } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 
@@ -18,11 +18,14 @@ export default function AdminSidebar({ email }: { email: string }) {
   }
 
   const links = [
-    { label: "Blog Posts", href: "/admin/posts", icon: FileText },
+    { label: "Hero", href: "/admin/hero", icon: Zap },
     { label: "Selected Work", href: "/admin/work", icon: Briefcase },
+    { label: "About", href: "/admin/about", icon: UserCircle },
+    { label: "Services", href: "/admin/services", icon: Wrench },
     { label: "Experience", href: "/admin/experience", icon: Building2 },
     { label: "Visual", href: "/admin/visual-explorations", icon: Layers },
-    { label: "Services", href: "/admin/services", icon: Wrench },
+    { label: "Blog Posts", href: "/admin/posts", icon: FileText },
+    { label: "CTA & Contact", href: "/admin/cta", icon: Mail },
     { label: "Beyond Work", href: "/admin/beyond-work", icon: Smile },
     { label: "Communities", href: "/admin/communities", icon: Users },
   ];

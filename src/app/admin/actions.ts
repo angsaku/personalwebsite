@@ -293,6 +293,7 @@ export async function createExperience(formData: FormData) {
     description: formData.get("description") as string,
     highlights,
     sort_order: Number(formData.get("sort_order") || 0),
+    is_current: formData.get("is_current") === "true",
   });
 
   if (error) return { error: error.message };
@@ -317,6 +318,7 @@ export async function updateExperience(id: string, formData: FormData) {
       description: formData.get("description") as string,
       highlights,
       sort_order: Number(formData.get("sort_order") || 0),
+      is_current: formData.get("is_current") === "true",
     })
     .eq("id", id)
     .select();
@@ -325,6 +327,7 @@ export async function updateExperience(id: string, formData: FormData) {
   if (!data || data.length === 0) return { error: `No row matched id="${id}".` };
   revalidatePath("/");
   redirect("/admin/experience");
+
 }
 
 export async function deleteExperience(id: string) {
@@ -539,4 +542,83 @@ export async function deleteWorkflowService(id: string) {
   await supabase.from("workflow_services").delete().eq("id", id);
   revalidatePath("/approach");
   redirect("/admin/workflow/services");
+}
+
+/* ── Hero Content ─────────────────────────────────── */
+
+export async function upsertHeroContent(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+  const { data: existing } = await supabase.from("hero_content").select("id").limit(1).single();
+
+  const payload = {
+    short_description: formData.get("short_description") as string,
+    years_experience: formData.get("years_experience") as string,
+    projects_delivered: formData.get("projects_delivered") as string,
+    happy_clients: formData.get("happy_clients") as string,
+    og_image_url: (formData.get("og_image_url") as string) || null,
+  };
+
+  const { error } = existing
+    ? await supabase.from("hero_content").update(payload).eq("id", existing.id)
+    : await supabase.from("hero_content").insert(payload);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  return { success: true };
+}
+
+/* ── About Content ─────────────────────────────────── */
+
+export async function upsertAboutContent(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+  const { data: existing } = await supabase.from("about_content").select("id").limit(1).single();
+
+  const skills = (formData.get("skills") as string)
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  const payload = {
+    heading: formData.get("heading") as string,
+    bio_paragraph_1: formData.get("bio_paragraph_1") as string,
+    bio_paragraph_2: formData.get("bio_paragraph_2") as string,
+    skills,
+    photo_url: (formData.get("photo_url") as string) || null,
+    resume_url: (formData.get("resume_url") as string) || null,
+  };
+
+  const { error } = existing
+    ? await supabase.from("about_content").update(payload).eq("id", existing.id)
+    : await supabase.from("about_content").insert(payload);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  return { success: true };
+}
+
+/* ── CTA Content ─────────────────────────────────── */
+
+export async function upsertCtaContent(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+  const { data: existing } = await supabase.from("cta_content").select("id").limit(1).single();
+
+  const payload = {
+    label: formData.get("label") as string,
+    headline: formData.get("headline") as string,
+    body_text: formData.get("body_text") as string,
+    email: formData.get("email") as string,
+    whatsapp_number: formData.get("whatsapp_number") as string,
+    linkedin_url: formData.get("linkedin_url") as string,
+    instagram_url: formData.get("instagram_url") as string,
+    behance_url: formData.get("behance_url") as string,
+    dribbble_url: formData.get("dribbble_url") as string,
+  };
+
+  const { error } = existing
+    ? await supabase.from("cta_content").update(payload).eq("id", existing.id)
+    : await supabase.from("cta_content").insert(payload);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  return { success: true };
 }

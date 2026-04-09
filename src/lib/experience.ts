@@ -8,6 +8,7 @@ export interface Experience {
   location: string;
   description: string;
   highlights: string[];
+  is_current: boolean;
 }
 
 const fallback: Experience[] = [
@@ -20,6 +21,7 @@ const fallback: Experience[] = [
     description:
       "Lead the end-to-end design of core product features, manage design system, collaborate with cross-functional teams. Replace this with your actual responsibilities and achievements.",
     highlights: ["Design System", "Mobile App", "B2B Platform"],
+    is_current: true,
   },
   {
     id: "2",
@@ -30,6 +32,7 @@ const fallback: Experience[] = [
     description:
       "Designed user-centered solutions for web and mobile platforms. Conducted UX research, created wireframes and prototypes. Replace with your actual description.",
     highlights: ["E-Commerce", "User Research", "Redesign"],
+    is_current: false,
   },
   {
     id: "3",
@@ -40,6 +43,7 @@ const fallback: Experience[] = [
     description:
       "Crafted visual designs and interaction patterns for various client projects across fintech, healthtech, and retail sectors. Replace with your actual experience.",
     highlights: ["Client Work", "FinTech", "Healthcare"],
+    is_current: false,
   },
 ];
 
@@ -63,5 +67,6 @@ export async function getExperiences(): Promise<Experience[]> {
     location: row.location,
     description: row.description,
     highlights: row.highlights,
+    is_current: row.is_current ?? false,
   }));
 }
