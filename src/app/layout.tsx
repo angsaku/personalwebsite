@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,18 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fzjpbihupkiggcdvynua.supabase.co" />
         <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4LPB4K3SZX"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4LPB4K3SZX');
+          `}
+        </Script>
       </head>
       <body className={`${geist.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
