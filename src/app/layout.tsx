@@ -47,6 +47,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fzjpbihupkiggcdvynua.supabase.co" />
         <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
+      </head>
+      <body className={`${geist.variable} font-sans antialiased`}>
+        <Providers>{children}</Providers>
+        <Analytics />
+        <SpeedInsights />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-4LPB4K3SZX"
           strategy="afterInteractive"
@@ -59,11 +64,6 @@ export default function RootLayout({
             gtag('config', 'G-4LPB4K3SZX');
           `}
         </Script>
-      </head>
-      <body className={`${geist.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
