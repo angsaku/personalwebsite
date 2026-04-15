@@ -27,6 +27,14 @@ export default function ServiceEasterEggTrigger() {
       >
         ✦ see my approach
       </span>
+
+      {/* Mobile hint — always visible on small screens, same style as desktop tooltip */}
+      <span
+        className="md:hidden absolute -top-8 left-0 whitespace-nowrap flex items-center gap-1.5 px-3 py-1.5 bg-[#0a1128] border border-[#E5212E]/30 rounded-full text-xs text-[#E5212E] pointer-events-none"
+        aria-hidden
+      >
+        ✦ see my approach
+      </span>
     </span>
   );
 }

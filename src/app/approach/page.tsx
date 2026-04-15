@@ -1,9 +1,11 @@
 export const revalidate = 3600;
 
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, ArrowUpRight, Mail } from "lucide-react";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollReveal from "@/components/ScrollReveal";
+import SkillTag from "@/components/SkillTag";
 import ServiceApproachAccordion from "./_components/ServiceApproachAccordion";
 import {
   getWorkflowConfig,
@@ -11,6 +13,7 @@ import {
   getWorkflowPhases,
   getWorkflowServices,
 } from "@/lib/workflow";
+import { getSelectedWork } from "@/lib/selected-work";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,12 +22,14 @@ export const metadata: Metadata = {
 };
 
 export default async function ApproachPage() {
-  const [config, principles, phases, services] = await Promise.all([
+  const [config, principles, phases, services, allWork] = await Promise.all([
     getWorkflowConfig(),
     getWorkflowPrinciples(),
     getWorkflowPhases(),
     getWorkflowServices(),
+    getSelectedWork(),
   ]);
+  const featuredWork = allWork.slice(0, 2);
 
   return (
     <div className="min-h-screen bg-[#020618] text-gray-200">
@@ -147,6 +152,81 @@ export default async function ApproachPage() {
           </section>
         </ScrollReveal>
 
+        {/* Selected Work */}
+        <ScrollReveal direction="up" threshold={0.06}>
+          <section>
+            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-3">Selected Work</p>
+            <p className="text-gray-500 text-sm mb-8">A sample of what this process looks like in practice.</p>
+            <div>
+              {featuredWork.map((project) => (
+                <Link
+                  key={project.id}
+                  href={`/work/${project.slug}`}
+                  className="group relative grid grid-cols-1 md:grid-cols-12 gap-6 py-10 border-t border-white/[0.06] transition-colors"
+                >
+                  <span className="service-sweep absolute top-0 left-0 right-0 h-px bg-[#E5212E]" />
+                  {/* Number */}
+                  <div className="md:col-span-1 text-xs text-gray-600 font-mono mt-1">
+                    {project.number}
+                  </div>
+                  {/* Thumbnail */}
+                  <div className="md:col-span-3 aspect-video rounded-lg bg-[#0a1128] border border-white/[0.06] group-hover:border-[#E5212E]/20 transition-colors overflow-hidden">
+                    {project.thumbnailUrl ? (
+                      <Image
+                        src={project.thumbnailUrl}
+                        alt={project.title}
+                        width={400}
+                        height={225}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
+                          <span className="text-[#E5212E] text-lg font-bold">{project.number}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {/* Info */}
+                  <div className="md:col-span-7 flex flex-col justify-between gap-4">
+                    <div>
+                      <p className="text-xs text-gray-600 tracking-wide mb-2">
+                        {project.category} · {project.year}
+                      </p>
+                      <h3 className="text-xl md:text-2xl font-semibold text-white group-hover:text-[#E5212E] transition-colors mb-3">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Arrow */}
+                  <div className="md:col-span-1 flex items-start justify-end">
+                    <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-[#E5212E] group-hover:bg-[#E5212E] transition-all">
+                      <ArrowUpRight size={14} className="text-gray-500 group-hover:text-white transition-colors" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+              <div className="border-t border-white/[0.06] pt-8 mt-2">
+                <Link
+                  href="/work"
+                  className="inline-flex items-center gap-2 px-6 py-3 border border-[#E5212E]/40 text-[#E5212E] text-sm font-medium rounded-full hover:bg-[#E5212E] hover:text-white hover:border-[#E5212E] transition-all duration-300"
+                >
+                  View All Projects
+                  <ArrowUpRight size={15} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
+
         {/* CTA */}
         <ScrollReveal direction="up" threshold={0.1}>
           <section className="border border-[#E5212E]/20 bg-[#E5212E]/[0.04] rounded-2xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
@@ -155,13 +235,13 @@ export default async function ApproachPage() {
               <h3 className="text-lg font-semibold text-white">Let&apos;s work on something together.</h3>
               <p className="text-sm text-gray-500 mt-1">Tell me about your project and let&apos;s figure out the best way to move forward.</p>
             </div>
-            <Link
-              href="/#contact"
+            <a
+              href="mailto:satriyaxavier@gmail.com"
               className="flex items-center gap-2 px-6 py-3 bg-[#E5212E] text-white text-sm font-medium rounded-full hover:bg-[#c41a25] transition-colors whitespace-nowrap flex-shrink-0"
             >
+              <Mail size={15} />
               Get in Touch
-              <ArrowUpRight size={15} />
-            </Link>
+            </a>
           </section>
         </ScrollReveal>
 

@@ -2,7 +2,7 @@ export const revalidate = 0;
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Download, MapPin, Mail, Linkedin, Instagram } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, MapPin, Mail, Linkedin, Instagram, Github, Youtube, MessageCircle } from "lucide-react";
 import { getAboutContent } from "@/lib/about";
 import { getBeyondWork } from "@/lib/beyond-work";
 import { getCommunities } from "@/lib/communities";
@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   title: "About Me — Satriya Kurniawan",
   description: "A little more about who I am beyond the portfolio — hobbies, interests, and what drives me.",
 };
+
+function XLogo({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 
 function toDirectImageUrl(url: string): string {
   const match = url.match(/\/file\/d\/([^/]+)/);
@@ -226,21 +234,20 @@ export default async function AboutPage() {
           <div className="blur-blob absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E5212E] rounded-full blur-[200px] opacity-[0.06] pointer-events-none" />
 
           <div className="relative max-w-4xl mx-auto text-center">
-            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">Let&apos;s Collaborate</p>
+            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-6">{cta.label}</p>
 
             <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
-              Have a project<br />in mind<span className="text-[#E5212E]">?</span>
+              {cta.headline}
             </h2>
 
             <p className="text-gray-400 text-lg max-w-lg mx-auto leading-relaxed mb-10">
-              I&apos;m always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision. Let&apos;s build something great together.
+              {cta.body_text}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
               <a
                 href={`mailto:${cta.email}`}
-                className="flex items-center gap-2 bg-[#E5212E] text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-[#c41a25] transition-colors max-w-full overflow-hidden"
+                className="group flex items-center gap-2 bg-[#E5212E] text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-[#c41c28] transition-all duration-300 max-w-full overflow-hidden"
               >
                 <Mail size={16} className="flex-shrink-0" />
                 <span className="truncate">{cta.email}</span>
@@ -250,28 +257,39 @@ export default async function AboutPage() {
                 href={`https://wa.me/${cta.whatsapp_number}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 border border-white/10 text-gray-400 px-8 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-colors"
+                className="flex items-center gap-2 border border-white/10 text-gray-400 px-6 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-all duration-300"
               >
+                <MessageCircle size={16} className="flex-shrink-0" />
                 WhatsApp
               </a>
             </div>
 
-            <div className="grid grid-cols-2 sm:flex sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-14 pt-10 border-t border-white/[0.06]">
+            <div className="flex flex-row items-center justify-center gap-3 mt-14 pt-10 border-t border-white/[0.06]">
               {[
-                { label: "LinkedIn", icon: Linkedin, href: cta.linkedin_url },
-                { label: "Instagram", icon: Instagram, href: cta.instagram_url },
-                { label: "Behance", icon: null, text: "Be", href: cta.behance_url },
-                { label: "Dribbble", icon: null, text: "Dr", href: cta.dribbble_url },
-              ].map((s) => (
+                { label: "LinkedIn", icon: Linkedin, href: cta.linkedin_url, text: null, svg: null },
+                { label: "Instagram", icon: Instagram, href: cta.instagram_url, text: null, svg: null },
+                { label: "GitHub", icon: Github, href: cta.github_url, text: null, svg: null },
+                { label: "X", icon: null, href: cta.twitter_url, text: null, svg: XLogo },
+                { label: "YouTube", icon: Youtube, href: cta.youtube_url, text: null, svg: null },
+                { label: "Behance", icon: null, href: cta.behance_url, text: "Be", svg: null },
+                { label: "Dribbble", icon: null, href: cta.dribbble_url, text: "Dr", svg: null },
+                { label: "TikTok", icon: null, href: cta.tiktok_url, text: "Tt", svg: null },
+              ].filter((s) => s.href).map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-white transition-colors"
+                  aria-label={s.label}
+                  className="group flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 border border-transparent hover:text-white hover:bg-[#E5212E]/10 hover:border-[#E5212E]/40 transition-all duration-200"
                 >
-                  {s.icon ? <s.icon size={16} /> : <span className="text-sm font-bold">{s.text}</span>}
-                  {s.label}
+                  {s.icon ? (
+                    <s.icon size={16} />
+                  ) : s.svg ? (
+                    <s.svg size={16} />
+                  ) : (
+                    <span className="text-xs font-bold leading-none">{s.text}</span>
+                  )}
                 </a>
               ))}
             </div>
