@@ -3,7 +3,8 @@ export const revalidate = 3600;
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
+import { Clock, Calendar, Tag } from "lucide-react";
+import BackButton from "@/components/BackButton";
 import { getPost, getAllPosts, getAllSlugs } from "@/lib/blog";
 import type { Metadata } from "next";
 import ReadingProgressBar from "@/app/work/[slug]/_components/ReadingProgressBar";
@@ -81,13 +82,7 @@ export default async function BlogDetail({ params }: Props) {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
         <div className="max-w-3xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/#blog"
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={14} />
-            Back
-          </Link>
+          <BackButton />
           <div className="flex items-center gap-4">
             <ShareButton url={`https://angsaku.vercel.app/blog/${slug}`} title={post.title} />
             <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">

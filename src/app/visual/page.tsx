@@ -1,7 +1,7 @@
 export const revalidate = 3600;
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import BackButton from "@/components/BackButton";
 import { getVisualExplorations } from "@/lib/visual-explorations";
 import VisualPageGrid from "./_components/VisualPageGrid";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -22,13 +22,7 @@ export default async function VisualPage() {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/#visual"
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={14} />
-            Back
-          </Link>
+          <BackButton />
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" alt="Satriya Kurniawan" className="h-7 w-auto" width={28} height={28} />

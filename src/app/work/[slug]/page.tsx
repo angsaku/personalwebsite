@@ -3,7 +3,8 @@ export const revalidate = 0;
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import BackButton from "@/components/BackButton";
 import { getProject, getSelectedWork, getAllWorkSlugs } from "@/lib/selected-work";
 import GalleryLightbox from "./_components/GalleryLightbox";
 import SkillTag from "@/components/SkillTag";
@@ -90,13 +91,7 @@ export default async function WorkDetail({ params }: Props) {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/#work"
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={14} />
-            Back
-          </Link>
+          <BackButton />
           <div className="flex items-center gap-4">
             <ShareButton url={`https://angsaku.vercel.app/work/${slug}`} title={project.title} />
             <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">

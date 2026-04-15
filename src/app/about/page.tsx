@@ -2,7 +2,8 @@ export const revalidate = 0;
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Download, MapPin, Mail, Linkedin, Instagram, Github, Youtube, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Download, MapPin, Mail, Linkedin, Instagram, Github, Youtube, MessageCircle } from "lucide-react";
+import BackButton from "@/components/BackButton";
 import { getAboutContent } from "@/lib/about";
 import { getBeyondWork } from "@/lib/beyond-work";
 import { getCommunities } from "@/lib/communities";
@@ -49,13 +50,7 @@ export default async function AboutPage() {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/#about"
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={14} />
-            Back
-          </Link>
+          <BackButton />
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo.svg" alt="Satriya Kurniawan" className="h-7 w-auto" width={28} height={28} />

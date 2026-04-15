@@ -1,7 +1,7 @@
 export const revalidate = 0;
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import BackButton from "@/components/BackButton";
 import { getAllPosts } from "@/lib/blog";
 import BlogSearch from "@/components/BlogSearch";
 import type { Metadata } from "next";
@@ -19,13 +19,7 @@ export default async function BlogPage() {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link
-            href="/#blog"
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
-          >
-            <ArrowLeft size={14} />
-            Back
-          </Link>
+          <BackButton />
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
