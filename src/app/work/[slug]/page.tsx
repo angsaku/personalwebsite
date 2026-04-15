@@ -209,21 +209,21 @@ export default async function WorkDetail({ params }: Props) {
           <article className="md:col-span-9 space-y-16">
             {project.intro && (
               <section>
-                <h2 className="text-xl font-semibold text-white mb-4">Introduction</h2>
+                <h2 className="text-2xl font-semibold text-white mb-4">Introduction</h2>
                 <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.intro }} />
               </section>
             )}
 
             {project.challenge && (
               <section>
-                <h2 className="text-xl font-semibold text-white mb-4">The Challenge</h2>
+                <h2 className="text-2xl font-semibold text-white mb-4">The Challenge</h2>
                 <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.challenge }} />
               </section>
             )}
 
             {project.process.length > 0 && (
               <section>
-                <h2 className="text-xl font-semibold text-white mb-10">The Process</h2>
+                <h2 className="text-2xl font-semibold text-white mb-10">The Process</h2>
                 <div className="relative">
                   {/* Vertical timeline line */}
                   <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gradient-to-b from-[#E5212E]/40 via-[#E5212E]/10 to-transparent" />
@@ -270,7 +270,7 @@ export default async function WorkDetail({ params }: Props) {
 
             {project.outcome && (
               <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-8">
-                <h2 className="text-xl font-semibold text-white mb-4">Outcome & Learnings</h2>
+                <h2 className="text-2xl font-semibold text-white mb-4">Outcome & Learnings</h2>
                 <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.outcome }} />
               </section>
             )}

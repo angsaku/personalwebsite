@@ -29,6 +29,7 @@ export default function MiniEditor({ value, onChange, placeholder }: Props) {
         placeholder: placeholder ?? "Write here…",
         modules: {
           toolbar: [
+            [{ header: [1, 2, 3, false] }],
             ["bold", "italic"],
             [{ list: "ordered" }, { list: "bullet" }],
             ["clean"],
@@ -50,7 +51,7 @@ export default function MiniEditor({ value, onChange, placeholder }: Props) {
   }, []);
 
   return (
-    <div className="quill-wrapper rounded-xl overflow-hidden border border-white/[0.08]">
+    <div className="quill-wrapper rounded-xl border border-white/[0.08]">
       <div ref={containerRef} style={{ minHeight: "120px" }} />
     </div>
   );
