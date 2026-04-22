@@ -18,8 +18,9 @@ export async function logout() {
 export async function createPost(formData: FormData) {
   const supabase = createSupabaseAdmin();
 
+  const slug = formData.get("slug") as string;
   const { error } = await supabase.from("blog_posts").insert({
-    slug: formData.get("slug") as string,
+    slug,
     tag: formData.get("tag") as string,
     title: formData.get("title") as string,
     excerpt: formData.get("excerpt") as string,
@@ -31,16 +32,19 @@ export async function createPost(formData: FormData) {
   });
 
   if (error) return { error: error.message };
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${slug}`);
   redirect("/admin/posts");
 }
 
 export async function updatePost(id: string, formData: FormData) {
   const supabase = createSupabaseAdmin();
 
+  const slug = formData.get("slug") as string;
   const { error } = await supabase
     .from("blog_posts")
     .update({
-      slug: formData.get("slug") as string,
+      slug,
       tag: formData.get("tag") as string,
       title: formData.get("title") as string,
       excerpt: formData.get("excerpt") as string,
@@ -54,12 +58,15 @@ export async function updatePost(id: string, formData: FormData) {
     .eq("id", id);
 
   if (error) return { error: error.message };
+  revalidatePath("/blog");
+  revalidatePath(`/blog/${slug}`);
   redirect("/admin/posts");
 }
 
 export async function deletePost(id: string) {
   const supabase = createSupabaseAdmin();
   await supabase.from("blog_posts").delete().eq("id", id);
+  revalidatePath("/blog");
   redirect("/admin/posts");
 }
 
