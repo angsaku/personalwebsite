@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getClientLogos } from "@/lib/client-logos";
 
 export default async function ClientLogos() {
@@ -26,12 +27,11 @@ export default async function ClientLogos() {
             >
               <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
                 {client.logo_url ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={client.logo_url}
                     alt={client.name}
-                    loading="lazy"
-                    decoding="async"
+                    width={32}
+                    height={32}
                     className="w-full h-full object-contain"
                   />
                 ) : (
