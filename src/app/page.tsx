@@ -13,6 +13,7 @@ import Services from "@/components/Services";
 import PhotoDump from "@/components/PhotoDump";
 import Blog from "@/components/Blog";
 import Footer from "@/components/Footer";
+import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -64,6 +65,7 @@ export default function Home() {
       <PhotoDump />
       <Blog />
       <Footer />
+      <BackToTop />
     </main>
   );
 }

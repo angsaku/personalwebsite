@@ -8,6 +8,7 @@ import { getCommunities } from "@/lib/communities";
 import { getCtaContent } from "@/lib/cta";
 import { ICON_MAP } from "@/lib/icon-map";
 import RevealInit from "@/components/RevealInit";
+import ScrollToTop from "@/components/ScrollToTop";
 import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 import type { Metadata } from "next";
 
@@ -48,6 +49,7 @@ export default async function AboutPage() {
 
   return (
     <div className="sk-wd">
+      <ScrollToTop />
       <RevealInit />
 
       {/* ── Sticky topbar ── */}
