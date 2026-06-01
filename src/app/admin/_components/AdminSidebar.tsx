@@ -23,7 +23,7 @@ export default function AdminSidebar({ email }: { email: string }) {
     { label: "About", href: "/admin/about", icon: UserCircle },
     { label: "Services", href: "/admin/services", icon: Wrench },
     { label: "Experience", href: "/admin/experience", icon: Building2 },
-    { label: "Visual", href: "/admin/visual-explorations", icon: Layers },
+    { label: "Gallery", href: "/admin/visual-explorations", icon: Layers },
     { label: "Blog Posts", href: "/admin/posts", icon: FileText },
     { label: "CTA & Contact", href: "/admin/cta", icon: Mail },
     { label: "Beyond Work", href: "/admin/beyond-work", icon: Smile },

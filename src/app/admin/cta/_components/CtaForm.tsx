@@ -4,9 +4,6 @@ import { useState } from "react";
 import { upsertCtaContent } from "@/app/admin/actions";
 
 type CtaRow = {
-  label: string;
-  headline: string;
-  body_text: string;
   email: string;
   whatsapp_number: string;
   linkedin_url: string;
@@ -51,43 +48,6 @@ export default function CtaForm({ cta }: { cta: CtaRow | null }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl">
-      <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-6 space-y-4">
-        <h2 className="text-sm font-semibold text-white mb-2">Copy</h2>
-
-        <div>
-          <label className={labelCls}>Label (small text above headline)</label>
-          <input
-            name="label"
-            defaultValue={cta?.label ?? ""}
-            className={inputCls}
-            placeholder="Let's Collaborate"
-          />
-        </div>
-
-        <div>
-          <label className={labelCls}>Headline *</label>
-          <input
-            name="headline"
-            defaultValue={cta?.headline ?? ""}
-            required
-            className={inputCls}
-            placeholder="Have a project in mind?"
-          />
-        </div>
-
-        <div>
-          <label className={labelCls}>Body Text *</label>
-          <textarea
-            name="body_text"
-            defaultValue={cta?.body_text ?? ""}
-            required
-            rows={3}
-            className={`${inputCls} resize-none`}
-            placeholder="I'm always open to discussing new projects…"
-          />
-        </div>
-      </section>
-
       <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-6 space-y-4">
         <h2 className="text-sm font-semibold text-white mb-2">Contact</h2>
 
