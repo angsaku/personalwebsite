@@ -3,20 +3,16 @@ export const revalidate = 0;
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
-import BackButton from "@/components/BackButton";
 import { getProject, getSelectedWork, getAllWorkSlugs } from "@/lib/selected-work";
 import GalleryLightbox from "./_components/GalleryLightbox";
-import SkillTag from "@/components/SkillTag";
 import ReadingProgressBar from "./_components/ReadingProgressBar";
 import BackToTop from "./_components/BackToTop";
+import WorkList from "@/components/WorkList";
+import RevealInit from "@/components/RevealInit";
 import ScrollToTop from "@/components/ScrollToTop";
-import ShareButton from "@/components/ShareButton";
 import type { Metadata } from "next";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const slugs = await getAllWorkSlugs();
@@ -25,19 +21,19 @@ export async function generateStaticParams() {
 
 function isDirectImage(url: string | null | undefined): boolean {
   if (!url) return false;
-  // Only use images directly hosted (Supabase, CDN) — skip Google Drive redirects
-  return url.includes("supabase.co") || (url.startsWith("https://") && !url.includes("drive.google.com"));
+  return (
+    url.includes("supabase.co") ||
+    (url.startsWith("https://") && !url.includes("drive.google.com"))
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
-
   const rawImage =
     (isDirectImage(project.coverUrl) ? project.coverUrl : null) ??
     (isDirectImage(project.thumbnailUrl) ? project.thumbnailUrl : null);
-
   return {
     title: `${project.title} — Satriya Kurniawan`,
     description: project.description,
@@ -65,7 +61,7 @@ export default async function WorkDetail({ params }: Props) {
   ]);
   if (!project) notFound();
 
-  const related = allProjects.filter((p) => p.slug !== slug).slice(0, 2);
+  const related = allProjects.filter((p) => p.slug !== slug).slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -73,271 +69,199 @@ export default async function WorkDetail({ params }: Props) {
     name: project.title,
     description: project.description,
     url: `https://angsaku.vercel.app/work/${slug}`,
-    author: {
-      "@type": "Person",
-      name: "Satriya Kurniawan",
-      url: "https://angsaku.vercel.app",
-    },
+    author: { "@type": "Person", name: "Satriya Kurniawan", url: "https://angsaku.vercel.app" },
     ...(isDirectImage(project.coverUrl) && { image: project.coverUrl }),
   };
 
   return (
-    <div className="min-h-screen bg-[#020618] text-gray-200">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+    <div className="sk-wd">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ScrollToTop />
-      {/* Top bar */}
-      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06] relative">
-        <div className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-          <BackButton />
-          <div className="flex items-center gap-4">
-            <ShareButton url={`https://angsaku.vercel.app/work/${slug}`} title={project.title} />
-            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo.svg"
-                alt="Satriya Kurniawan"
-                className="h-7 w-auto"
-                width={28}
-                height={28}
-              />
-            </Link>
-          </div>
+      <RevealInit />
+
+      {/* ── Sticky topbar ── */}
+      <div className="sk-wd-topbar">
+        <Link href="/" className="sk-wd-logo" aria-label="Home">
+          <svg width="40" height="30" viewBox="0 0 40 30" fill="none">
+            <rect width="40" height="30" fill="var(--accent)" />
+            <text x="20" y="16" dominantBaseline="middle" textAnchor="middle"
+              fill="var(--bg)" fontFamily="var(--font-jetbrains-mono,monospace)"
+              fontWeight="800" fontSize="11" letterSpacing="2">SK</text>
+          </svg>
+        </Link>
+        <Link href="/#work" className="sk-wd-back sk-mono">← ALL WORK</Link>
+        <div className="sk-wd-topbar-title sk-mono">
+          ≈ {project.title.toUpperCase()}
+        </div>
+        <div className="sk-wd-topbar-meta sk-mono">
+          FILE / {project.number}
         </div>
         <ReadingProgressBar />
       </div>
 
-      {/* Hero */}
-      <div className="relative overflow-hidden border-b border-white/[0.06]">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-            backgroundSize: "64px 64px",
-          }}
-        />
-        <div className="blur-blob absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.08] pointer-events-none" />
-
-        <div className="relative max-w-4xl mx-auto px-6 py-20">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-xs text-[#E5212E] tracking-[0.25em] uppercase font-medium">
-              {project.category}
-            </span>
-            <span className="text-gray-700">·</span>
-            <span className="text-xs text-gray-600">{project.year}</span>
-          </div>
-
-          <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight mb-8 max-w-3xl">
-            {project.title}
-          </h1>
-
-          <p className="text-gray-400 text-lg leading-relaxed max-w-2xl">
-            {project.description}
-          </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 mt-8">
-            {project.tags.map((tag) => (
-              <SkillTag key={tag} label={tag} className="px-3 py-1.5 text-xs" />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Cover image */}
-      <div className="max-w-4xl mx-auto px-6 pt-12">
-        <div className="aspect-video rounded-2xl bg-[#0a1128] border border-white/[0.06] overflow-hidden flex items-center justify-center mb-16">
-          {project.coverUrl ? (
-            <Image
-              src={project.coverUrl}
-              alt={project.title}
-              width={1200}
-              height={675}
-              priority
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="text-center">
-              <div className="w-14 h-14 rounded-xl bg-[#E5212E]/10 border border-[#E5212E]/20 mx-auto mb-3 flex items-center justify-center">
-                <span className="text-[#E5212E] text-2xl">✦</span>
-              </div>
-              <p className="text-xs text-gray-700 tracking-wide">Cover Image / Hero Visual</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 pb-32">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
-          {/* Sidebar */}
-          <aside className="md:col-span-3 space-y-10">
-            {project.metrics.length > 0 && (
-              <div>
-                <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-4">Impact</p>
-                <div className="space-y-4">
-                  {project.metrics.map((m) => (
-                    <div key={m.label}>
-                      <p className="text-2xl font-bold text-[#E5212E]">{m.value}</p>
-                      <p className="text-xs text-gray-600 mt-0.5">{m.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {project.tools.length > 0 && (
-              <div>
-                <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-4">Tools Used</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tools.map((tool) => (
-                    <SkillTag key={tool} label={tool} className="px-3 py-1.5 text-xs" />
-                  ))}
-                </div>
-              </div>
-            )}
-          </aside>
-
-          {/* Main content */}
-          <article className="md:col-span-9 space-y-16">
-            {project.intro && (
-              <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">Introduction</h2>
-                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.intro }} />
-              </section>
-            )}
-
-            {project.challenge && (
-              <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">The Challenge</h2>
-                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.challenge }} />
-              </section>
-            )}
-
-            {project.process.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-semibold text-white mb-10">The Process</h2>
-                <div className="relative">
-                  {/* Vertical timeline line */}
-                  <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gradient-to-b from-[#E5212E]/40 via-[#E5212E]/10 to-transparent" />
-
-                  <div className="space-y-10">
-                    {project.process.map((step, i) => (
-                      <div key={i} className="relative flex gap-6 group">
-                        {/* Step number bubble */}
-                        <div className="relative flex-shrink-0 w-10 h-10 rounded-full bg-[#020618] border border-[#E5212E]/40 group-hover:border-[#E5212E] group-hover:bg-[#E5212E]/10 flex items-center justify-center transition-all duration-300 z-10">
-                          <span className="text-xs font-bold text-[#E5212E]">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                        </div>
-
-                        {/* Content card */}
-                        <div className="flex-1 pb-2">
-                          <div className="bg-[#0a1128] border border-white/[0.06] group-hover:border-[#E5212E]/20 rounded-2xl p-6 transition-all duration-300">
-                            <h3 className="text-base font-semibold text-white mb-3 group-hover:text-[#E5212E] transition-colors duration-300">
-                              {step.step}
-                            </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                              {step.description}
-                            </p>
-                            {step.image_url && (
-                              <div className="aspect-video rounded-xl overflow-hidden border border-white/[0.06] mt-5">
-                                <Image
-                                  src={step.image_url}
-                                  alt={step.step}
-                                  width={800}
-                                  height={450}
-                                  loading="lazy"
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {project.outcome && (
-              <section className="bg-[#0a1128] border border-white/[0.06] rounded-2xl p-8">
-                <h2 className="text-2xl font-semibold text-white mb-4">Outcome & Learnings</h2>
-                <div className="blog-content text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: project.outcome }} />
-              </section>
-            )}
-
-            {project.caseStudyUrl && (
-              <section className="border border-[#E5212E]/20 bg-[#E5212E]/[0.04] rounded-2xl p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                <div>
-                  <p className="text-xs text-[#E5212E] tracking-[0.25em] uppercase mb-2">Full Case Study</p>
-                  <h3 className="text-lg font-semibold text-white leading-snug">
-                    Want to see the full process?
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Read the in-depth breakdown — research, decisions, and outcomes.
-                  </p>
-                </div>
-                <a
-                  href={project.caseStudyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-6 py-3 bg-[#E5212E] text-white text-sm font-medium rounded-full hover:bg-[#c41a25] transition-colors whitespace-nowrap flex-shrink-0"
-                >
-                  Read Full Case Study
-                  <ArrowUpRight size={15} />
-                </a>
-              </section>
-            )}
-
-            {project.galleryImages.length > 0 && (
-              <section>
-                <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-4">Gallery</p>
-                <GalleryLightbox images={project.galleryImages} title={project.title} />
-              </section>
-            )}
-          </article>
+      {/* ── Hero ── */}
+      <section className="sk-wd-hero">
+        <div className="sk-section-tag sk-mono">
+          <span className="num">{project.number}</span>
+          <span>SELECTED WORK</span>
+          <span className="sk-line" />
+          <span>{project.category.toUpperCase()}</span>
+          <span>{project.year}</span>
         </div>
 
-        {/* Related projects */}
-        {related.length > 0 && (
-          <div className="border-t border-white/[0.06] mt-24 pt-12">
-            <p className="text-xs text-gray-600 tracking-[0.25em] uppercase mb-6">More Projects</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {related.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/work/${r.slug}`}
-                  className="group flex gap-4 p-5 bg-[#0a1128] border border-white/[0.06] rounded-xl hover:border-[#E5212E]/30 transition-colors"
-                >
-                  <div className="w-12 h-12 rounded-lg bg-[#E5212E]/10 border border-[#E5212E]/20 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                    {r.thumbnailUrl ? (
-                      <Image
-                        src={r.thumbnailUrl}
-                        alt={r.title}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-[#E5212E] text-sm font-bold">{r.number}</span>
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-xs text-[#E5212E] mb-1">{r.category}</p>
-                    <p className="text-sm text-white group-hover:text-[#E5212E] transition-colors font-medium leading-snug line-clamp-2">
-                      {r.title}
-                    </p>
-                  </div>
-                </Link>
+        <h1 className="sk-wd-title">
+          {project.title}
+        </h1>
+
+        <p className="sk-wd-desc sk-serif">{project.description}</p>
+
+        <div className="sk-skill-tags">
+          {project.tags.map((tag) => (
+            <span key={tag} className="sk-skill-tag sk-mono">{tag}</span>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Cover image ── */}
+      {project.coverUrl && (
+        <div className="sk-wd-cover">
+          <Image
+            src={project.coverUrl}
+            alt={project.title}
+            width={1400}
+            height={700}
+            priority
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        </div>
+      )}
+
+      {/* ── Body: sidebar + main ── */}
+      <div className="sk-wd-body">
+
+        {/* Sidebar */}
+        <aside className="sk-wd-sidebar">
+          {project.metrics.length > 0 && (
+            <div className="sk-wd-sidebar-block">
+              <div className="sk-wd-sidebar-label sk-mono">IMPACT</div>
+              {project.metrics.map((m) => (
+                <div key={m.label} className="sk-wd-metric">
+                  <div className="sk-wd-metric-val">{m.value}</div>
+                  <div className="sk-wd-metric-label sk-mono">{m.label}</div>
+                </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+
+          {project.tools.length > 0 && (
+            <div className="sk-wd-sidebar-block">
+              <div className="sk-wd-sidebar-label sk-mono">TOOLS</div>
+              <div className="sk-skill-tags" style={{ marginTop: 8 }}>
+                {project.tools.map((t) => (
+                  <span key={t} className="sk-skill-tag sk-mono">{t}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {project.caseStudyUrl && (
+            <div className="sk-wd-sidebar-block">
+              <div className="sk-wd-sidebar-label sk-mono">CASE STUDY</div>
+              <a
+                href={project.caseStudyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sk-btn-primary sk-mono"
+                style={{ fontSize: 10, padding: "10px 14px", marginTop: 4 }}
+              >
+                READ ↗
+              </a>
+            </div>
+          )}
+        </aside>
+
+        {/* Main content */}
+        <article className="sk-wd-main">
+
+          {project.intro && (
+            <div className="sk-wd-section">
+              <div className="sk-wd-section-label sk-mono">01 — INTRODUCTION</div>
+              <div className="sk-rich-text" dangerouslySetInnerHTML={{ __html: project.intro }} />
+            </div>
+          )}
+
+          {project.challenge && (
+            <div className="sk-wd-section">
+              <div className="sk-wd-section-label sk-mono">02 — THE CHALLENGE</div>
+              <div className="sk-rich-text" dangerouslySetInnerHTML={{ __html: project.challenge }} />
+            </div>
+          )}
+
+          {project.process.length > 0 && (
+            <div className="sk-wd-section">
+              <div className="sk-wd-section-label sk-mono">03 — THE PROCESS</div>
+              <div className="sk-wd-process">
+                {project.process.map((step, i) => (
+                  <div key={i} className="sk-wd-process-step">
+                    <div className="sk-wd-step-num sk-mono">{String(i + 1).padStart(2, "0")}</div>
+                    <div className="sk-wd-step-content">
+                      <h3 className="sk-wd-step-title">{step.step}</h3>
+                      <p className="sk-wd-step-desc sk-serif">{step.description}</p>
+                      {step.image_url && (
+                        <div className="sk-wd-step-img">
+                          <Image
+                            src={step.image_url}
+                            alt={step.step}
+                            width={800}
+                            height={450}
+                            loading="lazy"
+                            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {project.outcome && (
+            <div className="sk-wd-section">
+              <div className="sk-wd-section-label sk-mono">04 — OUTCOME &amp; LEARNINGS</div>
+              <div className="sk-rich-text" dangerouslySetInnerHTML={{ __html: project.outcome }} />
+            </div>
+          )}
+        </article>
       </div>
+
+      {/* ── Gallery ── */}
+      {project.galleryImages.length > 0 && (
+        <div className="sk-wd-gallery-section">
+          <div className="sk-wd-section-label sk-mono" style={{ marginBottom: 24 }}>
+            GALLERY / {project.galleryImages.length} SHOTS
+          </div>
+          <GalleryLightbox images={project.galleryImages} title={project.title} />
+        </div>
+      )}
+
+      {/* ── Related projects ── */}
+      {related.length > 0 && (
+        <section className="sk-wd-related">
+          <div className="sk-section-tag sk-mono" style={{ padding: "0 40px" }}>
+            <span>MORE PROJECTS</span>
+            <span className="sk-line" />
+            <span>{related.length} ENTRIES</span>
+          </div>
+          <WorkList projects={related} />
+          <div style={{ padding: "24px 40px 0", borderTop: "1px solid var(--line)" }}>
+            <Link href="/#work" className="sk-btn-ghost sk-mono">
+              ← BACK TO HOME <span></span>
+            </Link>
+          </div>
+        </section>
+      )}
+
       <BackToTop />
     </div>
   );

@@ -1,78 +1,53 @@
-import { getHeroContent } from "@/lib/hero";
-import HeroButtons from "@/components/HeroButtons";
-import HeroFlipWordClient from "@/components/HeroFlipWordClient";
-import HeroRings from "@/components/HeroRings";
+import Navbar from "@/components/Navbar";
 
-export default async function Hero() {
-  const hero = await getHeroContent();
-
-  const stats = [
-    { value: hero.yearsExperience, label: "Years of Experience" },
-    { value: hero.projectsDelivered, label: "Projects Delivered" },
-    { value: hero.happyClients, label: "Happy Clients" },
-  ];
-
+export default function Hero() {
   return (
-    <section className="relative xl:min-h-screen flex flex-col justify-center xl:justify-end py-32 pt-24 md:py-28 md:pt-24 lg:py-24 lg:pt-28 xl:pb-20 xl:pt-20 px-6 overflow-hidden">
-      {/* Background grid */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-          backgroundSize: "80px 80px",
-        }}
-      />
+    <section className="sk-hero">
+      <Navbar />
 
-      {/* Decorative rings */}
-      <HeroRings />
+      <h1 className="sk-hero-name">
+        <span className="row sk-glitch sk-shake" data-text="SATRIYA">SATRIYA</span>
+        <span className="row right outlined sk-glitch" data-text="KURNIA">
+          KURNIA<span className="accent">—</span>
+        </span>
+        <span className="row indent sk-shake sk-glitch" data-text="WAN.">
+          WAN<span className="accent">.</span>
+        </span>
+      </h1>
 
-      {/* Bottom-left subtle cross accent */}
-      <div className="absolute bottom-16 left-8 pointer-events-none hidden lg:block opacity-20">
-        <div className="relative w-8 h-8">
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-[#E5212E]" />
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-[#E5212E]" />
-        </div>
+      <div className="sk-hero-meta tl sk-mono">
+        <b>FILE/01</b>
+        <br />
+        product designer—
+        <br />
+        shaping interfaces &amp; products
+        <br />
+        people actually use.
       </div>
 
-      <div className="relative max-w-6xl mx-auto w-full">
-        {/* Badge */}
-        <div className="fade-up delay-1 inline-flex items-center gap-2 mb-8">
-          <span className="w-2 h-2 rounded-full bg-[#E5212E] animate-pulse" />
-          <span className="text-xs text-gray-400 tracking-[0.08em] md:tracking-[0.2em] uppercase">
-            Available for projects
-          </span>
-        </div>
+      <div
+        className="sk-hero-stamp sk-mono"
+        style={{ top: "12vh", right: "22vw" }}
+      >
+        ★ FILE_NOT_FOUND ★
+      </div>
+      <div
+        className="sk-hero-stamp sk-mono"
+        style={{
+          top: "44vh",
+          left: "8vw",
+          transform: "rotate(8deg)",
+        }}
+      >
+        SCROLL ↓ AT OWN RISK
+      </div>
 
-        {/* Headline */}
-        <h1 className="fade-up delay-2 text-[2.75rem] md:text-7xl lg:text-8xl font-bold leading-[1.15] tracking-tight mb-8">
-          <span className="text-white block">Crafting</span>
-          <span className="block">
-            <HeroFlipWordClient />
-          </span>
-          <span className="block">
-            <span className="text-white">That Matter</span>
-            <span className="text-[#E5212E]">.</span>
-          </span>
-        </h1>
-
-        {/* Sub row */}
-        <div className="fade-up delay-3 flex flex-col md:flex-row md:items-end justify-between gap-8 mt-2">
-          <p className="text-gray-400 text-base md:text-lg max-w-md leading-relaxed">
-            {hero.shortDescription}
-          </p>
-
-          <HeroButtons />
-        </div>
-
-        {/* Stats */}
-        <div className="fade-up delay-4 grid grid-cols-3 gap-6 mt-16 pt-10 border-t border-white/[0.06]">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl md:text-4xl font-bold text-white">{stat.value}</p>
-              <p className="text-xs text-gray-500 mt-1 tracking-wide">{stat.label}</p>
-            </div>
-          ))}
-        </div>
+      <div className="sk-hero-tag">
+        <span className="ar">¶</span>
+        <span>
+          I design products, brands, and the occasional bad pun. Sharp, specific,
+          &amp; shaped by hand not a template.
+        </span>
       </div>
     </section>
   );
