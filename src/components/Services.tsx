@@ -1,66 +1,41 @@
 import { getServices } from "@/lib/services";
-import SkillTag from "@/components/SkillTag";
-import ServiceEasterEggTrigger from "@/components/ServiceEasterEggTrigger";
 
 export default async function Services() {
   const services = await getServices();
 
   return (
-    <section id="services" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
-          <div>
-            <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-3">
-              Services
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-              What <ServiceEasterEggTrigger />
-            </h2>
-          </div>
-          <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
-            From pixels to strategy a range of design and management services
-            tailored to your product needs.
-          </p>
-        </div>
+    <section className="sk-section" id="services">
+      <div className="sk-section-tag sk-mono">
+        <span className="num">04</span>
+        <span>SERVICES / WHAT I DO FOR MONEY</span>
+        <span className="sk-line" />
+        <span>OPEN FOR PROJECTS ●</span>
+      </div>
 
-        {/* Service list */}
-        <div className="divide-y divide-white/[0.06]">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="group relative grid grid-cols-1 md:grid-cols-12 gap-6 py-10 -mx-4 px-4 transition-colors duration-300"
-            >
-              {/* Animated bottom border — sweeps left to right on hover */}
-              <span className="service-sweep absolute bottom-0 left-0 right-0 h-px bg-[#E5212E]" />
-              {/* Number */}
-              <div className="md:col-span-1">
-                <span className="text-xs text-[#E5212E]/50 font-mono group-hover:text-[#E5212E] transition-colors">
-                  {service.number}
-                </span>
-              </div>
-
-              {/* Title */}
-              <div className="md:col-span-4">
-                <h3 className="text-xl md:text-2xl font-semibold text-white group-hover:text-[#E5212E] transition-colors leading-snug">
-                  {service.title}
-                </h3>
-              </div>
-
-              {/* Description + tags */}
-              <div className="md:col-span-7 space-y-4">
-                <p className="text-gray-500 text-sm leading-relaxed">
-                  {service.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {service.tags.map((tag) => (
-                    <SkillTag key={tag} label={tag} className="px-3 py-1 text-xs" />
-                  ))}
-                </div>
-              </div>
+      <div className="sk-services-grid">
+        {services.map((s, i) => (
+          <article
+            key={s.id}
+            className="sk-service-card rv"
+            data-cursor="hover"
+            data-cursor-label="✷ inquire"
+          >
+            <div className="s-head sk-mono">
+              <span className="s-num">{s.number} ↗</span>
             </div>
-          ))}
-        </div>
+            <h3 className="s-title">{s.title}</h3>
+            <p className="s-blurb sk-serif">{s.description}</p>
+            <ul className="s-list sk-mono">
+              {s.tags.map((tag) => (
+                <li key={tag}>— {tag}</li>
+              ))}
+            </ul>
+            <div className="s-foot sk-mono">
+              <span>PROJECT-BASED</span>
+              <span className="s-cta">START PROJECT →</span>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

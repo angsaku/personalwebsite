@@ -9,6 +9,17 @@ export interface AboutContent {
   resumeUrl: string | null;
 }
 
+function toDirectImageUrl(url: string | null): string | null {
+  if (!url) return null;
+  // https://drive.google.com/file/d/FILE_ID/view…  →  uc?export=view&id=FILE_ID
+  const fileMatch = url.match(/\/file\/d\/([^/?]+)/);
+  if (fileMatch) return `https://drive.google.com/uc?export=view&id=${fileMatch[1]}`;
+  // Already a direct id query-param form
+  const idMatch = url.match(/[?&]id=([^&]+)/);
+  if (idMatch) return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+  return url;
+}
+
 const fallback: AboutContent = {
   heading: "Designing with purpose",
   bioParagraph1:
@@ -48,7 +59,7 @@ export async function getAboutContent(): Promise<AboutContent> {
     bioParagraph1: row.bio_paragraph_1,
     bioParagraph2: row.bio_paragraph_2,
     skills: row.skills,
-    photoUrl: row.photo_url,
+    photoUrl: toDirectImageUrl(row.photo_url),
     resumeUrl: row.resume_url ?? null,
   };
 }

@@ -1,29 +1,38 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Script from "next/script";
 
-const geist = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
 });
 
 const BASE_URL = "https://angsaku.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
-  alternates: {
-    canonical: BASE_URL,
-  },
-  title: "Satriya Kurniawan — Professional Designer",
+  alternates: { canonical: BASE_URL },
+  title: "Satriya Kurniawan — Product Designer",
   description: "Product Designer crafting meaningful digital experiences.",
-  icons: {
-    icon: "/logo.svg",
-    shortcut: "/logo.svg",
-  },
+  icons: { icon: "/logo.svg", shortcut: "/logo.svg" },
   openGraph: {
     title: "Satriya Kurniawan — Product Designer",
     description: "Product Designer crafting meaningful digital experiences that bridge business goals with human needs.",
@@ -42,16 +51,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fzjpbihupkiggcdvynua.supabase.co" />
         <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
       </head>
-      <body className={`${geist.variable} font-sans antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}>
         <Providers>{children}</Providers>
         <Analytics />
         <SpeedInsights />

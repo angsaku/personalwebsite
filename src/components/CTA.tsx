@@ -36,7 +36,7 @@ export default async function CTA() {
         </p>
 
         <h2 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-8">
-          {cta.headline}
+          <span className="sk-glitch sk-glitch-solid sk-shake block" data-text={cta.headline}>{cta.headline}</span>
         </h2>
 
         <p className="text-gray-400 text-lg max-w-lg mx-auto leading-relaxed mb-12">

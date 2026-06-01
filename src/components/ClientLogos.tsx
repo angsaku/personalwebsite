@@ -1,49 +1,54 @@
 import Image from "next/image";
 import { getClientLogos } from "@/lib/client-logos";
 
+const IMAGE_EXTS = /\.(jpe?g|png|gif|webp|avif|svg)(\?|$)/i;
+function isImageUrl(url: string | null): url is string {
+  if (!url) return false;
+  return IMAGE_EXTS.test(url);
+}
+
 export default async function ClientLogos() {
   const clients = await getClientLogos();
-  const doubled = [...clients, ...clients];
 
   return (
-    <section className="py-16 border-y border-white/[0.06] overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 mb-8">
-        <p className="text-xs text-gray-600 tracking-[0.3em] uppercase text-center">
-          Trusted by forward-thinking companies
-        </p>
+    <section className="sk-clients">
+      <div className="sk-clients-head sk-mono">
+        <span>★ TRUSTED BY / CLIENTS &amp; COLLABORATORS</span>
+        <span className="sk-clients-line" />
+        <span>{clients.length} CLIENTS · &amp; COUNTING</span>
       </div>
 
-      {/* Marquee */}
-      <div className="relative marquee-wrapper">
-        {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#020618] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#020618] to-transparent z-10 pointer-events-none" />
-
-        <div className="flex gap-12 animate-marquee whitespace-nowrap">
-          {doubled.map((client, i) => (
-            <div
-              key={`${client.id}-${i}`}
-              className="inline-flex items-center gap-3 text-gray-600 hover:text-gray-400 transition-colors cursor-default select-none"
-            >
-              <div className="w-8 h-8 rounded border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                {client.logo_url ? (
-                  <Image
-                    src={client.logo_url}
-                    alt={client.name}
-                    width={32}
-                    height={32}
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <span className="text-[10px] font-bold text-gray-500">
-                    {client.name.charAt(0)}
-                  </span>
-                )}
+      <div className="sk-clients-row">
+        {clients.map((c) => (
+          <div
+            key={c.id}
+            className="sk-client sk-client-logo-wrap"
+            data-cursor="hover"
+            data-cursor-label="↘ client"
+            title={c.name}
+          >
+            {isImageUrl(c.logo_url) ? (
+              <div className="sk-client-img-box">
+                <Image
+                  src={c.logo_url}
+                  alt={c.name}
+                  width={80}
+                  height={40}
+                  style={{
+                    objectFit: "contain",
+                    objectPosition: "center",
+                    filter: "grayscale(1) brightness(0.6)",
+                    transition: "filter .2s",
+                  }}
+                  className="sk-client-logo-img"
+                />
               </div>
-              <span className="text-sm font-medium tracking-wide">{client.name}</span>
-            </div>
-          ))}
-        </div>
+            ) : (
+              /* text wordmark fallback */
+              <span className="sk-client-mono">{c.name}</span>
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );

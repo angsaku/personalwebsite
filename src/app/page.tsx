@@ -1,20 +1,18 @@
 export const revalidate = 0;
 
-import Navbar from "@/components/Navbar";
+import GrainOverlay from "@/components/GrainOverlay";
+import Cursor from "@/components/Cursor";
+import RevealInit from "@/components/RevealInit";
 import Hero from "@/components/Hero";
-import ClientLogos from "@/components/ClientLogos";
+import MarqueeBar from "@/components/MarqueeBar";
 import SelectedWork from "@/components/SelectedWork";
+import ClientLogos from "@/components/ClientLogos";
 import About from "@/components/About";
-import Services from "@/components/Services";
 import Experience from "@/components/Experience";
-import VisualExploration from "@/components/VisualExploration";
-import Testimonials from "@/components/Testimonials";
+import Services from "@/components/Services";
+import PhotoDump from "@/components/PhotoDump";
 import Blog from "@/components/Blog";
-import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import ScrollReveal from "@/components/ScrollReveal";
-import ScrollToTop from "@/components/ScrollToTop";
-import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -35,7 +33,7 @@ const websiteJsonLd = {
 
 export default function Home() {
   return (
-    <main className="relative">
+    <main>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -44,52 +42,28 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
-      <ScrollToTop />
-      <div className="md:hidden">
-        <BackToTop />
-      </div>
-      <Navbar />
+
+      {/* Fixed overlays */}
+      <GrainOverlay />
+      <Cursor />
+      <RevealInit />
+
+      {/* Page sections */}
       <Hero />
 
-      <ScrollReveal direction="up" threshold={0.15}>
-        <ClientLogos />
-      </ScrollReveal>
+      <MarqueeBar
+        thick
+        items={["SCROLL", "MORE", "SCROLL", "FURTHER", "AGAIN", "DEEPER"]}
+      />
 
-      <ScrollReveal direction="up" threshold={0.08}>
-        <SelectedWork />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.08}>
-        <About />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.06}>
-        <Services />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.06}>
-        <Experience />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.06}>
-        <VisualExploration />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.08}>
-        <Testimonials />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.08}>
-        <Blog />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.12}>
-        <CTA />
-      </ScrollReveal>
-
-      <ScrollReveal direction="up" threshold={0.05}>
-        <Footer />
-      </ScrollReveal>
+      <SelectedWork />
+      <ClientLogos />
+      <About />
+      <Experience />
+      <Services />
+      <PhotoDump />
+      <Blog />
+      <Footer />
     </main>
   );
 }

@@ -1,9 +1,9 @@
 export const revalidate = 0;
 
 import Link from "next/link";
-import BackButton from "@/components/BackButton";
 import { getSelectedWork } from "@/lib/selected-work";
 import WorkList from "@/components/WorkList";
+import RevealInit from "@/components/RevealInit";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -14,52 +14,68 @@ export const metadata: Metadata = {
 export default async function WorkPage() {
   const projects = await getSelectedWork();
 
+  /* Collect unique categories for the meta line */
+  const categories = Array.from(new Set(projects.map((p) => p.category.split("·")[0].trim())));
+
   return (
-    <div className="min-h-screen bg-[#020618] text-gray-200">
-      {/* Top bar */}
-      <div className="sticky top-0 z-50 bg-[#020618]/90 backdrop-blur-md border-b border-white/[0.06]">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <BackButton />
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.svg"
-              alt="Satriya Kurniawan"
-              className="h-7 w-auto"
-              width={28}
-              height={28}
-            />
-          </Link>
-        </div>
+    <div className="sk-wd">
+      <RevealInit />
+
+      {/* ── Sticky topbar ── */}
+      <div className="sk-wd-topbar">
+        <Link href="/" className="sk-wd-logo" aria-label="Home">
+          <svg width="40" height="30" viewBox="0 0 40 30" fill="none">
+            <rect width="40" height="30" fill="var(--accent)" />
+            <text x="20" y="16" dominantBaseline="middle" textAnchor="middle"
+              fill="var(--bg)" fontFamily="var(--font-jetbrains-mono,monospace)"
+              fontWeight="800" fontSize="11" letterSpacing="2">SK</text>
+          </svg>
+        </Link>
+        <Link href="/" className="sk-wd-back sk-mono">← HOME</Link>
+        <div className="sk-wd-topbar-title sk-mono">SELECTED WORK / ALL PROJECTS</div>
+        <div className="sk-wd-topbar-meta sk-mono">FILE / 01</div>
       </div>
 
-      {/* Hero */}
-      <div className="relative overflow-hidden border-b border-white/[0.06]">
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
-            backgroundSize: "64px 64px",
-          }}
-        />
-        <div className="blur-blob absolute top-0 right-1/4 w-80 h-80 bg-[#E5212E] rounded-full blur-[180px] opacity-[0.07] pointer-events-none" />
-
-        <div className="relative max-w-6xl mx-auto px-6 py-16">
-          <p className="text-xs text-[#E5212E] tracking-[0.3em] uppercase mb-4">
-            Selected Work
-          </p>
-          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
-            All Projects<span className="text-[#E5212E]">.</span>
-          </h1>
-          <p className="text-gray-400 text-lg max-w-xl leading-relaxed">
-            A full collection of design projects spanning mobile, web, and enterprise products.
-          </p>
+      {/* ── Hero ── */}
+      <section className="sk-wd-hero">
+        <div className="sk-section-tag sk-mono">
+          <span className="num">01</span>
+          <span>SELECTED WORK</span>
+          <span className="sk-line" />
+          <span>{projects.length} ENTRIES ↓</span>
         </div>
-      </div>
 
-      {/* Project list */}
-      <div className="max-w-6xl mx-auto px-6 py-16 pb-32">
-        <WorkList projects={projects} />
+        <h1 className="sk-wd-title">
+          ALL
+          <br />
+          PROJECTS.
+        </h1>
+
+        <p className="sk-wd-desc sk-serif">
+          A full collection of design work spanning mobile, web, and enterprise products.
+        </p>
+
+        {/* Category tags */}
+        {categories.length > 0 && (
+          <div className="sk-skill-tags" style={{ marginTop: 0 }}>
+            {categories.map((c) => (
+              <span key={c} className="sk-skill-tag sk-mono">{c}</span>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ── Project list ── */}
+      <WorkList projects={projects} />
+
+      {/* ── Footer nav ── */}
+      <div className="sk-wd-work-foot">
+        <Link href="/" className="sk-btn-ghost sk-mono">
+          ← BACK TO HOME <span></span>
+        </Link>
+        <Link href="/blog" className="sk-btn-ghost sk-mono">
+          BLOG / NOTES <span>→</span>
+        </Link>
       </div>
     </div>
   );

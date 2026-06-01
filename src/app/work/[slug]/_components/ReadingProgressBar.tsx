@@ -7,7 +7,6 @@ export default function ReadingProgressBar() {
 
   useEffect(() => {
     let rafId: number;
-
     function update() {
       rafId = requestAnimationFrame(() => {
         const scrollTop = window.scrollY;
@@ -15,7 +14,6 @@ export default function ReadingProgressBar() {
         setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
       });
     }
-
     window.addEventListener("scroll", update, { passive: true });
     return () => {
       window.removeEventListener("scroll", update);
@@ -24,9 +22,11 @@ export default function ReadingProgressBar() {
   }, []);
 
   return (
-    <div
-      className="absolute bottom-0 left-0 h-[2px] bg-[#E5212E] will-change-transform"
-      style={{ width: `${progress}%`, transition: "width 0.1s linear" }}
-    />
+    <div className="sk-wd-progress-track">
+      <div
+        className="sk-wd-progress-fill"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
   );
 }
