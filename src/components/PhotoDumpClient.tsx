@@ -76,7 +76,7 @@ export default function PhotoDumpClient({ items }: { items: VisualItem[] }) {
         )
       );
     };
-    const up = (e: MouseEvent) => {
+    const up = (_e: MouseEvent) => {
       if (dragging.current) {
         const { id, moved } = dragging.current;
         setTiles((ts) => ts.map((t) => (t.id === id ? { ...t, dragging: false } : t)));

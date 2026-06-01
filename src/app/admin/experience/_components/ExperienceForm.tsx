@@ -119,7 +119,7 @@ export default function ExperienceForm({ experience }: { experience?: Exp }) {
           <div className="flex items-center justify-between bg-[#020618] border border-white/[0.08] rounded-xl px-4 py-3">
             <div>
               <p className="text-sm text-white">Current Position</p>
-              <p className="text-xs text-gray-600 mt-0.5">Shows a pulsing "Current" badge on the experience section</p>
+              <p className="text-xs text-gray-600 mt-0.5">Shows a pulsing &quot;Current&quot; badge on the experience section</p>
             </div>
             <button
               type="button"

@@ -30,6 +30,7 @@ export default function HeroFlipWord({ fallback: _ }: { fallback?: string }) {
       el.textContent = word;
       max = Math.max(max, el.offsetWidth);
     });
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMinWidth(max);
     // Start deleting the first word to kick off the loop
     const t = setTimeout(() => setDeleting(true), PAUSE_AFTER_TYPE);
