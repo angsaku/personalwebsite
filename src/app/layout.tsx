@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/next";
@@ -18,10 +18,10 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const instrumentSerif = Instrument_Serif({
+const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-instrument-serif",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
 
@@ -58,7 +58,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fzjpbihupkiggcdvynua.supabase.co" />
         <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
       </head>
-      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${plusJakartaSans.variable} antialiased`} suppressHydrationWarning>
         <Providers>{children}</Providers>
         <Analytics />
         <SpeedInsights />

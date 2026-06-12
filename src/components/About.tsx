@@ -25,6 +25,7 @@ export default async function About() {
                   src={about.photoUrl}
                   alt="Satriya Kurniawan"
                   fill
+                  unoptimized
                   style={{ objectFit: "cover" }}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   priority

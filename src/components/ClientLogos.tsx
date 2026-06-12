@@ -34,6 +34,7 @@ export default async function ClientLogos() {
                   alt={c.name}
                   width={80}
                   height={40}
+                  unoptimized
                   style={{
                     objectFit: "contain",
                     objectPosition: "center",

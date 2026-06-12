@@ -3,29 +3,12 @@ export default function Navbar() {
     <div className="sk-topbar">
       {/* Logo mark */}
       <div className="sk-topbar-logo">
-        <svg
-          width="48"
-          height="36"
-          viewBox="0 0 48 36"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-label="Satriya Kurniawan"
-        >
-          <rect width="48" height="36" fill="var(--accent)" />
-          <text
-            x="24"
-            y="19"
-            dominantBaseline="middle"
-            textAnchor="middle"
-            fill="var(--bg)"
-            fontFamily="var(--font-jetbrains-mono, monospace)"
-            fontWeight="800"
-            fontSize="13"
-            letterSpacing="2"
-          >
-            SK
-          </text>
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-sk.svg"
+          alt="Satriya Kurniawan"
+          style={{ display: "block", height: "40px", width: "auto" }}
+        />
       </div>
 
       <nav className="nav">

@@ -110,6 +110,7 @@ export default async function BlogDetail({ params }: Props) {
             width={1400}
             height={600}
             priority
+            unoptimized
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         </div>

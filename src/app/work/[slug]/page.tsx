@@ -131,6 +131,7 @@ export default async function WorkDetail({ params }: Props) {
             width={1400}
             height={700}
             priority
+            unoptimized
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           />
         </div>
@@ -215,6 +216,7 @@ export default async function WorkDetail({ params }: Props) {
                             width={800}
                             height={450}
                             loading="lazy"
+                            unoptimized
                             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                           />
                         </div>

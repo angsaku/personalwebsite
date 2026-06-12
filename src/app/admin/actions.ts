@@ -518,3 +518,23 @@ export async function upsertCtaContent(formData: FormData) {
   revalidatePath("/");
   return { success: true };
 }
+
+/* ── Inquiry Form ─────────────────────────────────── */
+
+export async function submitInquiry(formData: FormData) {
+  const name         = (formData.get("name") as string).trim();
+  const email        = (formData.get("email") as string).trim();
+  const project_type = (formData.get("project_type") as string) || null;
+  const budget       = (formData.get("budget") as string) || null;
+  const message      = (formData.get("message") as string).trim();
+
+  if (!name || !email || !message) return { error: "Name, email and message are required." };
+
+  const supabase = createSupabaseAdmin();
+  const { error: dbError } = await supabase.from("inquiries").insert({
+    name, email, project_type, budget, message,
+  });
+  if (dbError) return { error: dbError.message };
+
+  return { success: true };
+}
