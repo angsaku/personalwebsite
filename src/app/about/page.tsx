@@ -86,8 +86,8 @@ export default async function AboutPage() {
                     src={about.photoUrl}
                     alt="Satriya Kurniawan"
                     fill
+                    unoptimized
                     style={{ objectFit: "cover" }}
-                    sizes="(max-width: 768px) 100vw, 33vw"
                     priority
                   />
                   <div className="ph-corner tl sk-mono" style={{ zIndex: 1 }}>+</div>

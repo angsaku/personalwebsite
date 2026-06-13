@@ -2,7 +2,7 @@ export const revalidate = 0;
 
 import Link from "next/link";
 import { getSelectedWork } from "@/lib/selected-work";
-import WorkList from "@/components/WorkList";
+import WorkSearch from "@/components/WorkSearch";
 import RevealInit from "@/components/RevealInit";
 import type { Metadata } from "next";
 
@@ -65,17 +65,9 @@ export default async function WorkPage() {
         )}
       </section>
 
-      {/* ── Project list ── */}
-      <WorkList projects={projects} />
-
-      {/* ── Footer nav ── */}
-      <div className="sk-wd-work-foot">
-        <Link href="/" className="sk-btn-ghost sk-mono">
-          ← BACK TO HOME <span></span>
-        </Link>
-        <Link href="/blog" className="sk-btn-ghost sk-mono">
-          BLOG / NOTES <span>→</span>
-        </Link>
+      {/* ── Search + paginated list ── */}
+      <div style={{ padding: "0 40px 80px" }}>
+        <WorkSearch projects={projects} />
       </div>
     </div>
   );
