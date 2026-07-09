@@ -243,6 +243,49 @@ export type Database = {
         Update: { name?: string; role?: string; period?: string; description?: string; logo_url?: string | null; sort_order?: number };
         Relationships: [];
       };
+      templates: {
+        Row: {
+          id: string;
+          title: string;
+          description: string;
+          platform: string;
+          thumbnail_url: string | null;
+          template_url: string;
+          price: string;
+          tags: string[];
+          published: boolean;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          description?: string;
+          platform?: string;
+          thumbnail_url?: string | null;
+          template_url?: string;
+          price?: string;
+          tags?: string[];
+          published?: boolean;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          title?: string;
+          description?: string;
+          platform?: string;
+          thumbnail_url?: string | null;
+          template_url?: string;
+          price?: string;
+          tags?: string[];
+          published?: boolean;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

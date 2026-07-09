@@ -12,6 +12,7 @@ import Experience from "@/components/Experience";
 import Services from "@/components/Services";
 import PhotoDump from "@/components/PhotoDump";
 import Blog from "@/components/Blog";
+import Templates from "@/components/Templates";
 import Footer from "@/components/Footer";
 import BackToTop from "@/app/work/[slug]/_components/BackToTop";
 
@@ -64,6 +65,7 @@ export default function Home() {
       <Services />
       <PhotoDump />
       <Blog />
+      <Templates />
       <Footer />
       <BackToTop />
     </main>

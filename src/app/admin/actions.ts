@@ -519,6 +519,72 @@ export async function upsertCtaContent(formData: FormData) {
   return { success: true };
 }
 
+/* ── Templates ───────────────────────────────────── */
+
+export async function createTemplate(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+  const tags = ((formData.get("tags") as string) ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  const { error } = await supabase.from("templates").insert({
+    title: formData.get("title") as string,
+    description: formData.get("description") as string,
+    platform: formData.get("platform") as string,
+    thumbnail_url: (formData.get("thumbnail_url") as string) || null,
+    template_url: formData.get("template_url") as string,
+    price: (formData.get("price") as string) || "Free",
+    tags,
+    published: formData.get("published") === "true",
+    sort_order: Number(formData.get("sort_order") || 0),
+  });
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/templates");
+}
+
+export async function updateTemplate(id: string, formData: FormData) {
+  const supabase = createSupabaseAdmin();
+  const tags = ((formData.get("tags") as string) ?? "")
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+
+  const { error } = await supabase
+    .from("templates")
+    .update({
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      platform: formData.get("platform") as string,
+      thumbnail_url: (formData.get("thumbnail_url") as string) || null,
+      template_url: formData.get("template_url") as string,
+      price: (formData.get("price") as string) || "Free",
+      tags,
+      published: formData.get("published") === "true",
+      sort_order: Number(formData.get("sort_order") || 0),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/templates");
+}
+
+export async function deleteTemplate(id: string) {
+  const supabase = createSupabaseAdmin();
+  await supabase.from("templates").delete().eq("id", id);
+  revalidatePath("/");
+  redirect("/admin/templates");
+}
+
+export async function toggleTemplatePublish(id: string, published: boolean) {
+  const supabase = createSupabaseAdmin();
+  await supabase.from("templates").update({ published: !published }).eq("id", id);
+}
+
 /* ── Inquiry Form ─────────────────────────────────── */
 
 export async function submitInquiry(formData: FormData) {

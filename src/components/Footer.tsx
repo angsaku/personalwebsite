@@ -43,7 +43,7 @@ export default async function Footer() {
   return (
     <section className="sk-contact" id="contact">
       <div className="sk-section-tag sk-mono">
-        <span className="num">07</span>
+        <span className="num">08</span>
         <span>CONTACT / SAY SOMETHING</span>
         <span className="sk-line" />
         <span>END OF FILE</span>

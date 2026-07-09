@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, Zap, UserCircle, Mail } from "lucide-react";
+import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, Zap, UserCircle, Mail, Inbox, LayoutTemplate } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 
@@ -25,7 +25,9 @@ export default function AdminSidebar({ email }: { email: string }) {
     { label: "Experience", href: "/admin/experience", icon: Building2 },
     { label: "Gallery", href: "/admin/visual-explorations", icon: Layers },
     { label: "Blog Posts", href: "/admin/posts", icon: FileText },
+    { label: "Templates", href: "/admin/templates", icon: LayoutTemplate },
     { label: "CTA & Contact", href: "/admin/cta", icon: Mail },
+    { label: "Inquiries", href: "/admin/inquiries", icon: Inbox },
     { label: "Beyond Work", href: "/admin/beyond-work", icon: Smile },
     { label: "Communities", href: "/admin/communities", icon: Users },
   ];
