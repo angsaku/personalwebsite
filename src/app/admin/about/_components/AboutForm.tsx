@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { upsertAboutContent } from "@/app/admin/actions";
 
 type AboutRow = {
@@ -13,6 +14,7 @@ type AboutRow = {
 };
 
 export default function AboutForm({ about }: { about: AboutRow | null }) {
+  const router = useRouter();
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -29,6 +31,7 @@ export default function AboutForm({ about }: { about: AboutRow | null }) {
         setError(result.error);
       } else {
         setSaved(true);
+        router.refresh();
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);

@@ -22,7 +22,7 @@ export default async function AboutAdminPage() {
           Edit your bio, skills, photo, and resume link.
         </p>
       </div>
-      <AboutForm about={about} />
+      <AboutForm key={JSON.stringify(about)} about={about} />
     </div>
   );
 }

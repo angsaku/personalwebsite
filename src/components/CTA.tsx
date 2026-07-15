@@ -1,5 +1,6 @@
 import { ArrowUpRight, Mail, Instagram, Linkedin, MessageCircle, Github, Youtube } from "lucide-react";
 import { getCtaContent } from "@/lib/cta";
+import InquiryForm from "@/components/InquiryForm";
 
 function XLogo({ size = 16 }: { size?: number }) {
   return (
@@ -61,6 +62,14 @@ export default async function CTA() {
             <MessageCircle size={16} className="flex-shrink-0" />
             WhatsApp
           </a>
+        </div>
+
+        {/* Inquiry form */}
+        <div className="mt-16 pt-10 border-t border-white/[0.06] max-w-xl mx-auto w-full">
+          <p className="text-xs text-gray-500 tracking-[0.2em] uppercase mb-6 text-center">
+            Or fill out a project brief
+          </p>
+          <InquiryForm />
         </div>
 
         {/* Social links */}
