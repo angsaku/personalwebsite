@@ -40,6 +40,7 @@ export default function MiniEditor({ value, onChange, placeholder }: Props) {
               [{ header: [1, 2, 3, false] }],
               ["bold", "italic"],
               [{ list: "ordered" }, { list: "bullet" }],
+              ["blockquote"],
               ["image"],
               TABLE_TOOLBAR_GROUP,
               ["clean"],
