@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 interface Props { images: string[]; title: string; }
@@ -8,6 +8,10 @@ interface Props { images: string[]; title: string; }
 export default function GalleryLightbox({ images, title }: Props) {
   const [open, setOpen]       = useState(false);
   const [current, setCurrent] = useState(0);
+  const [active, setActive]   = useState(0);
+
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const slideRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const prev = useCallback(() => setCurrent((c) => (c - 1 + images.length) % images.length), [images.length]);
   const next = useCallback(() => setCurrent((c) => (c + 1) % images.length), [images.length]);
@@ -28,42 +32,100 @@ export default function GalleryLightbox({ images, title }: Props) {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
-  /* ── Grid layout: first image wider ── */
-  const spanClass = (i: number, total: number) => {
-    if (total === 1) return "sk-wd-gal-span-full";
-    if (total === 2) return i === 0 ? "sk-wd-gal-span-8" : "sk-wd-gal-span-4";
-    if (i === 0) return "sk-wd-gal-span-8";
-    if (i === 1) return "sk-wd-gal-span-4";
-    if (total === 4 && i === 3) return "sk-wd-gal-span-8";
-    return "sk-wd-gal-span-4";
+  /* ── Track the most-visible slide for the nav + progress bar ── */
+  useEffect(() => {
+    const root = sliderRef.current;
+    if (!root) return;
+    const ratios = new Array(images.length).fill(0);
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const idx = slideRefs.current.findIndex((el) => el === entry.target);
+          if (idx !== -1) ratios[idx] = entry.intersectionRatio;
+        });
+        let bestIdx = 0;
+        let bestRatio = -1;
+        ratios.forEach((r, i) => { if (r > bestRatio) { bestRatio = r; bestIdx = i; } });
+        setActive(bestIdx);
+      },
+      { root, threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    slideRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, [images.length]);
+
+  const scrollToSlide = (i: number) => {
+    slideRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
   };
+
+  /* ── Wide slides every third shot, for rhythm ── */
+  const isWide = (i: number) => i % 3 === 1;
 
   return (
     <>
-      {/* Thumbnail grid */}
-      <div className="sk-wd-gal-grid">
-        {images.map((src, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => { setCurrent(i); setOpen(true); }}
-            className={`sk-wd-gal-thumb ${spanClass(i, images.length)}`}
-            aria-label={`Open image ${i + 1}`}
-          >
-            <Image
-              src={src}
-              alt={`${title} — ${i + 1}`}
-              fill
-              loading="lazy"
-              sizes="(max-width: 768px) 100vw, 800px"
-              style={{ objectFit: "cover", transition: "transform .4s ease" }}
-            />
-            <div className="sk-wd-gal-overlay sk-mono">
-              ↗ {i + 1} / {images.length}
-            </div>
-          </button>
-        ))}
+      {/* Horizontal slider */}
+      <div className="sk-wd-gal-slider-wrap">
+        <div className="sk-wd-gal-slider" ref={sliderRef}>
+          {images.map((src, i) => (
+            <button
+              key={i}
+              type="button"
+              ref={(el) => { slideRefs.current[i] = el; }}
+              onClick={() => { setCurrent(i); setOpen(true); }}
+              className={`sk-wd-gal-slide ${isWide(i) ? "sk-wd-gal-slide-wide" : ""}`}
+              aria-label={`Open image ${i + 1}`}
+            >
+              <Image
+                src={src}
+                alt={`${title} — ${i + 1}`}
+                fill
+                loading={i === 0 ? "eager" : "lazy"}
+                sizes="(max-width: 640px) 70vw, 620px"
+                style={{ objectFit: "cover", transition: "transform .4s ease" }}
+              />
+              <div className="sk-wd-gal-overlay sk-mono">
+                ↗ {i + 1} / {images.length}
+              </div>
+            </button>
+          ))}
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="sk-wd-gal-nav sk-wd-gal-nav-prev"
+              onClick={() => scrollToSlide(Math.max(0, active - 1))}
+              disabled={active === 0}
+              aria-label="Previous images"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              className="sk-wd-gal-nav sk-wd-gal-nav-next"
+              onClick={() => scrollToSlide(Math.min(images.length - 1, active + 1))}
+              disabled={active === images.length - 1}
+              aria-label="More images"
+            >
+              →
+            </button>
+          </>
+        )}
       </div>
+
+      {images.length > 1 && (
+        <div className="sk-wd-gal-progress">
+          <span>{String(active + 1).padStart(2, "0")}</span>
+          <div className="sk-wd-gal-progress-track">
+            <div
+              className="sk-wd-gal-progress-fill"
+              style={{ width: `${((active + 1) / images.length) * 100}%` }}
+            />
+          </div>
+          <span>{String(images.length).padStart(2, "0")}</span>
+        </div>
+      )}
 
       {/* Lightbox */}
       {open && (

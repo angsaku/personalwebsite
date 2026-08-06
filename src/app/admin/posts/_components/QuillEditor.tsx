@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createSupabaseBrowser } from "@/lib/supabase-browser";
 
 interface Props {
   value: string;
@@ -12,6 +13,8 @@ export default function QuillEditor({ value, onChange }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const quillRef = useRef<any>(null);
   const initialised = useRef(false);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (initialised.current || !containerRef.current) return;
@@ -32,7 +35,7 @@ export default function QuillEditor({ value, onChange }: Props) {
             ["bold", "italic", "underline", "strike"],
             [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
             ["blockquote", "code-block"],
-            ["link"],
+            ["link", "image"],
             ["clean"],
           ],
         },
@@ -45,6 +48,10 @@ export default function QuillEditor({ value, onChange }: Props) {
       quillRef.current.on("text-change", () => {
         onChange(quillRef.current.root.innerHTML);
       });
+
+      quillRef.current
+        .getModule("toolbar")
+        .addHandler("image", () => uploadImage(quillRef.current, "blog-content", setUploading, setError));
     }
 
     init();
@@ -54,6 +61,52 @@ export default function QuillEditor({ value, onChange }: Props) {
   return (
     <div className="quill-wrapper rounded-xl border border-white/[0.08]">
       <div ref={containerRef} style={{ minHeight: "320px" }} />
+      {uploading && <p className="px-3 py-1.5 text-xs text-gray-500">Uploading image…</p>}
+      {error && <p className="px-3 py-1.5 text-xs text-[#E5212E]">{error}</p>}
     </div>
   );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function uploadImage(
+  quill: any,
+  folder: string,
+  setUploading: (v: boolean) => void,
+  setError: (v: string) => void
+) {
+  const input = document.createElement("input");
+  input.setAttribute("type", "file");
+  input.setAttribute("accept", "image/png,image/jpeg,image/webp,image/gif");
+  input.click();
+
+  input.onchange = async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+
+    setError("");
+    setUploading(true);
+
+    const range = quill.getSelection(true);
+    const supabase = createSupabaseBrowser();
+    const ext = file.name.split(".").pop();
+    const path = `${folder}/${Date.now()}.${ext}`;
+
+    const { data, error: uploadError } = await supabase.storage
+      .from("portfolio")
+      .upload(path, file, { upsert: true });
+
+    if (uploadError) {
+      setError(uploadError.message);
+      setUploading(false);
+      return;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from("portfolio")
+      .getPublicUrl(data.path);
+
+    quill.insertEmbed(range.index, "image", publicUrl, "user");
+    quill.setSelection(range.index + 1, 0, "user");
+    setUploading(false);
+  };
 }
