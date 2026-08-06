@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import { TABLE_TOOLBAR_GROUP, registerTableIcons, tableToolbarHandlers, titleTableButtons } from "@/app/admin/_components/quillTable";
 
 interface Props {
   value: string;
@@ -26,18 +27,25 @@ export default function QuillEditor({ value, onChange }: Props) {
       // @ts-ignore – CSS module has no type declarations
       await import("quill/dist/quill.snow.css");
 
+      registerTableIcons(Quill);
+
       quillRef.current = new Quill(containerRef.current!, {
         theme: "snow",
         placeholder: "Write your blog post here…",
         modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-            ["blockquote", "code-block"],
-            ["link", "image"],
-            ["clean"],
-          ],
+          table: true,
+          toolbar: {
+            container: [
+              [{ header: [1, 2, 3, false] }],
+              ["bold", "italic", "underline", "strike"],
+              [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+              ["blockquote", "code-block"],
+              ["link", "image"],
+              TABLE_TOOLBAR_GROUP,
+              ["clean"],
+            ],
+            handlers: tableToolbarHandlers,
+          },
         },
       });
 
@@ -52,6 +60,8 @@ export default function QuillEditor({ value, onChange }: Props) {
       quillRef.current
         .getModule("toolbar")
         .addHandler("image", () => uploadImage(quillRef.current, "blog-content", setUploading, setError));
+
+      titleTableButtons(quillRef.current);
     }
 
     init();

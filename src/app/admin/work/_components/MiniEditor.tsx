@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
+import { TABLE_TOOLBAR_GROUP, registerTableIcons, tableToolbarHandlers, titleTableButtons } from "@/app/admin/_components/quillTable";
 
 interface Props {
   value: string;
@@ -27,17 +28,24 @@ export default function MiniEditor({ value, onChange, placeholder }: Props) {
       // @ts-ignore
       await import("quill/dist/quill.snow.css");
 
+      registerTableIcons(Quill);
+
       quillRef.current = new Quill(containerRef.current!, {
         theme: "snow",
         placeholder: placeholder ?? "Write here…",
         modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ["bold", "italic"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["image"],
-            ["clean"],
-          ],
+          table: true,
+          toolbar: {
+            container: [
+              [{ header: [1, 2, 3, false] }],
+              ["bold", "italic"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["image"],
+              TABLE_TOOLBAR_GROUP,
+              ["clean"],
+            ],
+            handlers: tableToolbarHandlers,
+          },
         },
       });
 
@@ -52,6 +60,8 @@ export default function MiniEditor({ value, onChange, placeholder }: Props) {
       quillRef.current
         .getModule("toolbar")
         .addHandler("image", () => uploadImage(quillRef.current, "work-content", setUploading, setError));
+
+      titleTableButtons(quillRef.current);
     }
 
     init();
