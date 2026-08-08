@@ -26,6 +26,7 @@ type Project = {
   intro: string;
   challenge: string;
   outcome: string;
+  deep_dive: string;
   published: boolean;
   sort_order: number;
   tools: string[];
@@ -54,6 +55,7 @@ export default function WorkForm({ project }: { project?: Project }) {
   const [intro, setIntro] = useState(project?.intro ?? "");
   const [challenge, setChallenge] = useState(project?.challenge ?? "");
   const [outcome, setOutcome] = useState(project?.outcome ?? "");
+  const [deepDive, setDeepDive] = useState(project?.deep_dive ?? "");
   const [galleryImages, setGalleryImages] = useState<(string | null)[]>(project?.gallery_images ?? []);
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
@@ -70,6 +72,7 @@ export default function WorkForm({ project }: { project?: Project }) {
     formData.set("intro", intro);
     formData.set("challenge", challenge);
     formData.set("outcome", outcome);
+    formData.set("deep_dive", deepDive);
     formData.set("process", JSON.stringify(process.filter((p) => p.step)));
     formData.set("metrics", JSON.stringify(metrics.filter((m) => m.value)));
     formData.set("gallery_images", JSON.stringify(galleryImages.filter(Boolean)));
@@ -215,6 +218,12 @@ export default function WorkForm({ project }: { project?: Project }) {
             <label className={labelCls}>Outcome & Learnings</label>
             <Suspense fallback={<div className="h-32 bg-[#020618] rounded-xl border border-white/[0.08] animate-pulse" />}>
               <MiniEditor value={outcome} onChange={setOutcome} placeholder="Results and takeaways…" />
+            </Suspense>
+          </div>
+          <div>
+            <label className={labelCls}>Deep Dive (optional)</label>
+            <Suspense fallback={<div className="h-32 bg-[#020618] rounded-xl border border-white/[0.08] animate-pulse" />}>
+              <MiniEditor value={deepDive} onChange={setDeepDive} placeholder="Extra detail shown only if filled in…" />
             </Suspense>
           </div>
         </section>

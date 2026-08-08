@@ -21,6 +21,7 @@ type WorkRow = {
   intro: string;
   challenge: string;
   outcome: string;
+  deep_dive: string | null;
   published: boolean;
   sort_order: number | null;
   tools: string[] | null;
@@ -61,6 +62,7 @@ export default async function EditWorkPage({ params }: Props) {
         intro: project.intro ?? "",
         challenge: project.challenge ?? "",
         outcome: project.outcome ?? "",
+        deep_dive: project.deep_dive ?? "",
         published: project.published,
         sort_order: project.sort_order ?? 0,
         tools: project.tools ?? [],

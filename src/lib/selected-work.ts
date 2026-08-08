@@ -27,6 +27,7 @@ export interface Project {
   challenge: string;
   process: ProcessStep[];
   outcome: string;
+  deepDive: string;
   metrics: Metric[];
   tools: string[];
   galleryImages: string[];
@@ -52,6 +53,7 @@ const fallback: Project[] = [
       { step: "Design", description: "Describe your design process." },
     ],
     outcome: "Replace with the outcome and learnings.",
+    deepDive: "",
     metrics: [
       { value: "+40%", label: "Engagement" },
       { value: "2x", label: "Retention" },
@@ -86,6 +88,7 @@ function mapRow(row: any): Project {
     challenge: row.challenge ?? "",
     process: (row.process as ProcessStep[]) ?? [],
     outcome: row.outcome ?? "",
+    deepDive: row.deep_dive ?? "",
     metrics: (row.metrics as Metric[]) ?? [],
     tools: row.tools ?? [],
     galleryImages: (row.gallery_images as string[]) ?? [],

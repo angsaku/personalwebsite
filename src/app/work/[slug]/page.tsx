@@ -228,9 +228,16 @@ export default async function WorkDetail({ params }: Props) {
             </div>
           )}
 
+          {project.deepDive && (
+            <div className="sk-wd-section">
+              <div className="sk-wd-section-label sk-mono">04 — DEEP DIVE</div>
+              <div className="sk-rich-text" dangerouslySetInnerHTML={{ __html: project.deepDive }} />
+            </div>
+          )}
+
           {project.outcome && (
             <div className="sk-wd-section">
-              <div className="sk-wd-section-label sk-mono">04 — OUTCOME &amp; LEARNINGS</div>
+              <div className="sk-wd-section-label sk-mono">05 — OUTCOME &amp; LEARNINGS</div>
               <div className="sk-rich-text" dangerouslySetInnerHTML={{ __html: project.outcome }} />
             </div>
           )}
