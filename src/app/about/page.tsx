@@ -55,12 +55,12 @@ export default async function AboutPage() {
       {/* ── Sticky topbar ── */}
       <div className="sk-wd-topbar">
         <Link href="/" className="sk-wd-logo" aria-label="Home">
-          <svg width="40" height="30" viewBox="0 0 40 30" fill="none">
-            <rect width="40" height="30" fill="var(--accent)" />
-            <text x="20" y="16" dominantBaseline="middle" textAnchor="middle"
-              fill="var(--bg)" fontFamily="var(--font-jetbrains-mono,monospace)"
-              fontWeight="800" fontSize="11" letterSpacing="2">SK</text>
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-sk.svg"
+            alt="Satriya Kurniawan"
+            style={{ display: "block", height: "40px", width: "auto" }}
+          />
         </Link>
         <Link href="/" className="sk-wd-back sk-mono">← HOME</Link>
         <div className="sk-wd-topbar-title sk-mono">ABOUT / MORE ABOUT ME</div>
