@@ -1,5 +1,6 @@
 export const revalidate = 0;
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
 import BlogSearch from "@/components/BlogSearch";
@@ -55,7 +56,9 @@ export default async function BlogPage() {
 
       {/* ── Searchable post grid ── */}
       <div className="sk-blog-list-body">
-        <BlogSearch posts={posts} />
+        <Suspense fallback={null}>
+          <BlogSearch posts={posts} />
+        </Suspense>
       </div>
     </div>
   );

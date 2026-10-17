@@ -1,13 +1,20 @@
 "use client";
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { setUrlParams } from "@/lib/url-params";
 import type { Project } from "@/lib/selected-work";
 
 const PER_PAGE = 6;
 
 export default function WorkSearch({ projects }: { projects: Project[] }) {
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
+  const setPage = (n: number | ((p: number) => number)) => {
+    const next = typeof n === "function" ? n(page) : n;
+    setUrlParams({ page: next > 1 ? String(next) : null }, "push");
+  };
   const [hover, setHover] = useState<number | null>(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -16,6 +23,9 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
   }, []);
+
+  const urlQuery = searchParams.get("q") ?? "";
+  useEffect(() => { setQuery(urlQuery); }, [urlQuery]);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
@@ -35,7 +45,7 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
 
   function handleQuery(val: string) {
     setQuery(val);
-    setPage(1);
+    setUrlParams({ q: val.trim() ? val : null, page: null });
   }
 
   return (

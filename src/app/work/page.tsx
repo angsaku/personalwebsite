@@ -1,5 +1,6 @@
 export const revalidate = 0;
 
+import { Suspense } from "react";
 import Link from "next/link";
 import { getSelectedWork } from "@/lib/selected-work";
 import WorkSearch from "@/components/WorkSearch";
@@ -67,7 +68,9 @@ export default async function WorkPage() {
 
       {/* ── Search + paginated list ── */}
       <div style={{ padding: "0 40px 80px" }}>
-        <WorkSearch projects={projects} />
+        <Suspense fallback={null}>
+          <WorkSearch projects={projects} />
+        </Suspense>
       </div>
     </div>
   );

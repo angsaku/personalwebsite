@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { setUrlParams } from "@/lib/url-params";
 import type { BlogPost } from "@/lib/blog";
 
 function isValidUrl(url: string | null | undefined): boolean {
@@ -10,8 +12,17 @@ function isValidUrl(url: string | null | undefined): boolean {
 }
 
 export default function BlogSearch({ posts }: { posts: BlogPost[] }) {
-  const [query, setQuery]       = useState("");
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const [query, setQueryState] = useState(() => searchParams.get("q") ?? "");
+  const activeTag = searchParams.get("tag");
+  const setQuery = (val: string) => {
+    setQueryState(val);
+    setUrlParams({ q: val.trim() ? val : null });
+  };
+  const setActiveTag = (tag: string | null) => setUrlParams({ tag }, "push");
+
+  const urlQuery = searchParams.get("q") ?? "";
+  useEffect(() => { setQueryState(urlQuery); }, [urlQuery]);
 
   const allTags = useMemo(() => {
     const tags = posts.map((p) => p.tag).filter(Boolean);
