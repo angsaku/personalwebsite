@@ -47,7 +47,7 @@ export default async function CTA() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
           <a
             href={`mailto:${cta.email}`}
-            className="group flex items-center gap-2 bg-[#E5212E] text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-[#c41c28] transition-all duration-300 max-w-full overflow-hidden"
+            className="group flex items-center gap-2 bg-[#E5212E] text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-[#c41c28] transition-[background-color,border-color,color,opacity,transform] duration-300 max-w-full overflow-hidden"
           >
             <Mail size={16} className="flex-shrink-0" />
             <span className="truncate">{cta.email}</span>
@@ -57,7 +57,7 @@ export default async function CTA() {
             href={`https://wa.me/${cta.whatsapp_number}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 border border-white/10 text-gray-400 px-6 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-all duration-300"
+            className="flex items-center gap-2 border border-white/10 text-gray-400 px-6 py-4 rounded-full text-sm font-medium hover:border-white/30 hover:text-white transition-[background-color,border-color,color,opacity,transform] duration-300"
           >
             <MessageCircle size={16} className="flex-shrink-0" />
             WhatsApp
@@ -81,7 +81,7 @@ export default async function CTA() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              className="group flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 border border-transparent hover:text-white hover:bg-[#E5212E]/10 hover:border-[#E5212E]/40 transition-all duration-200"
+              className="group flex items-center justify-center w-9 h-9 rounded-lg text-gray-500 border border-transparent hover:text-white hover:bg-[#E5212E]/10 hover:border-[#E5212E]/40 transition-[background-color,border-color,color] duration-200"
             >
               {social.icon ? (
                 <social.icon size={16} />

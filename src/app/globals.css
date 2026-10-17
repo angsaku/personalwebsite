@@ -155,7 +155,7 @@ a { color: inherit; text-decoration: none; }
    ============================================ */
 .sk-hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 32px 40px 0;
   overflow: hidden;
 }
@@ -1067,7 +1067,7 @@ a { color: inherit; text-decoration: none; }
 /* ============================================
    WORK DETAIL PAGE  (sk-wd-*)
    ============================================ */
-.sk-wd { background: var(--bg); color: var(--fg); min-height: 100vh; }
+.sk-wd { background: var(--bg); color: var(--fg); min-height: 100dvh; }
 
 /* ── Topbar ── */
 .sk-wd-topbar {
@@ -1864,4 +1864,63 @@ a { color: inherit; text-decoration: none; }
   position: sticky; top: 0; z-index: 20;
   background: #fff;
   border-radius: 12px 12px 0 0;
+}
+
+/* ============================================
+   ACCESSIBILITY & INTERACTION (web-design-guidelines)
+   ============================================ */
+html { color-scheme: dark; }
+
+/* Skip link */
+.sk-skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 10000;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  font: 500 12px/1 var(--font-jetbrains-mono, monospace);
+  letter-spacing: .08em;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.sk-skip-link:focus-visible { transform: translateY(0); }
+
+/* Visible keyboard focus on every interactive element */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+a, button, select, summary, [role="button"] { touch-action: manipulation; }
+
+/* Anchor targets clear the fixed topbar */
+[id] { scroll-margin-top: 96px; }
+
+/* Lightbox: keep scroll inside the modal */
+.sk-wd-lightbox { overscroll-behavior: contain; }
+
+/* Custom cursor only for fine pointers that can hover */
+@media (hover: none), (pointer: coarse) {
+  .sk-cursor { display: none !important; }
+  *, *::before, *::after { cursor: auto !important; }
+}
+
+/* Reduced motion: stop decorative loops, remove smooth scroll and transitions */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+    cursor: auto !important;
+  }
+  .sk-cursor { display: none !important; }
 }

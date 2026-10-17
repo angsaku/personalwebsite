@@ -7,11 +7,13 @@ export default function Navbar() {
         <img
           src="/logo-sk.svg"
           alt="Satriya Kurniawan"
+          width={40}
+          height={40}
           style={{ display: "block", height: "40px", width: "auto" }}
         />
       </div>
 
-      <nav className="nav">
+      <nav className="nav" aria-label="Primary">
         {[
           ["#work",       "Work"],
           ["#about",      "About"],

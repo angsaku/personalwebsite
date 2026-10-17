@@ -42,12 +42,16 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
     <>
       {/* ── Search ── */}
       <div className="sk-blog-search-wrap">
-        <span className="sk-blog-search-icon sk-mono">⌕</span>
+        <span className="sk-blog-search-icon sk-mono" aria-hidden="true">⌕</span>
         <input
-          type="text"
+          type="search"
+          name="q"
+          aria-label="Search projects"
+          autoComplete="off"
+          spellCheck={false}
           value={query}
           onChange={(e) => handleQuery(e.target.value)}
-          placeholder="SEARCH BY TITLE, CATEGORY, OR TAG..."
+          placeholder="SEARCH BY TITLE, CATEGORY, OR TAG…"
           className="sk-blog-search-input sk-mono"
           data-gramm="false"
           suppressHydrationWarning
@@ -65,7 +69,7 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
       </div>
 
       {/* ── Count ── */}
-      <div className="sk-blog-results-count sk-mono">
+      <div className="sk-blog-results-count sk-mono" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "PROJECT" : "PROJECTS"} FOUND
       </div>
 
@@ -81,6 +85,8 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
               data-cursor-label="↗ open"
               onMouseEnter={() => setHover(i)}
               onMouseLeave={() => setHover(null)}
+              onFocus={() => setHover(i)}
+              onBlur={() => setHover(null)}
             >
               <span className="idx sk-mono">
                 № {String((safePage - 1) * PER_PAGE + i + 1).padStart(2, "0")}
@@ -119,6 +125,7 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
             type="button"
             className="sk-work-page-btn"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
+            aria-label="Previous page"
             disabled={safePage === 1}
           >
             ← PREV
@@ -131,6 +138,8 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
                 type="button"
                 className={`sk-work-page-num${n === safePage ? " active" : ""}`}
                 onClick={() => setPage(n)}
+                aria-label={`Page ${n}`}
+                aria-current={n === safePage ? "page" : undefined}
               >
                 {String(n).padStart(2, "0")}
               </button>
@@ -141,6 +150,7 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
             type="button"
             className="sk-work-page-btn"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            aria-label="Next page"
             disabled={safePage === totalPages}
           >
             NEXT →
@@ -160,6 +170,9 @@ export default function WorkSearch({ projects }: { projects: Project[] }) {
               src={hovered.thumbnailUrl}
               alt={hovered.title}
               className="sk-work-preview-img"
+              width={320}
+              height={200}
+              loading="lazy"
             />
             <div className="sk-work-preview-label sk-mono">≈ {hovered.title}</div>
           </>

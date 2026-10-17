@@ -15,7 +15,7 @@ export default async function BlogPage() {
   const posts = await getAllPosts();
 
   return (
-    <div className="sk-wd">
+    <div className="sk-wd" id="main-content">
       <RevealInit />
 
       {/* ── Sticky topbar ── */}

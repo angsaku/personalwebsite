@@ -18,7 +18,7 @@ export default async function WorkPage() {
   const categories = Array.from(new Set(projects.map((p) => p.category.split("·")[0].trim())));
 
   return (
-    <div className="sk-wd">
+    <div className="sk-wd" id="main-content">
       <RevealInit />
 
       {/* ── Sticky topbar ── */}

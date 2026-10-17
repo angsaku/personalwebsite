@@ -19,8 +19,15 @@ export default function ShareButton({ url, title }: ShareButtonProps) {
         setOpen(false);
       }
     }
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("pointerdown", onClickOutside);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onClickOutside);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   function copyLink() {
@@ -51,35 +58,41 @@ export default function ShareButton({ url, title }: ShareButtonProps) {
   return (
     <div ref={ref} className="relative">
       <button
+        type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label="Share"
-        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-white transition-colors"
+        aria-expanded={open}
+        aria-haspopup="true"
+        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-white transition-colors focus-visible:ring-2 focus-visible:ring-[#E5212E] rounded"
       >
-        <Share2 size={14} />
+        <Share2 size={14} aria-hidden="true" />
         Share
       </button>
 
       {open && (
         <div className="absolute right-0 top-full mt-2 w-48 bg-[#0a1128] border border-white/[0.08] rounded-xl shadow-xl z-50 overflow-hidden">
           <button
+            type="button"
             onClick={copyLink}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+            aria-live="polite"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors focus-visible:bg-white/[0.08] focus-visible:text-white"
           >
-            {copied ? <Check size={14} className="text-green-400" /> : <Link2 size={14} />}
+            {copied ? <Check size={14} className="text-green-400" aria-hidden="true" /> : <Link2 size={14} aria-hidden="true" />}
             {copied ? "Copied!" : "Copy Link"}
           </button>
           <button
+            type="button"
             onClick={shareLinkedIn}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors focus-visible:bg-white/[0.08] focus-visible:text-white"
           >
-            <Linkedin size={14} />
+            <Linkedin size={14} aria-hidden="true" />
             Share to LinkedIn
           </button>
           <button
+            type="button"
             onClick={shareX}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] transition-colors focus-visible:bg-white/[0.08] focus-visible:text-white"
           >
-            <Twitter size={14} />
+            <Twitter size={14} aria-hidden="true" />
             Share to X
           </button>
         </div>

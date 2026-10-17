@@ -16,7 +16,7 @@ export default async function VisualPage() {
   const items = await getVisualExplorations();
 
   return (
-    <div className="min-h-screen bg-[#020618] text-gray-200">
+    <div className="min-h-screen bg-[#020618] text-gray-200" id="main-content">
       <ScrollToTop />
 
       {/* Top bar */}

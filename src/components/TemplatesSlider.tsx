@@ -87,7 +87,7 @@ export default function TemplatesSlider({ templates }: { templates: Template[] }
             <div className="sk-tpl-thumb">
               {t.thumbnailUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={t.thumbnailUrl} alt={t.title} className="sk-tpl-thumb-img" />
+                <img src={t.thumbnailUrl} alt={t.title} width={400} height={300} loading="lazy" className="sk-tpl-thumb-img" />
               ) : (
                 <div className="sk-tpl-thumb-ph">
                   <span className="sk-mono" style={{ color: platformColor(t.platform) }}>

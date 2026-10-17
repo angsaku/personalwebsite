@@ -48,7 +48,7 @@ export default async function AboutPage() {
   }
 
   return (
-    <div className="sk-wd">
+    <div className="sk-wd" id="main-content">
       <ScrollToTop />
       <RevealInit />
 
@@ -205,7 +205,7 @@ export default async function AboutPage() {
                     {c.logo_url && (
                       <div className="sk-about-community-logo">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={c.logo_url} alt={c.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                        <img src={c.logo_url} alt={c.name} width={64} height={64} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                       </div>
                     )}
                     <div>

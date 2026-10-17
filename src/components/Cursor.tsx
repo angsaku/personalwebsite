@@ -6,6 +6,10 @@ export default function Cursor() {
   const labelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!finePointer || reduceMotion) return;
+
     document.body.style.cursor = "none";
 
     let raf: number;

@@ -64,7 +64,7 @@ function VideoCard({ videoUrl, thumbnailUrl, instagramUrl }: {
           className={`absolute inset-0 transition-opacity duration-300 ${hovered ? "opacity-0" : "opacity-100"}`}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={thumbnailUrl} alt="" className="w-full h-full object-cover" />
+          <img src={thumbnailUrl} alt="" width={360} height={640} loading="lazy" className="w-full h-full object-cover" />
         </div>
       )}
 

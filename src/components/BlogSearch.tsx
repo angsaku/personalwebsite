@@ -35,12 +35,16 @@ export default function BlogSearch({ posts }: { posts: BlogPost[] }) {
     <div>
       {/* ── Search bar ── */}
       <div className="sk-blog-search-wrap">
-        <span className="sk-blog-search-icon sk-mono">⌕</span>
+        <span className="sk-blog-search-icon sk-mono" aria-hidden="true">⌕</span>
         <input
-          type="text"
+          type="search"
+          name="q"
+          aria-label="Search posts"
+          autoComplete="off"
+          spellCheck={false}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="SEARCH BY TITLE, TAG, OR KEYWORD..."
+          placeholder="SEARCH BY TITLE, TAG, OR KEYWORD…"
           className="sk-blog-search-input sk-mono"
         />
         {query && (
@@ -79,7 +83,7 @@ export default function BlogSearch({ posts }: { posts: BlogPost[] }) {
       )}
 
       {/* ── Count ── */}
-      <div className="sk-blog-results-count sk-mono">
+      <div className="sk-blog-results-count sk-mono" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "POST" : "POSTS"} FOUND
       </div>
 

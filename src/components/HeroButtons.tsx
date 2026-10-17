@@ -7,7 +7,7 @@ export default function HeroButtons() {
     <div className="flex items-center gap-4">
       <ScrollLink
         href="#work"
-        className="group flex items-center gap-2 bg-[#E5212E] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c41c28] transition-all duration-300"
+        className="group flex items-center gap-2 bg-[#E5212E] text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-[#c41c28] transition-[background-color,border-color,color,opacity,transform] duration-300"
       >
         View Work
         <ArrowDownRight

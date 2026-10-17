@@ -60,7 +60,7 @@ export default async function BlogDetail({ params }: Props) {
   };
 
   return (
-    <div className="sk-wd">
+    <div className="sk-wd" id="main-content">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <ScrollToTop />
       <RevealInit />

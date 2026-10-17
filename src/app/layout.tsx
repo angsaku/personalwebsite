@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
@@ -24,6 +24,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
 
 const BASE_URL = "https://angsaku.vercel.app";
 
@@ -59,6 +64,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fzjpbihupkiggcdvynua.supabase.co" />
       </head>
       <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${plusJakartaSans.variable} antialiased`} suppressHydrationWarning>
+        <a href="#main-content" className="sk-skip-link">Skip to Main Content</a>
         <Providers>{children}</Providers>
         <Analytics />
         <SpeedInsights />

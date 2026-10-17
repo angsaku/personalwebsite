@@ -55,7 +55,7 @@ export default function GalleryLightbox({ images, title }: Props) {
   }, [images.length]);
 
   const scrollToSlide = (i: number) => {
-    slideRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+    slideRefs.current[i]?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", inline: "start", block: "nearest" });
   };
 
   /* ── Wide slides every third shot, for rhythm ── */
@@ -97,7 +97,7 @@ export default function GalleryLightbox({ images, title }: Props) {
               className="sk-wd-gal-nav sk-wd-gal-nav-prev"
               onClick={() => scrollToSlide(Math.max(0, active - 1))}
               disabled={active === 0}
-              aria-label="Previous images"
+              aria-label="Previous image"
             >
               ←
             </button>
@@ -106,7 +106,7 @@ export default function GalleryLightbox({ images, title }: Props) {
               className="sk-wd-gal-nav sk-wd-gal-nav-next"
               onClick={() => scrollToSlide(Math.min(images.length - 1, active + 1))}
               disabled={active === images.length - 1}
-              aria-label="More images"
+              aria-label="Next image"
             >
               →
             </button>
@@ -115,7 +115,7 @@ export default function GalleryLightbox({ images, title }: Props) {
       </div>
 
       {images.length > 1 && (
-        <div className="sk-wd-gal-progress">
+        <div className="sk-wd-gal-progress" style={{ fontVariantNumeric: "tabular-nums" }}>
           <span>{String(active + 1).padStart(2, "0")}</span>
           <div className="sk-wd-gal-progress-track">
             <div
@@ -129,19 +129,27 @@ export default function GalleryLightbox({ images, title }: Props) {
 
       {/* Lightbox */}
       {open && (
-        <div className="sk-wd-lightbox" onClick={() => setOpen(false)}>
+        <div
+          className="sk-wd-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${title} image gallery`}
+          onClick={() => setOpen(false)}
+        >
 
           {/* Close */}
           <button
             type="button"
             className="sk-wd-lb-close sk-mono"
             onClick={() => setOpen(false)}
+            aria-label="Close gallery"
+            autoFocus
           >
             ESC ✕
           </button>
 
           {/* Counter */}
-          <div className="sk-wd-lb-counter sk-mono">
+          <div className="sk-wd-lb-counter sk-mono" aria-live="polite" style={{ fontVariantNumeric: "tabular-nums" }}>
             {String(current + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}
           </div>
 
@@ -151,6 +159,7 @@ export default function GalleryLightbox({ images, title }: Props) {
               type="button"
               className="sk-wd-lb-prev sk-mono"
               onClick={(e) => { e.stopPropagation(); prev(); }}
+              aria-label="Previous image"
             >
               ←
             </button>
@@ -174,6 +183,7 @@ export default function GalleryLightbox({ images, title }: Props) {
               type="button"
               className="sk-wd-lb-next sk-mono"
               onClick={(e) => { e.stopPropagation(); next(); }}
+              aria-label="Next image"
             >
               →
             </button>
@@ -188,6 +198,8 @@ export default function GalleryLightbox({ images, title }: Props) {
                   type="button"
                   className={`sk-wd-lb-strip-thumb${i === current ? " active" : ""}`}
                   onClick={() => setCurrent(i)}
+                  aria-label={`Show image ${i + 1}`}
+                  aria-current={i === current}
                 >
                   <Image src={src} alt="" width={64} height={40} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </button>
