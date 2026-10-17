@@ -3,7 +3,14 @@
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { createSupabaseAdmin } from "@/lib/supabase-admin";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath as nextRevalidatePath, updateTag } from "next/cache";
+import { SUPABASE_CACHE_TAG } from "@/lib/supabase";
+
+// Every admin save also expires the cached public Supabase reads.
+function revalidatePath(...args: Parameters<typeof nextRevalidatePath>) {
+  nextRevalidatePath(...args);
+  updateTag(SUPABASE_CACHE_TAG);
+}
 
 /* ── Auth ──────────────────────────────────────── */
 
