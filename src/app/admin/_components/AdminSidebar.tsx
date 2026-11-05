@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, Zap, UserCircle, Mail, Inbox, LayoutTemplate } from "lucide-react";
+import { FileText, Briefcase, LogOut, Smile, Users, Building2, Layers, Wrench, Zap, UserCircle, Mail, Inbox, LayoutTemplate, BadgeCheck } from "lucide-react";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { useRouter } from "next/navigation";
 
@@ -30,6 +30,7 @@ export default function AdminSidebar({ email }: { email: string }) {
     { label: "Inquiries", href: "/admin/inquiries", icon: Inbox },
     { label: "Beyond Work", href: "/admin/beyond-work", icon: Smile },
     { label: "Communities", href: "/admin/communities", icon: Users },
+    { label: "Client Logos", href: "/admin/client-logos", icon: BadgeCheck },
   ];
 
   return (

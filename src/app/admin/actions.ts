@@ -594,6 +594,46 @@ export async function toggleTemplatePublish(id: string, published: boolean) {
   await supabase.from("templates").update({ published: !published }).eq("id", id);
 }
 
+/* ── Client Logos ────────────────────────────────── */
+
+export async function createClientLogo(formData: FormData) {
+  const supabase = createSupabaseAdmin();
+
+  const { error } = await supabase.from("client_logos").insert({
+    name: formData.get("name") as string,
+    logo_url: (formData.get("logo_url") as string) || null,
+    sort_order: Number(formData.get("sort_order") || 0),
+  });
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/client-logos");
+}
+
+export async function updateClientLogo(id: string, formData: FormData) {
+  const supabase = createSupabaseAdmin();
+
+  const { error } = await supabase
+    .from("client_logos")
+    .update({
+      name: formData.get("name") as string,
+      logo_url: (formData.get("logo_url") as string) || null,
+      sort_order: Number(formData.get("sort_order") || 0),
+    })
+    .eq("id", id);
+
+  if (error) return { error: error.message };
+  revalidatePath("/");
+  redirect("/admin/client-logos");
+}
+
+export async function deleteClientLogo(id: string) {
+  const supabase = createSupabaseAdmin();
+  await supabase.from("client_logos").delete().eq("id", id);
+  revalidatePath("/");
+  redirect("/admin/client-logos");
+}
+
 /* ── Inquiry Form ─────────────────────────────────── */
 
 export async function submitInquiry(formData: FormData) {

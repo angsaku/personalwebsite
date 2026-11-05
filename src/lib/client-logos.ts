@@ -50,3 +50,45 @@ export async function getClientLogos(): Promise<ClientLogo[]> {
     logo_url: toDirectImageUrl(row.logo_url),
   }));
 }
+
+export type ClientLogoAdmin = ClientLogo & { sort_order: number };
+
+export async function getClientLogosAdmin(): Promise<ClientLogoAdmin[]> {
+  const supabase = getSupabase();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("client_logos")
+    .select("*")
+    .order("sort_order", { ascending: true });
+
+  if (error || !data) return [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data as any[]).map((row) => ({
+    id: row.id,
+    name: row.name,
+    logo_url: row.logo_url ?? null,
+    sort_order: row.sort_order ?? 0,
+  }));
+}
+
+export async function getClientLogoById(id: string): Promise<ClientLogoAdmin | undefined> {
+  const supabase = getSupabase();
+  if (!supabase) return undefined;
+
+  const { data, error } = await supabase
+    .from("client_logos")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error || !data) return undefined;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row = data as any;
+  return {
+    id: row.id,
+    name: row.name,
+    logo_url: row.logo_url ?? null,
+    sort_order: row.sort_order ?? 0,
+  };
+}
